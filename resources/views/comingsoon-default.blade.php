@@ -21,12 +21,10 @@
                         <div class="card-body">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-md-6">
-                                    <img class="img-fluid" src="<?= asset('assets/images/ramadhan.png') ?>" alt="img" />
+                                    <img class="img-fluid" src="<?= asset('assets/images/pages/img-soon-2.svg') ?>" alt="img" />
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 class="text-center">Selamat Idul Fitri 1445 H</h2>
-                                    <h3 class="text-center">Mohon Maaf Lahir dan Batin</h3>
-                                    <h3 class="mt-4 text-center f-36"><b>ABMAS Coming Soon</b></h3>
+                                    <h3 class="mt-4 text-center f-46"><b>Coming Soon</b></h3>
                                     <p class="mt-3 mb-0 text-center text-muted f-16">Something new is on it's way</p>
                                     <p class="mt-0 mb-4 text-center text-muted f-16">In <strong>Samil and Dito</strong> We Trust!</p>
                                     <div class="row timer-block mt-4 justify-content-center" id="timer-block">
@@ -45,7 +43,6 @@
                                     </div>
 
                                 </div>
-                                <p class="text-center">Made with 🫶🏻 Farrel Arrizal </p>
                             </div>
                         </div>
                     </div>
