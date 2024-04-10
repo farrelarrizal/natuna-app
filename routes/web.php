@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $data = [
-        'head_title' => 'Coming Soon Page',
+        'head_title' => 'Selamat Lebaran',
     ];
     return view('comingsoon', $data);
 });

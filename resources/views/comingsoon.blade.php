@@ -26,7 +26,7 @@
                                 <div class="col-md-4">
                                     <h2 class="text-center">Selamat Idul Fitri 1445 H</h2>
                                     <h3 class="text-center">Mohon Maaf Lahir dan Batin</h3>
-                                    <h3 class="mt-4 text-center f-36"><b>ABMAS Coming Soon</b></h3>
+                                    <h4 class="mt-4 text-center f-24"><b>ABMAS Coming Soon</b></h4>
                                     <p class="mt-3 mb-0 text-center text-muted f-16">Something new is on it's way</p>
                                     <p class="mt-0 mb-4 text-center text-muted f-16">In <strong>Samil and Dito</strong> We Trust!</p>
                                     <div class="row timer-block mt-4 justify-content-center" id="timer-block">
@@ -44,6 +44,7 @@
                                         </div>
                                     </div>
 
+                                    <a href="https://link.dana.id/kaget?c=s3yryu5ea&r=gsUb9K" class="text-center btn btn-primary text-center col-md-12 mt-3">Save Your THR!</a>
                                 </div>
                                 <p class="text-center">Made with 🫶🏻 Farrel Arrizal </p>
                             </div>
