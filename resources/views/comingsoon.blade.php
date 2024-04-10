@@ -46,7 +46,7 @@
 
                                     <a href="https://link.dana.id/kaget?c=s3yryu5ea&r=gsUb9K" class="text-center btn btn-primary text-center col-12 mt-3">Save Your Dana THR!</a>
                                 </div>
-                                <p class="text-center">Made with 🫶🏻 Farrel Arrizal </p>
+                                <p class="text-center mt-3">Made with 🫶🏻 Farrel Arrizal </p>
                             </div>
                         </div>
                     </div>
