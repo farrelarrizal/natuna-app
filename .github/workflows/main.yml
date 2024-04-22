@@ -45,7 +45,7 @@ jobs:
         ssh deploy_ec2 "rsync -a temp/ $PATH_FILE"
         ssh deploy_ec2 "rm -rf temp"
         ssh deploy_ec2 "cd $PATH_FILE"
-        ssh deploy_ec2 "cd $PATH_FILE && sail down"
-        ssh deploy_ec2 "cd $PATH_FILE && sail build && sail up -d"
+        ssh deploy_ec2 "cd $PATH_FILE && vendor/bin/sail down"
+        ssh deploy_ec2 "cd $PATH_FILE && vendor/bin/sail build && vendor/bin/sail up -d"
         
       
