@@ -21,11 +21,9 @@
                         <div class="card-body">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-md-6">
-                                    <img class="img-fluid" src="<?= asset('assets/images/ramadhan.png') ?>" alt="img" />
+                                    <img class="img-fluid" src="<?= asset('https://diskominfo.natunakab.go.id/wp-content/uploads/2019/12/20191211-merdeka-sinyal.jpg') ?>" alt="img" />
                                 </div>
                                 <div class="col-md-4">
-                                    <h2 class="text-center">Selamat Idul Fitri 1445 H</h2>
-                                    <h3 class="text-center">Mohon Maaf Lahir dan Batin</h3>
                                     <h4 class="mt-4 text-center f-24"><b>ABMAS Coming Soon</b></h4>
                                     <p class="mt-3 mb-0 text-center text-muted f-16">Something new is on it's way</p>
                                     <p class="mt-0 mb-4 text-center text-muted f-16">In <strong>Samil and Dito</strong> We Trust!</p>
@@ -44,9 +42,9 @@
                                         </div>
                                     </div>
 
-                                    <a href="https://link.dana.id/kaget?c=slrx2l3zh&r=gsUb9K" class="text-center btn btn-danger text-center col-12 mt-3">Save Your Dana THR!</a>
+{{--                                    <a href="https://link.dana.id/kaget?c=slrx2l3zh&r=gsUb9K" class="text-center btn btn-primary text-center col-12 mt-3">Save Your Dana THR!</a>--}}
                                 </div>
-                                <p class="text-center mt-3">Made with 🫶🏻 Farrel Arrizal </p>
+                                <p class="text-center mt-3">Made with  💖ABMAS Team </p>
                             </div>
                         </div>
                     </div>
