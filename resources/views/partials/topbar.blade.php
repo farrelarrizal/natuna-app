@@ -1,6 +1,6 @@
 <!-- [ Header Topbar ] start -->
 <header class="pc-header">
-  <div class="header-wrapper"> <?= $this->include('partials/header-content') ?> </div>
+  <div class="header-wrapper"> @include('partials/header-content') </div>
 </header>
 <div class="offcanvas pc-announcement-offcanvas offcanvas-end" tabindex="-1" id="announcement" aria-labelledby="announcementLabel">
   <div class="offcanvas-header">
