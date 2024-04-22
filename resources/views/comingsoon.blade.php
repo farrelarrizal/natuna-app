@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
 
-{{--                                    <a href="https://link.dana.id/kaget?c=slrx2l3zh&r=gsUb9K" class="text-center btn btn-primary text-center col-12 mt-3">Save Your Dana THR!</a>--}}
+                                    <a href="{{ route('login') }}" class="text-center btn btn-light-primary text-center col-12 mt-3">login</a>
                                 </div>
                                 <p class="text-center mt-3">Made with  💖ABMAS Team </p>
                             </div>

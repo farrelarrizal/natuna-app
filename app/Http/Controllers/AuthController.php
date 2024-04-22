@@ -11,7 +11,7 @@ class AuthController extends Controller
     public function login()
     {
         $data = [
-            'head_title' => 'Login',
+            'title' => 'Login',
         ];
         return view('auth.login', $data);
     }
