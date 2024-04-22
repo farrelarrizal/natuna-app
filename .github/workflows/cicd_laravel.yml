@@ -12,27 +12,15 @@ on:
 permissions:
   contents: read
 
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up natuna
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
-        
+jobs:        
   docker-pull-ec2:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
     - name: Creating a SSH CONFIG file
       env:
         SSH_USER: ${{ secrets.USER }}
-        SSH_KEY: ${{ secrets.KEY }}
+        SSH_KEY: ${{ secrets.SECRET_KEYS }}
         SSH_HOST: ${{ secrets.HOST }}
 
       run: |
