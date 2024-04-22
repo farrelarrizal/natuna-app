@@ -31,9 +31,9 @@ jobs:
     steps:
     - name: Creating a SSH CONFIG file
       env:
-        SSH_USER: ${{ secrets.SSH_USER }}
-        SSH_KEY: ${{ secrets.SSH_KEY }}
-        SSH_HOST: ${{ secrets.SSH_HOST }}
+        SSH_USER: ${{ secrets.USER }}
+        SSH_KEY: ${{ secrets.KEY }}
+        SSH_HOST: ${{ secrets.HOST }}
 
       run: |
         mkdir -p ~/.ssh/
