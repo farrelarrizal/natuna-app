@@ -21,6 +21,22 @@
   <a href="#!" class="pc-link">
     <span class="pc-micon">
       <svg class="pc-icon">
+        <use xlink:href="#custom-shapes"></use>
+      </svg>
+    </span>
+    <span class="pc-mtext">Peta</span>
+    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+    <span class="pc-badge">2</span>
+  </a>
+  <ul class="pc-submenu">
+    <li class="pc-item"><a class="pc-link" href="peta-geografi">Geografi</a></li>
+    <li class="pc-item"><a class="pc-link" href="peta-keamanan">Keamanan</a></li>
+  </ul>
+</li>
+<li class="pc-item pc-hasmenu">
+  <a href="#!" class="pc-link">
+    <span class="pc-micon">
+      <svg class="pc-icon">
         <use xlink:href="#custom-document"></use>
       </svg>
     </span>

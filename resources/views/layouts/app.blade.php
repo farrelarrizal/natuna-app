@@ -4,6 +4,7 @@
 <head>
     @include('partials/head-page-meta')
     @include('partials/head-css')
+    @yield('css')
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->

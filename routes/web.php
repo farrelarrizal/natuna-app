@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PetaController;
 
 Route::get('/', function () {
     $data = [
@@ -20,5 +21,7 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     // dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('peta-geografi', [PetaController::class, 'geografi'])->name('peta-geografi');
+    Route::get('peta-keamanan', [PetaController::class, 'keamanan'])->name('peta-keamanan');
 });
 
