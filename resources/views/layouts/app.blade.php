@@ -5,6 +5,11 @@
     @include('partials/head-page-meta')
     @include('partials/head-css')
     @yield('css')
+    <style>
+        .pc-link.active .pc-micon path {
+            fill: #4680FF;
+        }
+    </style>
 </head>
 <!-- [Head] end -->
 <!-- [Body] Start -->
@@ -26,7 +31,6 @@
     <!-- [Page Specific JS] start-->
 <!-- Apex Chart -->
 <script src="<?= asset('assets/js/plugins/apexcharts.min.js') ?>"></script>
-<script src="<?= asset('assets/js/pages/dashboard-default.js') ?>"></script>
 <!-- [Page Specific JS] end -->
 @include('partials/customizer')
 @yield('script')
