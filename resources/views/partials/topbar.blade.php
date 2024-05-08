@@ -18,7 +18,7 @@
         </div>
         <h5 class="mb-3">Select Business Unit</h5>
         <p class="text-muted">You can use the Analytics Dashboard to explore how many new users download reports daily and monthly</p>
-        <img src="<?= asset('assets/images/layout/img-announcement-1.svg') ?>" alt="img" class="img-fluid mb-3">
+        <img src="<?= asset('assets/images/layout/img-announcement-1.png') ?>" alt="img" class="img-fluid mb-3">
         <div class="row">
           <div class="col-6">
             <div class="d-grid"><button class="btn btn-outline-secondary">Skip Intro</button></div>
@@ -38,7 +38,7 @@
         </div>
         <h5 class="mb-3">General Meeting for update</h5>
         <p class="text-muted">You can use the Analytics Dashboard to explore how many new users download reports daily and monthly</p>
-        <img src="<?= asset('assets/images/layout/img-announcement-2.svg') ?>" alt="img" class="img-fluid">
+        <img src="<?= asset('assets/images/layout/img-announcement-2.png') ?>" alt="img" class="img-fluid">
       </div>
     </div>
 
@@ -52,7 +52,7 @@
         </div>
         <h5 class="mb-3">Widgets update</h5>
         <p class="text-muted">We've made some updates to the emendable widget which we think you are going to love.</p>
-        <img src="<?= asset('assets/images/layout/img-announcement-3.svg') ?>" alt="img" class="img-fluid">
+        <img src="<?= asset('assets/images/layout/img-announcement-3.png') ?>" alt="img" class="img-fluid">
       </div>
     </div>
     <div class="card mb-3">
@@ -64,7 +64,7 @@
         </div>
         <h5 class="mb-3">Coming soon dark mode</h5>
         <p class="text-muted">We've made some updates to the emendable widget which we think you are going to love.</p>
-        <img src="<?= asset('assets/images/layout/img-announcement-4.svg') ?>" alt="img" class="img-fluid">
+        <img src="<?= asset('assets/images/layout/img-announcement-4.png') ?>" alt="img" class="img-fluid">
       </div>
     </div>
   </div>

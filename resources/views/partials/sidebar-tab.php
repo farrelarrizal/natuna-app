@@ -4,7 +4,7 @@
     <div class="m-header">
       <a href="index.html" class="b-brand">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="<?= asset('assets/images/logo-dark.svg') ?>" alt="" class="logo logo-lg">
+        <img src="<?= asset('assets/images/logo-sttal.svg') ?>" alt="" class="logo logo-lg">
         <img src="<?= asset('assets/images/favicon.svg') ?>" alt="" class="logo logo-sm">
       </a>
     </div>
