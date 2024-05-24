@@ -119,6 +119,7 @@
     ticks_snap_bounds: 95
   });
 })();
+
 // [ logarithmic-slider ]
 (function () {
   var slider = new Slider('#ex15', {

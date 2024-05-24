@@ -31,14 +31,6 @@ class HankamController extends Controller
         ];
         return view('hankam.maps', $data);
     }
-    public function simulation(){
-        $data = [
-            'title' => 'Defence and Security | Simulation',
-            'head_title' => 'Simulation',
-            'breadcrumb_item' => 'Defence and Security ',
-        ];
-        return view('hankam.simulation', $data);
-    }
     public function threatsMilitary(){
         $data = [
             'title' => 'Defence and Security | Military',
@@ -62,5 +54,54 @@ class HankamController extends Controller
             'breadcrumb_item' => 'Defence and Security ',
         ];
         return view('hankam.threats.hybrid-military', $data);
+    }
+    public function simulationBaseModel(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Base Model',
+            'head_title' => 'Base Model',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.base-model.index', $data);
+    }
+    public function editParameterBaseModel(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Base Model',
+            'head_title' => 'Base Model',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.base-model.edit-parameter', $data);
+    }
+
+    public function simulationScenarioModel(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.scenario-model.index', $data);
+    }
+    public function detailScenarioModel(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.scenario-model.detail', $data);
+    }
+    public function simulationOutcomeScenario(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Outcome Scenario',
+            'head_title' => 'Outcome Scenario',
+            'breadcrumb_item' => 'Simulation ',
+        ];
+        return view('hankam.simulation.outcome-scenario.index', $data);
+    }
+    public function detailOutcomeScenario(){
+        $data = [
+            'title' => 'Defence and Security | Simulation Outcome Scenario',
+            'head_title' => 'Outcome Scenario',
+            'breadcrumb_item' => 'Simulation ',
+        ];
+        return view('hankam.simulation.outcome-scenario.detail', $data);
     }
 }

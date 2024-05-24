@@ -133,7 +133,9 @@
                 <div class="pc-component">
                     <div class="alert alert-primary my-3" role="alert">
                         <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
-                        Information Notes </div>
+                        Information Notes 
+                        
+                      </div>
                 </div>
                 
                 <div class="my-3">
