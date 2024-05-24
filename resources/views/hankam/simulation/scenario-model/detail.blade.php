@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="<?= asset('assets/css/plugins/dataTables.bootstrap5.min.css') ?>" >
         <link rel="stylesheet" href="<?= asset('assets/css/plugins/bootstrap-slider.min.css') ?>" >
         <link rel="stylesheet" href="<?= asset('assets/css/uikit.css') ?>" >
+        <link rel="stylesheet" href="<?= asset('assets/css/plugins/nouislider.min.css') ?>">
 @endsection
 
 @section('content')
@@ -79,10 +80,10 @@
               <form action="">
                 <div class="form-group row">
                   
-                  <div class="col-md-2">
+                  {{-- <div class="col-md-2">
                     <p>Final Time:</p>
                   </div>
-                  {{-- <div class="col-md-6">
+                  <div class="col-md-6">
                     <input
                       id="ex8"
                       data-slider-id="ex1Slider"
@@ -93,6 +94,18 @@
                       data-slider-value="14"
                     >
                   </div> --}}
+                  <label class="col-form-label col-lg-3 col-sm-12">Basic Setup</label>
+                  <div class="col-lg-6 col-md-12 col-sm-12">
+                    
+                      <div class="row align-items-center">
+                        <div class="col-4">
+                          <input type="text" class="form-control" id="pc-no_ui_slider-1-input" placeholder="Quantity">
+                        </div>
+                        <div class="col-8">
+                          <div id="pc-no_ui_slider-1" class="pc-no_ui_slider--drag-danger"></div>
+                        </div>
+                      </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Scenario</button>
               </form>
@@ -106,4 +119,41 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?= asset('assets/js/plugins/bootstrap-slider.min.js') ?>"></script>
     <script src="<?= asset('assets/js/pages/ac-rangeslider.js') ?>"></script>
+    <script src="<?= asset('assets/js/plugins/wNumb.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/plugins/nouislider.min.js') ?>"></script>
+    <script>
+      (function () {
+        // init slider
+        var slider = document.getElementById('pc-no_ui_slider-1');
+
+        noUiSlider.create(slider, {
+          start: [0],
+          step: 35,
+          range: {
+            min: [0],
+            max: [135]
+          },
+          format: wNumb({
+            decimals: 0
+          }),
+          tooltips: [
+            true,
+            wNumb({
+              decimals: 1
+            })
+          ],
+        });
+
+        // init slider input
+        var sliderInput = document.getElementById('pc-no_ui_slider-1-input');
+
+        slider.noUiSlider.on('update', function (values, handle) {
+          sliderInput.value = values[handle];
+        });
+
+        sliderInput.addEventListener('change', function () {
+          slider.noUiSlider.set(this.value);
+        });
+      })();
+    </script>
 @endsection
