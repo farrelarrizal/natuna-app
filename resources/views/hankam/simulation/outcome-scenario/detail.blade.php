@@ -25,7 +25,27 @@
             <button type="button" class="btn btn-info"><i class="ti ti-square-plus"></i> Import</button>
         </div>
       </div>
-        <div class="col-sm-12">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Scenario Model Version 1 Chart</h5>
+                </div>
+                <div class="pc-component">
+                    <div class="alert alert-primary my-3" role="alert">
+                        <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
+                        Information Notes 
+                        
+                      </div>
+                </div>
+                
+                <div class="my-3">
+                    <div id="outcome-scenario-detail"></div>
+                </div>
+              </div>
+        </div>
+      </div>
+        <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <h5>Scenario Model Version 1</h5>
@@ -158,6 +178,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?= asset('assets/js/plugins/jquery.dataTables.min.js') ?>"></script>
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
+    <script src="<?= asset('assets/js/pages/menu/simulation.js') ?>"></script>
     <script>
       // [ Add Rows ]
       var t = $('#add-row-table').DataTable();
