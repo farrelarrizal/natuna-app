@@ -12,25 +12,35 @@
 @section('content')
 @include('partials/breadcrumb')
     <div class="row mb-3">
-        <div class="d-flex align-items-center justify-content-between">
-            <ul class="list-inline mb-3 d-flex align-items-center">
-                <li class="list-inline-item">
-                    <div class="avtar avtar-s bg-light-warning">
-                        <i class="ti ti-artboard f-20"></i>
-                    </div>
-                </li>
-                <li class="list-inline-item text-filter">
-                    <h5 class="mb-0">Defense and Security Scenario Model</h5>
-                    <span>Last Edit: 17 May 2024 18:50</span>
-                </li>
-            </ul>
+        <div class="col-sm-5">
+          <ul class="list-inline mb-3 d-flex align-items-center">
+              <li class="list-inline-item">
+                  <div class="avtar avtar-s bg-light-warning">
+                      <i class="ti ti-artboard f-20"></i>
+                  </div>
+              </li>
+              <li class="list-inline-item text-filter">
+                  <h5 class="mb-0">Defense and Security Scenario Model</h5>
+                  <span>Last Edit: 17 May 2024 18:50</span>
+              </li>
+          </ul> 
         </div>
+        <div class="col-sm-7">
+          <form action="" method="post">
+            <select name="" id="" class="form-select">
+              <option selected>Select SFD</option>
+                <option value="sfd-1">SFD 1</option>
+                <option value="sfd-2">SFD 2</option>
+                <option value="sfd-3">SFD 3</option>
+            </select>
+          </form>
+      </div>  
     </div>
     <div class="row">
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
-              <h5>Scenario Detail</h5>
+              <h5>Add Scenario Details</h5>
               
             </div>
             <div class="card-body">

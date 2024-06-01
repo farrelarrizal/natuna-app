@@ -17,23 +17,26 @@
 
 @section('content')
 @include('partials/breadcrumb')
-    <div class="row">
-        <ul class="list-inline mb-3 d-flex align-items-center">
-            <li class="list-inline-item">
-                <div class="avtar avtar-s bg-light-warning">
-                    <i class="ti ti-file-text f-20"></i>
-                </div>
-            </li>
-            <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
-            <li class="list-inline-item">
-                <div class="input-group input-group-sm date">
-                    <input type="text" class="form-control" placeholder="Select date" id="pc-datepicker-2">
-                    <span class="input-group-text">
-                        <i class="feather icon-calendar"></i>
-                    </span>
-                </div>
-            </li>
-        </ul>
+    <div class="row mb-2">
+        <div class="col-sm-3 mb-2">
+            <ul class="list-inline d-flex align-items-center">
+                <li class="list-inline-item">
+                    <div class="avtar avtar-s bg-light-warning">
+                        <i class="ti ti-file-text f-20"></i>
+                    </div>
+                </li>
+                <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group date">
+                <input type="text" class="form-control" placeholder="Select date" id="pc-datepicker-2">
+                <span class="input-group-text">
+                    <i class="feather icon-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-5"></div>
     </div>
     <div class="row">
         <div class="col-md-12">
