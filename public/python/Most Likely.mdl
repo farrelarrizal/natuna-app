@@ -1,0 +1,1015 @@
+{UTF-8}
+Power Plant Cost=
+	Average Power Plant Production Cost*Total of Electricity Production in Java
+	~	Rupiah
+	~		|
+
+Gross Income=
+	"Public & Commercial Income"+Household Income
+	~	Rupiah
+	~		|
+
+Gas Engine PP Operational Maintanance=
+	3.86e+10
+	~	Rupiah/Unit
+	~		|
+
+Solar PP Operational Cost=
+	Amount of Solar Power Plant*Solar PP Operational Maintanance
+	~	Rupiah
+	~		|
+
+Solar PP Operational Maintanance=
+	2.33e+09
+	~	Rupiah/Unit
+	~		|
+
+Geothermal PP Operational Cost=
+	Geothermal PP Operational Maintanance*Amount of Geothermal Power Plant
+	~	Rupiah
+	~		|
+
+Natural Gases PP Operational Cost=
+	Natural Gases PP Operational Maintanance*Amount of Natural Gases Power Plant
+	~	Rupiah
+	~		|
+
+"Steam & Gas PP Operational Cost"=
+	"Steam & Gas PP Operational Maintanance"*"Amount of Steam & Gas Power Plant"
+	~	Rupiah
+	~		|
+
+Gas Engine PP Operational Cost=
+	Amount of Gas Engine Power Plant*Gas Engine PP Operational Maintanance
+	~	Rupiah
+	~		|
+
+"Steam & Gas PP Operational Maintanance"=
+	1.5e+11
+	~	Rupiah/Unit
+	~		|
+
+Cost=
+	Power Plant Cost+Oversupply Management+Substation Power Plant Maintanace Cost
+	+Outsource Cost
+	~	Rupiah
+	~		|
+
+Steam PP Operational Cost=
+	Steam PP Operational Maintanance*Amount of Steam Power Plant
+	~	Rupiah
+	~		|
+
+Diesel PP Operational Cost=
+	Amount of Diesel Power Plant*Diesel PP Operational Maintanance
+	~	Rupiah
+	~		|
+
+Geothermal PP Operational Maintanance=
+	3.552e+11
+	~	Rupiah/Unit
+	~		|
+
+Substation Power Plant Maintanace Cost=
+	Diesel PP Operational Cost+Gas Engine PP Operational Cost+Geothermal PP Operational Cost\
+		+Natural Gases PP Operational Cost+Solar PP Operational Cost+"Steam & Gas PP Operational Cost"\
+		+Steam PP Operational Cost+Water PP Operational Cost
+	~	Rupiah
+	~		|
+
+Water PP Operational Maintanance=
+	1.28e+11
+	~	Rupiah/Unit
+	~		|
+
+Water PP Operational Cost=
+	Water PP Operational Maintanance*Amount of Water Power Plant
+	~	Rupiah
+	~		|
+
+Diesel PP Operational Maintanance=
+	7.21e+09
+	~	Rupiah/Unit
+	~		|
+
+Natural Gases PP Operational Maintanance=
+	8e+10
+	~	Rupiah/Unit
+	~		|
+
+Steam PP Operational Maintanance=
+	6.76e+11
+	~	Rupiah/Unit
+	~		|
+
+Lack of Energy=
+	IF THEN ELSE(Electricity Fulfillment<0, ABS(Electricity Fulfillment), 0)
+	~	MW
+	~		~	:SUPPLEMENTARY 
+	|
+
+Industry Average Usage=
+	IF THEN ELSE( Time=2021, 567, RANDOM NORMAL(494.229, 1308.08, 992.869, 291.39, 1))
+	~	MW/Factory
+	~		|
+
+Oversupply Management=
+	IF THEN ELSE(Electricity Fulfillment>0, Electricity Fulfillment*(Electricity Price per Watt\
+		*0.5), 0)
+	~	Rupiah
+	~		|
+
+IPP Electricity Production=
+	IPP Power Plant*IPP Production Capacity
+	~	MW
+	~		|
+
+IPP Increase=
+	IPP Rent Increase Rate
+	~	Unit/Year
+	~		|
+
+IPP Power Plant= INTEG (
+	IPP Power Plant*(IPP Increase/IPP Power Plant),
+		52)
+	~	Unit
+	~		|
+
+IPP Production Capacity=
+	RANDOM NORMAL(98.8158, 146.43, 108.634, 10.5953, 1)*10000
+	~	MW/Unit
+	~		|
+
+IPP Rent Increase Rate=
+	IF THEN ELSE(Time=2018, -7, RANDOM NORMAL(0, 13, 3.9167, 5.96459, 1))
+	~	Unit/Year
+	~		|
+
+Electricity Fulfillment=
+	(Total of Electricity Production in Java+IPP Electricity Production)-Total of Java Electricity Demand
+	~	MW
+	~		|
+
+Household Income=
+	High VA Electricity Income+Medium VA Electricity Income+Low VA Electricity Income
+	~	Rupiah
+	~		|
+
+Low VA Electricity Income=
+	Low Voltage Electricity Usage*Electricty Tariff High VA
+	~	Rupiah
+	~		|
+
+Outsource Cost=
+	IPP Electricity Production*Power Plant Rent Price
+	~	Rupiah
+	~		|
+
+High VA Electricity Income=
+	High Voltage Electricity Usage*Electricty Tariff Low VA
+	~	Rupiah
+	~		|
+
+Medium VA Electricity Income=
+	Medium Voltage Electricity Usage*Electricty Tariff Med VA
+	~	Rupiah
+	~		|
+
+Power Plant Rent Price=
+	RANDOM UNIFORM(975000, 1.35e+06, 1)
+	~	Rupiah/MW
+	~		|
+
+Amount of Diesel Power Plant= INTEG (
+	Amount of Diesel Power Plant*(Diesel PP Rate/Amount of Diesel Power Plant),
+		59)
+	~	Unit
+	~		|
+
+Amount of Gas Engine Power Plant= INTEG (
+	Amount of Gas Engine Power Plant*(Gas Engine PP Rate/Amount of Gas Engine Power Plant\
+		),
+		IF THEN ELSE(Time>=2018, 3, 1))
+	~	Unit
+	~		|
+
+Amount of Geothermal Power Plant= INTEG (
+	Amount of Geothermal Power Plant*(Geothermal PP Rate/Amount of Geothermal Power Plant\
+		),
+		7)
+	~	Unit
+	~		|
+
+Amount of Natural Gases Power Plant= INTEG (
+	Amount of Natural Gases Power Plant*(NG PP Rate/Amount of Natural Gases Power Plant)\
+		,
+		31)
+	~	Unit
+	~		|
+
+Amount of Solar Power Plant= INTEG (
+	Amount of Solar Power Plant*(Solar PP Rate/Amount of Solar Power Plant),
+		1)
+	~	Unit
+	~		|
+
+"Amount of Steam & Gas Power Plant"= INTEG (
+	"Amount of Steam & Gas Power Plant"*("Steam & Gas PP Rate"/"Amount of Steam & Gas Power Plant"\
+		),
+		43)
+	~	Unit
+	~		|
+
+Amount of Steam Power Plant= INTEG (
+	Amount of Steam Power Plant*(Steam PP Rate/Amount of Steam Power Plant),
+		29)
+	~	Unit
+	~		|
+
+Amount of Water Power Plant= INTEG (
+	Amount of Water Power Plant*(Water PP Rate/Amount of Water Power Plant),
+		97)
+	~	Unit
+	~		|
+
+"Low Voltage Customer Pop."= INTEG (
+	"Low Voltage Customer Pop."*(Low Voltage Rate/"Low Voltage Customer Pop."),
+		2.77539e+07)
+	~	House
+	~		|
+
+Business Population= INTEG (
+	Business Population*(Business Rate/Business Population),
+		1.11363e+06)
+	~	Store
+	~		|
+
+Industrial Factory Population= INTEG (
+	Industrial Factory Population*(Industry Rate/Industrial Factory Population),
+		38592)
+	~	Factory
+	~		|
+
+"High Voltage Customer Pop."= INTEG (
+	"High Voltage Customer Pop."*(High Voltage Rate/"High Voltage Customer Pop."),
+		47)
+	~	House
+	~		|
+
+"Medium Voltage Customer Pop."= INTEG (
+	"Medium Voltage Customer Pop."*(Med Voltage Rate/"Medium Voltage Customer Pop."),
+		26569)
+	~	House
+	~		|
+
+Industry Population Growth=
+	IF THEN ELSE(Time<2017,RANDOM NORMAL(1319, 5424, 3086.86, 1549.03, 1), RANDOM NORMAL\
+		(9657, 23804, 17198, 4851.06, 1))
+	~	Factory/Year
+	~	RANDOM NORMAL(1319, 23804, 8966.67, 7720.5, 1)
+		RANDOM NORMAL(9657, 23804, 17198, 4851.05525, 1)
+	|
+
+Med VA Power=
+	IF THEN ELSE(Time<2015,RANDOM NORMAL(0.298754,0.561343,0.369955, 0.110814, 1),IF THEN ELSE\
+		(Time>2016, RANDOM NORMAL( 0.481581, 0.831437, 0.668014, 0.110084, 1),RANDOM NORMAL\
+		(0.505246,0.556414, 0.528523
+	, 0.0211424,1)))
+	~	MVA/House
+	~		|
+
+POWER FACTOR=
+	RANDOM UNIFORM(0.8, 0.9, 1)
+	~	MW/MVA
+	~		|
+
+Med Voltage Rate=
+	Med Voltage Increase
+	~	House/Year
+	~		|
+
+Med Voltage Increase=
+	IF THEN ELSE(Time<2013,RANDOM NORMAL(9676,26420,15814.7, 4530.1, 1),IF THEN ELSE(Time\
+		>2013, RANDOM NORMAL( -1151, 7587, 3914.29,2707.8, 1),RANDOM UNIFORM(-55778, -42151\
+		, 1)))
+	~	House/Year
+	~	Time<2014,RANDOM NORMAL(9676,26420,15814.67, 7530.105, 1
+		RANDOM NORMAL(-51778, -1151, -26464.5, 25313.5, 1)
+	|
+
+Medium Voltage Electricity Usage=
+	Med VA Power*"Medium Voltage Customer Pop."*POWER FACTOR*1000
+	~	MW
+	~		|
+
+Total Household Electricity Demand=
+	High Voltage Electricity Usage+Medium Voltage Electricity Usage+Low Voltage Electricity Usage
+	~	MW
+	~		|
+
+High Voltage Electricity Usage=
+	"High Voltage Customer Pop."*High VA Power*POWER FACTOR*1000
+	~	MW
+	~		|
+
+Low Voltage Electricity Usage=
+	"Low Voltage Customer Pop."*Low VA Power*POWER FACTOR*1000
+	~	MW
+	~		|
+
+"Total of Public & Commercial Electicity Demand"=
+	Business Commercial Electricity Consumption+Industrial Electicity Consumption+Public Electricity Consumption
+	~	MW
+	~		|
+
+Low Voltage Rate=
+	Low Voltage Increase
+	~	House/Year
+	~		|
+
+Low Voltage Increase=
+	RANDOM NORMAL(1.50016e+06, 2.38366e+06, 1.95922e+06, 272525, 1)
+	~	House/Year
+	~		|
+
+High Voltage Rate=
+	High Voltage Increase
+	~	House/Year
+	~		|
+
+High Voltage Increase=
+	RANDOM NORMAL(-4, 13, 4.167, 4.41273, 1)
+	~	House/Year
+	~		|
+
+Total of Electricity Production in Java=
+	(Total Production of Diesel+Total Production of Gas+Total Production of Gas Engine+Total Production of Geo Thermal\
+		+Total Production of Solar
+	+Total Production of Steam+"Total Production of Steam & Gas"+Total Production of Water\
+		)
+	~	MW
+	~		|
+
+Average Solar Production=
+	IF THEN ELSE(Time>=2016,RANDOM NORMAL(0,1290,248.75,466.8,1), 0)
+	~	MW/Unit
+	~		|
+
+Average Gas Engine Poduction=
+	IF THEN ELSE(Time>=2019,RANDOM NORMAL(5920,65845.3,48951.2,24949.7,1),0)
+	~	MW/Unit
+	~		|
+
+Solar Power Plant Development Rate=
+	IF THEN ELSE(Time>=2016,RANDOM NORMAL(-1, 8, 0.75, 2.24072, 1),0)
+	~	Unit/Year
+	~	IF THEN ELSE(Time>=2016,RANDOM NORMAL(-1, 8, 0.75, 2.24072, 1),0)
+	|
+
+Gas Engine Power Plant Development Rate=
+	IF THEN ELSE(Time>=2018,RANDOM NORMAL(0, 12, 1.25, 3.345, 1),0)
+	~	Unit/Year
+	~		|
+
+Water Power Plant Development Rate=
+	RANDOM NORMAL(-5, 4, 0.1667, 2.154, 1)
+	~	Unit/Year
+	~		|
+
+Public Electricity Consumption=
+	Java Average Public Electricity Usage*Java Public Electricity Usage
+	~	MW
+	~		|
+
+"Steam & Gas Power Plant Development Rate"=
+	RANDOM NORMAL(0, 5, 2, 2.19848, 1)
+	~	Unit/Year
+	~		|
+
+"Steam & Gas PP Rate"=
+	"Steam & Gas Power Plant Development Rate"
+	~	Unit/Year
+	~		|
+
+Gas Engine PP Rate=
+	Gas Engine Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Java Public Electricity Usage=
+	RANDOM NORMAL(133755, 329763, 220664, 66524.8, 1 )
+	~	Unit
+	~		|
+
+"Total Production of Steam & Gas"=
+	"Amount of Steam & Gas Power Plant"*"Average Steam & Gas Production"
+	~	MW
+	~		|
+
+"Average Steam & Gas Production"=
+	RANDOM NORMAL(436390, 735056, 587852, 91650.7, 1)
+	~	MW/Unit
+	~		|
+
+Total Production of Gas Engine=
+	Amount of Gas Engine Power Plant*Average Gas Engine Poduction
+	~	MW
+	~		|
+
+Average Diesel Poduction=
+	RANDOM NORMAL(120.91, 12340.7, 3507.85, 4068.13, 1)
+	~	MW/Unit
+	~		|
+
+Average Gas Production=
+	RANDOM NORMAL(14991.3, 197932, 78288.2, 50238.1, 1)
+	~	MW/Unit
+	~		|
+
+Natural Gas Power Plant Development Rate=
+	RANDOM NORMAL(-4, 1, -0.5833, 1.38193, 0)
+	~	Unit/Year
+	~		|
+
+Average Geothermal Poduction=
+	RANDOM NORMAL(390804, 449277, 408807, 15927.8, 1)
+	~	MW/Unit
+	~		|
+
+Average Power Plant Production Cost=
+	RANDOM UNIFORM(1e+06, 1.5e+06, 1)
+	~	Rupiah/MW
+	~		|
+
+Average Steam Poduction=
+	RANDOM NORMAL(1.58663e+06, 2.535e+06, 1.98135e+06, 320055, 1)
+	~	MW/Unit
+	~		|
+
+Average Water Production=
+	RANDOM NORMAL(53373.3, 90878.1, 66710.2, 11010.9, 1)
+	~	MW/Unit
+	~	RANDOM NORMAL(53373.3, 90878.1, 66710.2, 11010.9, 1)
+	|
+
+Total Production of Solar=
+	Amount of Solar Power Plant*Average Solar Production
+	~	MW
+	~		|
+
+Business Average Usage=
+	RANDOM NORMAL(11.8849, 17.607, 14.8694, 1.91667, 1)
+	~	MW/Store
+	~		|
+
+Business Commercial Electricity Consumption=
+	Business Average Usage*Business Population
+	~	MW
+	~		|
+
+Business Population Growth=
+	RANDOM NORMAL(31367, 226436, 130876, 63473, 1)
+	~	Store/Year
+	~		|
+
+Business Rate=
+	Business Population Growth
+	~	Store/Year
+	~		|
+
+Steam Power Plant Development Rate=
+	RANDOM NORMAL(-4, 6, 1.0833, 3.0127, 1)
+	~	Unit/Year
+	~		|
+
+Diesel Power Plant Development Rate=
+	RANDOM NORMAL(-10, 24, 4.0833, 9.4115, 1)
+	~	Unit/Year
+	~		|
+
+Diesel PP Rate=
+	Diesel Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Electricity Price per Watt=
+	RANDOM UNIFORM( 1.136e+06, 1.69953e+06, 1)
+	~	Rupiah/MW
+	~		|
+
+Electricty Tariff High VA=
+	1.69953e+06
+	~	Rupiah/MW
+	~		|
+
+Electricty Tariff Low VA=
+	RANDOM UNIFORM(980000, 1.352e+06, 1)
+	~	Rupiah/MW
+	~		|
+
+Electricty Tariff Med VA=
+	1.4447e+06
+	~	Rupiah/MW
+	~		|
+
+Financial Profit=
+	Gross Income-Cost
+	~	Rupiah
+	~		~	:SUPPLEMENTARY 
+	|
+
+Total Production of Geo Thermal=
+	Amount of Geothermal Power Plant*Average Geothermal Poduction
+	~	MW
+	~		|
+
+Steam PP Rate=
+	Steam Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Industrial Electicity Consumption=
+	Industrial Factory Population*Industry Average Usage
+	~	MW
+	~		|
+
+Industry Rate=
+	Industry Population Growth
+	~	Factory/Year
+	~		|
+
+Java Average Public Electricity Usage=
+	RANDOM NORMAL(40.0892, 56.1147, 49.8894, 5.70333, 1)
+	~	MW/Unit
+	~		|
+
+Total Production of Steam=
+	Amount of Steam Power Plant*Average Steam Poduction
+	~	MW
+	~		|
+
+Total Production of Gas=
+	Amount of Natural Gases Power Plant*Average Gas Production
+	~	MW
+	~		|
+
+NG PP Rate=
+	Natural Gas Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Geothermal Power Plant Development Rate=
+	RANDOM UNIFORM(0,0, 0)
+	~	Unit/Year
+	~		|
+
+Geothermal PP Rate=
+	Geothermal Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Total Production of Water=
+	Amount of Water Power Plant*Average Water Production
+	~	MW
+	~		|
+
+"Public & Commercial Income"=
+	"Total of Public & Commercial Electicity Demand"*Electricity Price per Watt
+	~	Rupiah
+	~		|
+
+Solar PP Rate=
+	Solar Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Total of Java Electricity Demand=
+	"Total of Public & Commercial Electicity Demand"+Total Household Electricity Demand
+	~	MW
+	~		|
+
+Total Production of Diesel=
+	Amount of Diesel Power Plant*Average Diesel Poduction
+	~	MW
+	~		|
+
+Water PP Rate=
+	Water Power Plant Development Rate
+	~	Unit/Year
+	~		|
+
+Low VA Power=
+	RANDOM NORMAL( 0.00124178, 0.00135551, 0.00113836, 6.6267e-05, 1)
+	~	MVA/House
+	~		|
+
+High VA Power=
+	RANDOM NORMAL( 47.4577, 55.4016, 52.9614, 2.37902, 1)
+	~	MVA/House
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 12
+	~	Year
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Year
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Year [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Year [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Household Electicity Demand
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,110,0
+10,1,Low Voltage Electricity Usage,335,267,49,49,2,3,0,4,-1,0,0,0,0-0-0,255-255-255,|||0-0-0,0,0,0,0,0,0
+10,2,Medium Voltage Electricity Usage,543,129,52,52,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,High Voltage Electricity Usage,752,270,51,51,2,3,0,4,-1,0,0,0,0-0-0,255-255-255,|||0-0-0,0,0,0,0,0,0
+10,4,Total Household Electricity Demand,540,345,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,5,1,4,1,0,0,0,0,192,0,-1--1--1,,1|(407,307)|
+1,6,2,4,1,0,0,0,0,192,0,-1--1--1,,1|(588,223)|
+1,7,3,4,1,0,0,0,0,192,0,-1--1--1,,1|(684,315)|
+10,8,High VA Power,721,172,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,9,Low VA Power,370,170,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,10,Med VA Power,519,283,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,11,9,1,1,0,0,0,0,192,0,-1--1--1,,1|(372,184)|
+1,12,10,2,1,0,0,0,0,192,0,-1--1--1,,1|(506,231)|
+1,13,8,3,1,0,0,0,0,192,0,-1--1--1,,1|(716,204)|
+10,14,"Low Voltage Customer Pop.",335,133,59,20,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,"Medium Voltage Customer Pop.",542,13,59,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,"High Voltage Customer Pop.",752,136,59,20,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,14,1,1,0,0,0,0,192,0,-1--1--1,,1|(308,179)|
+1,18,16,3,1,0,0,0,0,192,0,-1--1--1,,1|(787,198)|
+1,19,15,2,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+12,20,48,332,-24,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,21,23,20,100,0,0,22,0,192,0,-1--1--1,,1|(332,13)|
+1,22,23,14,4,0,0,22,0,192,0,-1--1--1,,1|(332,83)|
+11,23,0,332,48,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,24,Low Voltage Rate,415,48,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,25,48,540,-119,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,26,28,25,100,0,0,22,0,192,0,-1--1--1,,1|(540,-89)|
+1,27,28,15,4,0,0,22,0,192,0,-1--1--1,,1|(540,-32)|
+11,28,0,540,-60,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,29,Med Voltage Rate,623,-60,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,30,48,753,-11,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,31,33,30,100,0,0,22,0,192,0,-1--1--1,,1|(753,22)|
+1,32,33,16,4,0,0,22,0,192,0,-1--1--1,,1|(753,87)|
+11,33,0,753,53,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,34,High Voltage Rate,836,53,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,35,Low Voltage Increase,243,-11,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,36,Med Voltage Increase,455,-113,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,37,High Voltage Increase,665,2,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,38,35,23,1,0,0,0,0,192,0,-1--1--1,,1|(266,26)|
+1,39,36,28,1,0,0,0,0,192,0,-1--1--1,,1|(491,-72)|
+1,40,37,33,1,0,0,0,0,192,0,-1--1--1,,1|(692,38)|
+10,41,Time,500,-29,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,42,POWER FACTOR,543,241,75,30,8,3,0,16,-1,0,0,0,0-0-0,0-0-0,||B|0-0-0,0,0,0,0,0,0
+1,43,42,3,1,0,0,0,0,192,0,-1--1--1,,1|(603,260)|
+1,44,42,2,1,0,0,0,0,192,0,-1--1--1,,1|(544,223)|
+1,45,42,1,1,0,0,0,0,192,0,-1--1--1,,1|(451,268)|
+1,46,41,36,1,0,0,0,0,192,0,-1--1--1,,1|(453,-62)|
+10,47,Time,429,295,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,48,47,10,1,0,0,0,0,192,0,-1--1--1,,1|(467,301)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Public Electricity Demand
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,"Total of Public & Commercial Electicity Demand",513,242,61,61,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Business Commercial Electricity Consumption,397,354,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Business Population Growth,230,119,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Business Average Usage,257,383,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,5,4,2,1,0,0,0,0,192,0,-1--1--1,,1|(321,401)|
+10,6,Public Electricity Consumption,513,87,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Business Population,303,255,46,20,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,8,48,298,145,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,11,8,100,0,0,22,0,192,0,-1--1--1,,1|(298,170)|
+1,10,11,7,4,0,0,22,0,192,0,-1--1--1,,1|(298,217)|
+11,11,0,298,194,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,12,Business Rate,381,194,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,13,3,11,1,0,0,0,0,192,0,-1--1--1,,1|(239,168)|
+1,14,7,2,1,0,0,0,0,192,0,-1--1--1,,1|(315,303)|
+10,15,Industrial Electicity Consumption,630,357,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,Industry Average Usage,787,384,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,16,15,1,0,0,0,0,192,0,-1--1--1,,1|(703,403)|
+10,18,Industrial Factory Population,734,263,46,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,19,48,733,145,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,20,22,19,100,0,0,22,0,192,0,-1--1--1,,1|(733,172)|
+1,21,22,18,4,0,0,22,0,192,0,-1--1--1,,1|(733,222)|
+11,22,0,733,197,8,6,33,3,0,0,2,0,0,0,0,0,0,0,0,0
+10,23,Industry Rate,650,197,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,24,Industry Population Growth,802,121,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,25,24,22,1,0,0,0,0,192,0,-1--1--1,,1|(784,180)|
+1,26,18,15,1,0,0,0,0,192,0,-1--1--1,,1|(715,309)|
+1,27,2,1,1,0,0,0,0,192,0,-1--1--1,,1|(433,285)|
+1,28,15,1,1,0,0,0,0,192,0,-1--1--1,,1|(595,286)|
+1,29,6,1,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+10,30,Time,857,280,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,31,Java Average Public Electricity Usage,663,34,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,32,31,6,1,0,0,0,0,192,0,-1--1--1,,1|(635,70)|
+10,33,Java Public Electricity Usage,368,42,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,34,33,6,1,0,0,0,0,192,0,-1--1--1,,1|(408,78)|
+1,35,30,24,1,0,0,0,0,192,0,-1--1--1,,1|(859,247)|
+1,36,30,16,1,0,0,0,0,192,0,-1--1--1,,1|(832,340)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Electricity Generated
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Total of Electricity Production in Java,529,210,59,59,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Amount of Water Power Plant,265,86,50,22,3,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,3,Average Water Production,262,23,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Amount of Solar Power Plant,269,222,50,22,3,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,5,Amount of Natural Gases Power Plant,261,358,59,22,3,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,6,Amount of Steam Power Plant,802,76,50,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Amount of Diesel Power Plant,808,218,55,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,8,Amount of Geothermal Power Plant,812,354,59,22,3,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+12,9,48,85,84,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,9,100,0,0,22,0,192,0,-1--1--1,,1|(122,84)|
+1,11,12,2,4,0,0,22,0,192,0,-1--1--1,,1|(188,84)|
+11,12,0,156,84,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,Water PP Rate,156,122,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,14,48,95,220,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,17,14,100,0,0,22,0,192,0,-1--1--1,,1|(129,220)|
+1,16,17,4,4,0,0,22,0,192,0,-1--1--1,,1|(192,220)|
+11,17,0,159,220,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,18,Solar PP Rate,159,258,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,19,48,71,351,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,20,22,19,100,0,0,22,0,192,0,-1--1--1,,1|(103,351)|
+1,21,22,5,4,0,0,22,0,192,0,-1--1--1,,1|(170,351)|
+11,22,0,132,351,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,23,NG PP Rate,132,389,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,24,48,999,354,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,25,27,24,100,0,0,22,0,192,0,-1--1--1,,1|(967,354)|
+1,26,27,8,4,0,0,22,0,192,0,-1--1--1,,1|(902,354)|
+11,27,0,939,354,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,28,Geothermal PP Rate,939,392,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,29,48,985,210,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,30,32,29,100,0,0,22,0,192,0,-1--1--1,,1|(954,210)|
+1,31,32,7,4,0,0,22,0,192,0,-1--1--1,,1|(892,210)|
+11,32,0,928,210,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,33,Diesel PP Rate,928,248,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,34,48,995,76,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,35,37,34,100,0,0,22,0,192,0,-1--1--1,,1|(960,76)|
+1,36,37,6,4,0,0,22,0,192,0,-1--1--1,,1|(888,76)|
+11,37,0,930,76,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,38,Steam PP Rate,930,114,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,39,Water Power Plant Development Rate,83,26,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,40,39,12,1,0,0,0,0,192,0,-1--1--1,,1|(146,35)|
+10,41,Solar Power Plant Development Rate,71,162,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,42,41,17,1,0,0,0,0,192,0,-1--1--1,,1|(146,171)|
+10,43,Natural Gas Power Plant Development Rate,38,304,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,44,43,22,1,0,0,0,0,192,0,-1--1--1,,1|(112,306)|
+10,45,Total Production of Water,404,53,43,43,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,46,Average Solar Production,279,142,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,47,Total Production of Solar,403,185,43,43,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,48,Average Gas Production,262,290,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,49,Total Production of Gas,404,324,43,43,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,50,Total Production of Geo Thermal,663,317,43,43,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,51,Total Production of Diesel,661,189,43,43,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,52,Total Production of Steam,659,44,43,43,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,53,Average Steam Poduction,811,23,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,54,Average Diesel Poduction,813,161,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,55,Average Geothermal Poduction,816,291,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,56,48,49,1,0,0,0,0,192,0,-1--1--1,,1|(346,283)|
+1,57,5,49,1,0,0,0,0,192,0,-1--1--1,,1|(340,362)|
+1,58,4,47,1,0,0,0,0,192,0,-1--1--1,,1|(341,222)|
+1,59,46,47,1,0,0,0,0,192,0,-1--1--1,,1|(345,150)|
+1,60,3,45,1,0,0,0,0,192,0,-1--1--1,,1|(334,20)|
+1,61,2,45,1,0,0,0,0,192,0,-1--1--1,,1|(338,87)|
+1,62,6,52,1,0,0,0,0,192,0,-1--1--1,,1|(724,78)|
+1,63,53,52,1,0,0,0,0,192,0,-1--1--1,,1|(721,15)|
+1,64,54,51,1,0,0,0,0,192,0,-1--1--1,,1|(722,159)|
+1,65,7,51,1,0,0,0,0,192,0,-1--1--1,,1|(732,224)|
+1,66,8,50,1,0,0,0,0,192,0,-1--1--1,,1|(736,350)|
+1,67,55,50,1,0,0,0,0,192,0,-1--1--1,,1|(731,287)|
+1,68,45,1,1,0,0,0,0,192,0,-1--1--1,,1|(484,99)|
+1,69,52,1,1,0,0,0,0,192,0,-1--1--1,,1|(572,97)|
+1,70,51,1,1,0,0,0,0,192,0,-1--1--1,,1|(612,218)|
+1,71,47,1,1,0,0,0,0,192,0,-1--1--1,,1|(446,219)|
+1,72,49,1,1,0,0,0,0,192,0,-1--1--1,,1|(480,293)|
+1,73,50,1,1,0,0,0,0,192,0,-1--1--1,,1|(571,291)|
+10,74,Steam Power Plant Development Rate,1006,20,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,75,74,37,1,0,0,0,0,192,0,-1--1--1,,1|(928,33)|
+10,76,Diesel Power Plant Development Rate,1004,163,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,77,Geothermal Power Plant Development Rate,1016,302,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,78,77,27,1,0,0,0,0,192,0,-1--1--1,,1|(938,324)|
+1,79,76,32,1,0,0,0,0,192,0,-1--1--1,,1|(925,168)|
+10,80,Time,190,177,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,81,"Amount of Steam & Gas Power Plant",266,488,59,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,82,48,73,481,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,83,85,82,100,0,0,22,0,192,0,-1--1--1,,1|(106,481)|
+1,84,85,81,4,0,0,22,0,192,0,-1--1--1,,1|(174,481)|
+11,85,0,135,481,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,86,"Steam & Gas PP Rate",135,519,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,87,"Steam & Gas Power Plant Development Rate",33,433,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,88,87,85,1,0,0,0,0,192,0,-1--1--1,,1|(118,442)|
+10,89,"Average Steam & Gas Production",267,420,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,90,"Total Production of Steam & Gas",409,454,43,43,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,91,89,90,1,0,0,0,0,192,0,-1--1--1,,1|(351,413)|
+1,92,81,90,1,0,0,0,0,192,0,-1--1--1,,1|(345,492)|
+10,93,Amount of Gas Engine Power Plant,809,489,59,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,94,48,996,489,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,95,97,94,100,0,0,22,0,192,0,-1--1--1,,1|(964,489)|
+1,96,97,93,4,0,0,22,0,192,0,-1--1--1,,1|(899,489)|
+11,97,0,936,489,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,98,Gas Engine PP Rate,936,527,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,99,Total Production of Gas Engine,665,451,43,43,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,100,Average Gas Engine Poduction,799,415,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,101,93,99,1,0,0,0,0,192,0,-1--1--1,,1|(735,485)|
+1,102,100,99,1,0,0,0,0,192,0,-1--1--1,,1|(720,414)|
+10,103,Gas Engine Power Plant Development Rate,1053,439,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,104,103,97,1,0,0,0,0,192,0,-1--1--1,,1|(956,457)|
+1,105,90,1,1,0,0,0,0,192,0,-1--1--1,,1|(486,360)|
+1,106,99,1,1,0,0,0,0,192,0,-1--1--1,,1|(566,344)|
+10,107,Time,915,435,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,108,107,103,1,0,0,0,0,192,0,-1--1--1,,1|(965,425)|
+1,109,80,41,1,0,0,0,0,192,0,-1--1--1,,1|(167,165)|
+1,110,107,100,1,0,0,0,0,192,0,-1--1--1,,1|(889,414)|
+1,111,80,46,1,0,0,0,0,192,0,-1--1--1,,1|(209,146)|
+1,112,107,93,1,0,0,0,1,192,1,0-0-255,|||0-0-0,1|(904,461)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Electricity Residual
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Electricity Fulfillment,467,353,49,49,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Cost,337,36,48,48,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Oversupply Management,530,143,45,45,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Financial Profit,507,52,41,41,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,5,Household Income,807,120,46,46,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,6,Total Household Electricity Demand,866,361,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,7,Total of Electricity Production in Java,347,287,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,8,"Total of Public & Commercial Electicity Demand",969,245,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,9,Average Power Plant Production Cost,183,66,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,9,66,1,0,0,0,0,192,0,-1--1--1,,1|(244,140)|
+1,11,7,1,1,0,0,0,0,192,0,-1--1--1,,1|(375,332)|
+1,12,1,3,1,0,0,0,0,192,0,-1--1--1,,1|(536,272)|
+1,13,3,2,1,0,0,0,0,192,0,-1--1--1,,1|(428,110)|
+10,14,Total of Java Electricity Demand,652,326,51,51,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,8,14,1,0,0,0,0,192,0,-1--1--1,,1|(854,300)|
+1,16,6,14,1,0,0,0,0,192,0,-1--1--1,,1|(797,363)|
+1,17,14,1,1,0,0,0,0,192,0,-1--1--1,,1|(574,355)|
+10,18,Electricty Tariff Low VA,758,-141,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,19,Electricty Tariff Med VA,974,-79,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,20,Electricty Tariff High VA,1094,85,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,21,Gross Income,653,106,45,45,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,22,"Public & Commercial Income",805,220,46,46,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,23,Electricity Price per Watt,662,247,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,24,23,22,1,0,0,0,0,192,0,-1--1--1,,1|(734,247)|
+1,25,8,22,1,0,0,0,0,192,0,-1--1--1,,1|(894,243)|
+1,26,22,21,1,0,0,0,0,192,0,-1--1--1,,1|(705,175)|
+1,27,5,21,1,0,0,0,0,192,0,-1--1--1,,1|(728,88)|
+1,28,2,4,1,0,0,0,0,192,0,-1--1--1,,1|(421,29)|
+1,29,21,4,1,0,0,0,0,192,0,-1--1--1,,1|(591,71)|
+10,30,High Voltage Electricity Usage,894,-148,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,31,Medium Voltage Electricity Usage,1086,-10,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,32,Low Voltage Electricity Usage,1108,195,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,33,High VA Electricity Income,803,-20,48,48,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,34,Medium VA Electricity Income,919,30,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,35,Low VA Electricity Income,948,144,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,36,33,5,1,0,0,0,0,192,0,-1--1--1,,1|(800,45)|
+1,37,34,5,1,0,0,0,0,192,0,-1--1--1,,1|(861,72)|
+1,38,35,5,1,0,0,0,0,192,0,-1--1--1,,1|(889,141)|
+1,39,32,35,1,0,0,0,0,192,0,-1--1--1,,1|(1044,153)|
+1,40,20,35,1,0,0,0,0,192,0,-1--1--1,,1|(1036,124)|
+1,41,31,34,1,0,0,0,0,192,0,-1--1--1,,1|(990,-16)|
+1,42,19,34,1,0,0,0,0,192,0,-1--1--1,,1|(971,-33)|
+1,43,30,33,1,0,0,0,0,192,0,-1--1--1,,1|(832,-112)|
+1,44,18,33,1,0,0,0,0,192,0,-1--1--1,,1|(792,-103)|
+10,45,IPP Power Plant,421,470,59,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,46,IPP Electricity Production,309,381,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,47,Outsource Cost,224,259,48,48,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,48,46,47,1,0,0,0,0,192,0,-1--1--1,,1|(243,346)|
+1,49,47,2,1,0,0,0,0,192,0,-1--1--1,,1|(228,157)|
+10,50,Power Plant Rent Price,108,183,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,51,50,47,1,0,0,0,0,192,0,-1--1--1,,1|(145,233)|
+1,52,46,1,1,0,0,0,0,192,0,-1--1--1,,1|(405,396)|
+10,53,IPP Production Capacity,211,462,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,54,53,46,1,0,0,0,0,192,0,-1--1--1,,1|(286,453)|
+1,55,45,46,1,0,0,0,0,192,0,-1--1--1,,1|(337,457)|
+12,56,48,611,463,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,57,59,56,100,0,0,22,0,192,0,-1--1--1,,1|(578,463)|
+1,58,59,45,4,0,0,22,0,192,0,-1--1--1,,1|(511,463)|
+11,59,0,549,463,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,60,IPP Increase,549,501,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,61,IPP Rent Increase Rate,648,409,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,62,61,59,1,0,0,0,0,192,0,-1--1--1,,1|(567,425)|
+10,63,Time,595,523,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,64,63,61,1,0,0,0,0,192,0,-1--1--1,,1|(629,498)|
+1,65,23,3,1,0,0,0,0,192,0,-1--1--1,,1|(584,213)|
+10,66,Power Plant Cost,324,166,50,50,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,67,7,66,1,0,0,0,0,192,0,-1--1--1,,1|(329,243)|
+1,68,66,2,1,0,0,0,0,192,0,-1--1--1,,1|(320,95)|
+10,69,Lack of Energy,440,208,47,47,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,70,1,69,1,0,0,0,0,192,0,-1--1--1,,1|(470,270)|
+10,71,Substation Power Plant Maintanace Cost,557,-28,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,72,71,2,1,0,0,0,0,192,0,-1--1--1,,1|(439,-14)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Operational Maintanance
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Amount of Diesel Power Plant,62,336,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,2,Amount of Gas Engine Power Plant,89,183,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,3,Amount of Geothermal Power Plant,212,47,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,4,Amount of Natural Gases Power Plant,347,-62,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,5,Amount of Solar Power Plant,618,-36,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,6,"Amount of Steam & Gas Power Plant",936,285,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,7,Amount of Steam Power Plant,857,145,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,8,Amount of Water Power Plant,737,33,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+10,9,Diesel PP Operational Maintanance,197,287,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,10,Gas Engine PP Operational Maintanance,240,151,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,11,Geothermal PP Operational Maintanance,353,27,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,Natural Gases PP Operational Maintanance,505,-38,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,13,Solar PP Operational Maintanance,795,-64,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,14,"Steam & Gas PP Operational Maintanance",1062,341,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,Steam PP Operational Maintanance,1006,164,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,Water PP Operational Maintanance,866,20,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,17,Diesel PP Operational Cost,317,395,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,18,Gas Engine PP Operational Cost,317,272,59,59,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,19,Geothermal PP Operational Cost,373,155,59,59,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,20,Natural Gases PP Operational Cost,491,108,59,59,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,21,Solar PP Operational Cost,625,105,60,60,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,22,"Steam & Gas PP Operational Cost",823,392,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,23,Steam PP Operational Cost,805,270,61,61,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,24,Water PP Operational Cost,736,159,57,57,2,3,0,4,-1,0,0,0,-1--1--1,192-255-255,|||0-0-0,0,0,0,0,0,0
+10,25,Substation Power Plant Maintanace Cost,555,317,60,60,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,26,17,25,1,0,0,0,0,192,0,-1--1--1,,1|(487,362)|
+1,27,24,25,1,0,0,0,0,192,0,-1--1--1,,1|(647,224)|
+1,28,23,25,1,0,0,0,0,192,0,-1--1--1,,1|(678,278)|
+1,29,22,25,1,0,0,0,0,192,0,-1--1--1,,1|(639,363)|
+1,30,21,25,1,0,0,0,0,192,0,-1--1--1,,1|(579,213)|
+1,31,20,25,1,0,0,0,0,192,0,-1--1--1,,1|(535,210)|
+1,32,19,25,1,0,0,0,0,192,0,-1--1--1,,1|(475,225)|
+1,33,18,25,1,0,0,0,0,192,0,-1--1--1,,1|(450,282)|
+1,34,16,24,1,0,0,0,0,192,0,-1--1--1,,1|(786,66)|
+1,35,8,24,1,0,0,0,0,192,0,-1--1--1,,1|(747,72)|
+1,36,15,23,1,0,0,0,0,192,0,-1--1--1,,1|(899,200)|
+1,37,7,23,1,0,0,0,0,192,0,-1--1--1,,1|(859,188)|
+1,38,6,22,1,0,0,0,0,192,0,-1--1--1,,1|(895,343)|
+1,39,14,22,1,0,0,0,0,192,0,-1--1--1,,1|(931,356)|
+1,40,5,21,1,0,0,0,0,192,0,-1--1--1,,1|(638,13)|
+1,41,13,21,1,0,0,0,0,192,0,-1--1--1,,1|(699,-5)|
+1,42,12,20,1,0,0,0,0,192,0,-1--1--1,,1|(485,14)|
+1,43,4,20,1,0,0,0,0,192,0,-1--1--1,,1|(421,-6)|
+1,44,11,19,1,0,0,0,0,192,0,-1--1--1,,1|(348,66)|
+1,45,3,19,1,0,0,0,0,192,0,-1--1--1,,1|(295,62)|
+1,46,10,18,1,0,0,0,0,192,0,-1--1--1,,1|(253,189)|
+1,47,2,18,1,0,0,0,0,192,0,-1--1--1,,1|(181,197)|
+1,48,9,17,1,0,0,0,0,192,0,-1--1--1,,1|(226,331)|
+1,49,1,17,1,0,0,0,0,192,0,-1--1--1,,1|(170,351)|
+///---\\\
+:L<%^E!@
+4:Time
+5:Electricity Fulfillment
+9:Most Likely
+19:100,3
+24:2010
+25:2045
+26:2045
+22:24 Hour,1 Day
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:0
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

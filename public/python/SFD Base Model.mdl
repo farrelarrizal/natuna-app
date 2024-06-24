@@ -1,0 +1,493 @@
+{UTF-8}
+Manipulation Signal Used Severity=
+	500
+	~	
+	~		|
+
+Cyber Attack Level of Threats=
+	(Espionage by Maritime Level of Threats+Firewall Level of Threats+IT System Level of Threats\
+		+Manipulation Signal Used Level of Threats+Misuses of AIS and Positioning Data Level of Threats\
+		)/Number of Cyber Attack
+	~	
+	~		|
+
+Disinfromation Campaign Level of Threats=
+	Disinfromation Campaign Probability+Disinfromation Campaign Severity
+	~	
+	~		|
+
+Disinfromation Campaign Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Disinfromation Campaign Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+National Sea Threat Risk=
+	(Hybrid Risk Level+Military Risk Level+Non Military Risk Level)/3
+	~	
+	~		|
+
+Sabotage Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Drugs Shipping Level of Threats=
+	Drug Shipping Probability+Drug Shipping Severity
+	~	
+	~		|
+
+Embargo Level of Threats=
+	Embargo Probability+Embargo Severity
+	~	
+	~		|
+
+Embargo Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Embargo Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Espionage by Maritime Level of Threats=
+	Espionage by Maritime Probability+Espionage by Maritime Severity
+	~	
+	~		|
+
+Espionage by Maritime Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Espionage by Maritime Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Firewall Level of Threats=
+	Firewall Probability+Firewall Severity
+	~	
+	~		|
+
+Firewall Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Firewall Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Hijacking Level of Threats=
+	Hijacking Probability+Hijacking Severity
+	~	
+	~		|
+
+Proxy Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Proxy Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Hybrid Risk Level=
+	(Disinfromation Campaign Level of Threats+Proxy Level of Threats+Social Media Level of Threats\
+		)/(Risk Level Maximum Score*Number of Hybrid Threats)
+	~	
+	~		|
+
+Illegal Fishing Level of Threats=
+	Illegal Fishing Probability+Illegal Fishing Severity
+	~	
+	~		|
+
+Military Invasion Level of Threats=
+	Military Invasion Probability+Military Invasion Severity
+	~	
+	~		|
+
+Sabotage Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+IT System Level of Threats=
+	IT System Probability+IT System Severity
+	~	
+	~		|
+
+IT System Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+IT System Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Manipulation Signal Used Level of Threats=
+	Manipulation Signal Used Probability+Manipulation Signal Used Severity
+	~	
+	~		|
+
+Manipulation Signal Used Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Piracy Level of Threats=
+	Piracy Probability+Piracy Severity
+	~	
+	~		|
+
+Military Invasion Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Military Invasion Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Military Risk Level=
+	(Cyber Attack Level of Threats+Embargo Level of Threats+Military Invasion Level of Threats\
+		+Sabotage Level of Threats+Terorism Level of Threats)/(Risk Level Maximum Score*Number of Military Threats\
+		)
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Level of Threats=
+	Misuses of AIS and Positioning Data Probability+Misuses of AIS and Positioning Data Severity
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Sabotage Level of Threats=
+	Sabotage Probability+Sabotage Severity
+	~	
+	~		|
+
+Terorism Level of Threats=
+	Terorism Probability+Terorism Severity
+	~	
+	~		|
+
+Terorism Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Natural Disasters Level of Threats=
+	Natural Disaster Probability+Natural Disaster Severity
+	~	
+	~		|
+
+Non Military Risk Level=
+	(Drugs Shipping Level of Threats+Hijacking Level of Threats+Illegal Fishing Level of Threats\
+		+Natural Disasters Level of Threats+Piracy Level of Threats+Smuggling Level of Threats\
+		)/(Risk Level Maximum Score*Number of Non Military Threats)
+	~	
+	~		|
+
+Number of Cyber Attack=
+	5
+	~	
+	~		|
+
+Number of Hybrid Threats=
+	3
+	~	
+	~		|
+
+Number of Military Threats=
+	5
+	~	
+	~		|
+
+Number of Non Military Threats=
+	6
+	~	
+	~		|
+
+Terorism Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Social Media Level of Threats=
+	Social Media Probability+Social Media Severity
+	~	
+	~		|
+
+Risk Level Maximum Score=
+	9
+	~	
+	~		|
+
+Proxy Level of Threats=
+	Proxy Probability+Proxy Severity
+	~	
+	~		|
+
+Smuggling Level of Threats=
+	Smuggling Probability+Smuggling Severity
+	~	
+	~		|
+
+Social Media Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Social Media Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Drug Shipping Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Drug Shipping Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Hijacking Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Hijacking Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Illegal Fishing Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Illegal Fishing Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Natural Disaster Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Natural Disaster Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Piracy Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Piracy Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+Smuggling Probability  = A FUNCTION OF( )
+	~	
+	~		|
+
+Smuggling Severity  = A FUNCTION OF( )
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 60
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*Sea Threats
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Hijacking Level of Threats,371,897,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Illegal Fishing Level of Threats,361,1024,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Natural Disasters Level of Threats,429,1142,58,58,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Drugs Shipping Level of Threats,559,1207,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,5,Smuggling Level of Threats,709,1217,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,6,Piracy Level of Threats,832,1151,53,53,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Hijacking Probability,222,832,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,8,Hijacking Severity,214,905,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,7,1,1,0,0,0,0,192,0,-1--1--1,,1|(304,840)|
+1,10,8,1,1,0,0,0,0,192,0,-1--1--1,,1|(275,924)|
+10,11,Illegal Fishing Probability,200,992,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,Illegal Fishing Severity,223,1078,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,13,Natural Disaster Probability,284,1183,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,14,Natural Disaster Severity,332,1247,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,Drug Shipping Probability,474,1307,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,Drug Shipping Severity,587,1332,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,17,Smuggling Probability,754,1335,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,18,Smuggling Severity,834,1294,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,19,Piracy Probability,966,1242,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,20,Piracy Severity,986,1170,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,21,11,2,1,0,0,0,0,192,0,-1--1--1,,1|(275,985)|
+1,22,12,2,1,0,0,0,0,192,0,-1--1--1,,1|(302,1077)|
+1,23,13,3,1,0,0,0,0,192,0,-1--1--1,,1|(341,1148)|
+1,24,14,3,1,0,0,0,0,192,0,-1--1--1,,1|(387,1238)|
+1,25,15,4,1,0,0,0,0,192,0,-1--1--1,,1|(489,1264)|
+1,26,16,4,1,0,0,0,0,192,0,-1--1--1,,1|(590,1292)|
+1,27,17,5,1,0,0,0,0,192,0,-1--1--1,,1|(719,1297)|
+1,28,18,5,1,0,0,0,0,192,0,-1--1--1,,1|(804,1250)|
+1,29,19,6,1,0,0,0,0,192,0,-1--1--1,,1|(882,1222)|
+1,30,20,6,1,0,0,0,0,192,0,-1--1--1,,1|(939,1145)|
+10,31,Non Military Risk Level,601,1025,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,32,1,31,1,0,0,0,0,192,0,-1--1--1,,1|(490,938)|
+1,33,2,31,1,0,0,0,0,192,0,-1--1--1,,1|(468,1004)|
+1,34,3,31,1,0,0,0,0,192,0,-1--1--1,,1|(501,1073)|
+1,35,4,31,1,0,0,0,0,192,0,-1--1--1,,1|(592,1116)|
+1,36,5,31,1,0,0,0,0,192,0,-1--1--1,,1|(679,1111)|
+1,37,6,31,1,0,0,0,0,192,0,-1--1--1,,1|(741,1061)|
+10,38,Risk Level Maximum Score,855,998,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,39,38,31,1,0,0,0,0,192,0,-1--1--1,,1|(730,991)|
+10,40,Number of Non Military Threats,527,876,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,41,40,31,1,0,0,0,0,192,0,-1--1--1,,1|(580,931)|
+10,42,Military Risk Level,670,708,52,52,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,43,Military Invasion Level of Threats,434,710,53,53,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,44,Terorism Level of Threats,481,588,52,52,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,45,Sabotage Level of Threats,780,530,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,46,Embargo Level of Threats,862,621,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,47,Number of Military Threats,515,798,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,48,47,42,1,0,0,0,0,192,0,-1--1--1,,1|(611,774)|
+1,49,43,42,1,0,0,0,0,192,0,-1--1--1,,1|(553,724)|
+1,50,44,42,1,0,0,0,0,192,0,-1--1--1,,1|(567,671)|
+1,51,45,42,1,0,0,0,0,192,0,-1--1--1,,1|(738,633)|
+1,52,46,42,1,0,0,0,0,192,0,-1--1--1,,1|(776,683)|
+10,53,Military Invasion Probability,284,675,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,54,Military Invasion Severity,287,744,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,55,53,43,1,0,0,0,0,192,0,-1--1--1,,1|(353,666)|
+1,56,54,43,1,0,0,0,0,192,0,-1--1--1,,1|(357,749)|
+10,57,Terorism Probability,326,533,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,58,Terorism Severity,330,598,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,59,57,44,1,0,0,0,0,192,0,-1--1--1,,1|(409,539)|
+1,60,58,44,1,0,0,0,0,192,0,-1--1--1,,1|(400,607)|
+10,61,Embargo Probability,1007,548,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,62,Embargo Severity,1023,612,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,63,61,46,1,0,0,0,0,192,0,-1--1--1,,1|(931,567)|
+1,64,62,46,1,0,0,0,0,192,0,-1--1--1,,1|(955,642)|
+10,65,Sabotage Probability,878,421,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,66,Sabotage Severity,929,491,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,67,65,45,1,0,0,0,0,192,0,-1--1--1,,1|(842,447)|
+1,68,66,45,1,0,0,0,0,192,0,-1--1--1,,1|(875,518)|
+10,69,Cyber Attack Level of Threats,595,455,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,70,69,42,1,0,0,0,0,192,0,-1--1--1,,1|(665,570)|
+10,71,Number of Cyber Attack,601,607,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,72,71,69,1,0,0,0,0,192,0,-1--1--1,,1|(584,539)|
+10,73,Misuses of AIS and Positioning Data Level of Threats,445,467,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,74,Misuses of AIS and Positioning Data Probability,248,475,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,75,Misuses of AIS and Positioning Data Severity,270,409,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,76,Manipulation Signal Used Level of Threats,452,346,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,77,Manipulation Signal Used Probability,273,319,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,78,Manipulation Signal Used Severity,321,241,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,79,IT System Level of Threats,564,291,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,80,IT System Probability,466,169,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,81,IT System Severity,586,158,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,82,Espionage by Maritime Level of Threats,686,313,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,83,Espionage by Maritime Probability,737,180,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,84,Espionage by Maritime Severity,828,236,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,85,Firewall Level of Threats,736,417,51,51,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,86,Firewall Probability,857,309,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,87,Firewall Severity,873,356,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,88,75,73,1,0,0,0,0,192,0,-1--1--1,,1|(378,417)|
+1,89,74,73,1,0,0,0,0,192,0,-1--1--1,,1|(355,487)|
+1,90,78,76,1,0,0,0,0,192,0,-1--1--1,,1|(408,276)|
+1,91,77,76,1,0,0,0,0,192,0,-1--1--1,,1|(356,348)|
+1,92,80,79,1,0,0,0,0,192,0,-1--1--1,,1|(498,231)|
+1,93,81,79,1,0,0,0,0,192,0,-1--1--1,,1|(594,204)|
+1,94,83,82,1,0,0,0,0,192,0,-1--1--1,,1|(702,225)|
+1,95,84,82,1,0,0,0,0,192,0,-1--1--1,,1|(761,282)|
+1,96,86,85,1,0,0,0,0,192,0,-1--1--1,,1|(789,338)|
+1,97,87,85,1,0,0,0,0,192,0,-1--1--1,,1|(809,405)|
+1,98,73,69,1,0,0,0,0,192,0,-1--1--1,,1|(518,481)|
+1,99,85,69,1,0,0,0,0,192,0,-1--1--1,,1|(682,451)|
+1,100,82,69,1,0,0,0,0,192,0,-1--1--1,,1|(653,379)|
+1,101,79,69,1,0,0,0,0,192,0,-1--1--1,,1|(576,367)|
+1,102,76,69,1,0,0,0,0,192,0,-1--1--1,,1|(519,405)|
+10,103,Hybrid Risk Level,1047,907,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,104,38,103,1,0,0,0,0,192,0,-1--1--1,,1|(975,980)|
+1,105,38,42,1,0,0,0,0,192,0,-1--1--1,,1|(726,884)|
+10,106,Social Media Level of Threats,1168,755,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,107,Proxy Level of Threats,1255,906,60,60,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,108,Disinfromation Campaign Level of Threats,1144,1067,60,60,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,109,Social Media Probability,1245,630,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,110,Proxy Probability,1407,853,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,111,Disinfromation Campaign Probability,1297,1114,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,112,Social Media Severity,1297,692,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,113,Proxy Severity,1405,946,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,114,Disinfromation Campaign Severity,1224,1197,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,115,109,106,1,0,0,0,0,192,0,-1--1--1,,1|(1182,673)|
+1,116,112,106,1,0,0,0,0,192,0,-1--1--1,,1|(1246,742)|
+1,117,110,107,1,0,0,0,0,192,0,-1--1--1,,1|(1329,853)|
+1,118,113,107,1,0,0,0,0,192,0,-1--1--1,,1|(1342,946)|
+1,119,111,108,1,0,0,0,0,192,0,-1--1--1,,1|(1229,1074)|
+1,120,114,108,1,0,0,0,0,192,0,-1--1--1,,1|(1165,1144)|
+1,121,108,103,1,0,0,0,0,192,0,-1--1--1,,1|(1068,986)|
+1,122,107,103,1,0,0,0,0,192,0,-1--1--1,,1|(1140,919)|
+1,123,106,103,1,0,0,0,0,192,0,-1--1--1,,1|(1082,824)|
+10,124,National Sea Threat Risk,816,848,55,55,2,3,0,4,-1,0,0,0,-1--1--1,192-255-192,|||0-0-0,0,0,0,0,0,0
+1,125,31,124,1,0,0,0,0,192,0,-1--1--1,,1|(690,914)|
+1,126,42,124,1,0,0,0,0,192,0,-1--1--1,,1|(762,754)|
+1,127,103,124,1,0,0,0,0,192,0,-1--1--1,,1|(940,899)|
+10,128,Number of Hybrid Threats,985,757,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,129,128,103,1,0,0,0,0,192,0,-1--1--1,,1|(999,819)|
+///---\\\
+:L<%^E!@
+5:Manipulation Signal Used Severity
+19:100,0
+24:0
+25:0
+26:0
+22:24 Hour,1 Day
+22:Year,Tahun
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1
