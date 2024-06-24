@@ -32,7 +32,7 @@
 <!-- Apex Chart -->
 <script src="<?= asset('assets/js/plugins/apexcharts.min.js') ?>"></script>
 <!-- [Page Specific JS] end -->
-@include('partials/customizer')
+{{-- @include('partials/customizer') --}}
 @yield('script')
 
 </body>

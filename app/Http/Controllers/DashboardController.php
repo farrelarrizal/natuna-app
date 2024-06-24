@@ -13,9 +13,10 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
         ];
 
-        return view('dashboard', $data);
+        return view('dashboard.index', $data);
     }
-     public function executiveSummary(){
+    public function executiveSummary()
+    {
         $data = [
             'title' => 'Dashboard | Executive Summary',
             'head_title' => 'Executive Summary',
@@ -23,7 +24,8 @@ class DashboardController extends Controller
         ];
         return view('dashboard.executive-summary', $data);
     }
-     public function recommendation(){
+    public function recommendation()
+    {
         $data = [
             'title' => 'Dashboard | Recommendation',
             'head_title' => 'Recommendation',
