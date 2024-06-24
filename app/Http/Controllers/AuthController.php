@@ -18,10 +18,10 @@ class AuthController extends Controller
 
     public function loginPost(Request $request)
     {
-        $email = $request->email;
+        $username = $request->username;
         $password = $request->password;
 
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        if (Auth::attempt(['username' => $username, 'password' => $password])) {
             return redirect()->intended('dashboard');
         }
 
