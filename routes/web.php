@@ -36,6 +36,21 @@ Route::middleware('auth')->group(function () {
             Route::get('non-military',  [HankamController::class, 'threatsNonMilitary'])->name('non-military');
             Route::get('hybrid-military',  [HankamController::class, 'threatsHybridMilitary'])->name('hybrid-military');
         });
+        Route::prefix('simulation')->name('simulation.')->group(function () {
+            Route::prefix('base-model')->name('base-model.')->group(function (){
+                Route::get('/', [HankamController::class, 'simulationBaseModel'])->name('index');
+                Route::get('edit-parameter', [HankamController::class, 'editParameterBaseModel'])->name('edit-parameter');
+            });
+            Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
+                Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
+                Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
+            });
+            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function (){
+                Route::get('/',  [HankamController::class, 'simulationOutcomeScenario'])->name('index');
+                Route::get('detail',  [HankamController::class, 'detailOutcomeScenario'])->name('detail');
+            });
+           
+        });
     });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {

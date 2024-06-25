@@ -17,23 +17,26 @@
 
 @section('content')
 @include('partials/breadcrumb')
-    <div class="row">
-        <ul class="list-inline mb-3 d-flex align-items-center">
-            <li class="list-inline-item">
-                <div class="avtar avtar-s bg-light-warning">
-                    <i class="ti ti-file-text f-20"></i>
-                </div>
-            </li>
-            <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
-            <li class="list-inline-item">
-                <div class="input-group input-group-sm date">
-                    <input type="text" class="form-control" placeholder="Select date" id="pc-datepicker-2">
-                    <span class="input-group-text">
-                        <i class="feather icon-calendar"></i>
-                    </span>
-                </div>
-            </li>
-        </ul>
+    <div class="row mb-2">
+        <div class="col-sm-3 mb-2">
+            <ul class="list-inline d-flex align-items-center">
+                <li class="list-inline-item">
+                    <div class="avtar avtar-s bg-light-warning">
+                        <i class="ti ti-file-text f-20"></i>
+                    </div>
+                </li>
+                <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <div class="input-group date">
+                <input type="text" class="form-control" placeholder="Select date" id="pc-datepicker-2">
+                <span class="input-group-text">
+                    <i class="feather icon-calendar"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-5"></div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -49,6 +52,36 @@
                     </div>
                     <div class="my-3">
                         <div id="map"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Marine Traffic Maps</h5>
+                    </div>
+                    <div class="pc-component">
+                        <div class="alert alert-primary my-3" role="alert">
+                            <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
+                            Informatin Notes</div>
+                    </div>
+                    <div class="my-3">
+                        <div id="mtmap" style="width: 100%; height: 450px; border: 0;">
+                            <script type="text/javascript">
+                                width='100%'; // the width of the embedded map in pixels or percentage
+                                height='450'; // the height of the embedded map in pixels or percentage
+                                border='0'; // the width of the border around the map (zero means no border)
+                                shownames='true'; // to display ship names on the map (true or false)
+                                latitude='4.110729239932477'; // the latitude of the center of the map, in decimal degrees
+                                longitude='108.16539816312209'; // the longitude of the center of the map, in decimal degrees
+                                zoom='7'; // the zoom level of the map (values between 2 and 17)
+                                maptype='1'; // use 0 for Normal Map, 1 for Satellite, 2 for OpenStreetMap
+                                showmenu = false;
+                            </script>
+                            <script type="text/javascript" src="//www.marinetraffic.com/js/embed.js"></script>
+                        </div>
                     </div>
                 </div>
             </div>

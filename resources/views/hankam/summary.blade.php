@@ -12,42 +12,49 @@
 
 @section('content')
 @include('partials/breadcrumb')
-    <div class="row">
+    <div class="row mb-3">
+      <div class="col-sm-4 mb-2">
         <ul class="list-inline mb-3 d-flex align-items-center">
-            <li class="list-inline-item">
+          <li class="list-inline-item">
                 <div class="avtar avtar-s bg-light-warning">
                     <i class="ti ti-file-text f-20"></i>
                 </div>
             </li>
             <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
-            <li class="list-inline-item mr-4">
-                <select class="form-select form-select-sm w-auto">
-                    <option selected="">Year</option>
-                    <option>January</option>
-                    <option>February</option>
-                    <option>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>August</option>
-                    <option>September</option>
-                    <option>October</option>
-                    <option>November</option>
-                    <option>Desember</option>
-                </select>
-            </li>
-            <li class="list-inline-item">
-                <select class="form-select form-select-sm w-auto">
-                    <option selected="">Region</option>
-                    <option>Region 1</option>
-                    <option>Region 2</option>
-                    <option>Region 3</option>
-                    <option>Region 4</option>
-                    <option>Region 5</option>
-                </select>
-            </li>
         </ul>
+      </div>
+      <div class="col-sm-4 mb-2">
+        <form action="">
+          <select class="form-select">
+            <option selected="">Year</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>Desember</option>
+        </select>
+        </form>
+      </div>
+      <div class="col-sm-4 mb-2">
+        <form action="">
+            <select class="form-select">
+            <option selected="">Region</option>
+            <option>Region 1</option>
+            <option>Region 2</option>
+            <option>Region 3</option>
+            <option>Region 4</option>
+            <option>Region 5</option>
+        </select>
+        </form>
+        
+      </div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -133,7 +140,9 @@
                 <div class="pc-component">
                     <div class="alert alert-primary my-3" role="alert">
                         <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
-                        Information Notes </div>
+                        Information Notes 
+                        
+                      </div>
                 </div>
                 
                 <div class="my-3">
