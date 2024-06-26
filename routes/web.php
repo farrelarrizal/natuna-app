@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PetaController;
 use App\Http\Controllers\HankamController;
 use App\Http\Controllers\MarineResourceController;
+use App\Http\Controllers\ToolsController;
+
+
 
 Route::get('/', function () {
     $data = [
@@ -58,6 +61,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
+    });
+
+    Route::prefix('tools')->name('tools.')->group(function () {
+        // Route for the index method
+        Route::get('key-variable', [ToolsController::class, 'index'])->name('key-variable.index');
+    
+        // Route for the update method
+        Route::get('key-variable/{variable}/edit', [ToolsController::class, 'edit'])->name('key-variable.edit');
+        Route::put('key-variable/{variable}', [ToolsController::class, 'update'])->name('key-variable.update');
+
     });
 
     Route::prefix('marine-resource')->name('marine-resource.')->group(function () {
