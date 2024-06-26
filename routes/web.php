@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
             Route::prefix('base-model')->name('base-model.')->group(function (){
                 Route::get('/', [HankamController::class, 'simulationBaseModel'])->name('index');
                 Route::get('edit-parameter', [HankamController::class, 'editParameterBaseModel'])->name('edit-parameter');
+                Route::put('update-variable', [HankamController::class, 'updateVariableBaseModel'])->name('update-variable');
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');

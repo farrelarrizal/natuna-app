@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       series: [
         {
-          name: 'Parameter 1',
+          name: 'Variabel 1',
           data: [20, 70, 40, 70, 70, 90, 50, 55, 45, 60, 50, 65]
         },
         {
-          name: 'Parameter 2',
+          name: 'Variabel 2',
           data: [10, 40, 20, 40, 50, 70, 80, 30, 15, 32, 90, 30]
         }
       ],

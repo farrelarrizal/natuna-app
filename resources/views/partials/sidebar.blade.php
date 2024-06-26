@@ -4,7 +4,7 @@
     <div class="m-header">
       <a href="#" class="b-brand text-primary">
         <!-- ========   Change your logo from here   ============ -->
-        <img src="<?= asset('../assets/images/logo-sttal.svg') ?>" />
+        <img src="<?= asset('../assets/images/logo-dasina.png') ?>" width="75" height="75"/>
         <span class="badge bg-light-success rounded-pill ms-2 theme-version"></span>
       </a>
     </div>

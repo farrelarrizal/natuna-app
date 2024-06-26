@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Variable;
 
 class HankamController extends Controller
 {
@@ -56,22 +57,40 @@ class HankamController extends Controller
         return view('hankam.threats.hybrid-military', $data);
     }
     public function simulationBaseModel(){
+        $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
+            'variable' => $dataVariable
         ];
         return view('hankam.simulation.base-model.index', $data);
     }
     public function editParameterBaseModel(){
+        $dataVariable = Variable::select('id','name', 'value', 'level', 'key_variable')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
+            'variable' => $dataVariable
         ];
         return view('hankam.simulation.base-model.edit-parameter', $data);
     }
-
+    public function updateVariableBaseModel(Request $request)
+    {
+        $validated = $request->validate([
+            'values' => 'required|array',
+            'values.*' => 'numeric',
+        ]);
+        foreach ($validated['values'] as $id => $value) {
+            $variable = Variable::find($id);
+            if ($variable) {
+                $variable->value = $value;
+                $variable->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Variables updated successfully.');
+    }
     public function simulationScenarioModel(){
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',

@@ -39,7 +39,6 @@
                     <div class="alert alert-primary my-3" role="alert">
                         <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
                         Information Notes 
-                        
                       </div>
                 </div>
                 
@@ -52,26 +51,33 @@
         <div class="col-md-12">
             <div class="card">
               <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>Parameters Detail</h5>
+                <h5>Variable Detail</h5>
               </div>
               <div class="card-body p-0 income-scroll">
                 <div class="mt-3 mb-3">
                   <div class="row">
-                    <div class="col-md-6 px-4">
-                      <div class="flex-grow-1 mx-2">
-                        <p class="text-muted mb-1">Naval defense posture (percentage)</p>
-                        <p class="mb-0">percentage</p>
+                    @foreach ($variable as $item)
+                      <div class="col-md-6 px-4">
+                        <div class="flex-grow-1 mx-2">
+                          @if ($item->key_variable == 1)
+                          <h5><span class="badge bg-light-primary">{{$item->name}}</span></h5>
+                          @else
+                            <p class="text-muted mb-1">{{$item->name}}</p>
+                          @endif
+                          
+                          <p class="mb-0">{{$item->value}} ({{$item->level}})</p>
+                        </div>
+                        <hr class="border border-primary-subtle" />
                       </div>
-                    </div>
-                    <div class="col-md-6 px-4">
+                    @endforeach
+                    {{-- <div class="col-md-6 px-4">
                         <div class="flex-grow-1 mx-2">
                           <p class="text-muted mb-1">Naval Strength</p>
                           <p class="mb-0">A FUNCTION OF( Integrated Force)</p>
                         </div>
-                      </div>
+                    </div> --}}
                   </div>
-                  <hr class="border border-primary-subtle" />
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="col-md-6 px-4">
                         <div class="flex-grow-1 mx-2">
                           <p class="text-muted mb-1">number of personnel</p>
@@ -109,7 +115,7 @@
                         </div>
                       </div>
                   </div>
-                  <hr class="border border-primary-subtle" />
+                  <hr class="border border-primary-subtle" /> --}}
                 </div>
               </div>
             </div>
