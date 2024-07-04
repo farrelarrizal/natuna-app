@@ -36,6 +36,7 @@
             <div class="d-flex flex-wrap gap-2">
               <a href="{{route('hankam.simulation.base-model.edit-parameter')}}" class="btn btn-warning "><i class="ti ti-pencil"></i><span class="text-truncate w-100">&nbsp;Edit Parameter</span></a>
               <button type="button" class="btn btn-secondary"><i class="ti ti-upload"></i><span class="text-truncate w-100">&nbsp;Export Model</span></button>
+              <a href="{{route('hankam.simulation.base-model.upload-model')}}" class="btn btn-info "><i class="ti ti-file-upload"></i><span class="text-truncate w-100">&nbsp;Import Model</span></a>
             </div>
             
         </div>

@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/', [HankamController::class, 'simulationBaseModel'])->name('index');
                 Route::get('edit-parameter', [HankamController::class, 'editParameterBaseModel'])->name('edit-parameter');
                 Route::put('update-variable', [HankamController::class, 'updateVariableBaseModel'])->name('update-variable');
+                Route::get('upload-model', [HankamController::class, 'uploadModelBaseModel'])->name('upload-model');
+                Route::post('uploadModel', [HankamController::class, 'uploadModel'])->name('uploadModel');
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
