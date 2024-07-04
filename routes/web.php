@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PetaController;
 use App\Http\Controllers\HankamController;
 use App\Http\Controllers\MarineResourceController;
+use App\Http\Controllers\ApiDataController;
 use App\Http\Controllers\ToolsController;
 
 
@@ -77,5 +78,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [MarineResourceController::class, 'index']);
     });
 
+    //API Data 
+    Route::prefix('api')->name('api.')->group(function(){
+        //data
+        Route::get('/get-scenarios', [ApiDataController::class, 'getScenarios'])->name('get.scenarios');
+        //graph
+        Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
+    });
 });
 

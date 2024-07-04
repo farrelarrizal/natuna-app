@@ -44,7 +44,11 @@
                   <div class="form-group row">
                     @foreach ($variable as $item)
                          <div class="col-lg-6">
-                          <label class="form-label">{{$item->name}}</label>
+                          @if ($item->key_variable == 1)
+                            <label class="form-label"><span class="badge bg-light-primary" style="font-size: 14px;">{{$item->name}} ({{$item->level}})</span></label>
+                          @else
+                            <label class="form-label">{{$item->name}} ({{$item->level}})</label>
+                          @endif
                           <input type="number" class="form-control" name="values[{{ $item->id }}]" value="{{$item->value}}" step="0.001">
                           <small class="form-text text-muted">Please enter value of variable</small>
                         </div>

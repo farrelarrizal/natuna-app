@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Variable extends Model
+class Scenario extends Model
 {
     use HasFactory;
-    protected $fillable = ['model_id','name', 'value', 'level', 'unit', 'key_variable'];
+    protected $fillable = ['sfd_id', 'name', 'desc'];
 
-    public function modelSD()
+    public function sfd()
     {
-        return $this->belongsTo(ModelSD::class, 'model_id');
+        return $this->belongsTo(Sfd::class, 'sfd_id');
     }
 
     public function scenarioData()

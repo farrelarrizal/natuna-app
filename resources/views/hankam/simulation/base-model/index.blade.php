@@ -3,7 +3,18 @@
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-        <link rel="stylesheet" href="<?= asset('assets/css/plugins/dataTables.bootstrap5.min.css') ?>" >
+      <link rel="stylesheet" href="<?= asset('assets/css/plugins/dataTables.bootstrap5.min.css') ?>" >
+    <style>
+      .button-send{
+        border-radius: 8px;
+      }
+      .alert p {
+        margin-bottom: 0;
+        padding-left:10px;
+        font-sizee:15px;
+        color: black;
+      }
+    </style>
 @endsection
 
 @section('content')
@@ -33,16 +44,40 @@
             <div class="card">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
+                  
                     <h5 class="mb-0">Defence and Security Graphics</h5>
+                        <form id="scenarioForm">
+                          <div class="row row-cols-md-auto g-1 align-items-center">
+                            <div class="col-6">
+                              <select id="scenarioSelect" name="scenarioId" class="form-select form-select-sm">
+                              </select>
+                            </div>
+                            <div class="col-6">
+                              <button type="submit" class="btn btn-primary btn-sm button-send">Send</button>
+                            </div>
+                          </div>
+                        </form>
+                    
                 </div>
-                <div class="pc-component">
+                {{-- <div class="pc-component">
                     <div class="alert alert-primary my-3" role="alert">
                         <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
                         Information Notes 
+                        <p>Additional description and information about copywriting.</p>
                       </div>
+                </div> --}}
+               <div class="row mt-3">
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                  <div class="avatar avatar-s"><i data-feather="alert-circle"></i></div>
+                  <div class="ml-2">
+                    <p>Informational Notes</p>
+                    
+                  </div>
                 </div>
-                
-                <div class="my-3">
+              </div>
+
+               
+                <div class="row my-3">
                     <div id="defence-and-security-graphics"></div>
                 </div>
               </div>
@@ -60,7 +95,7 @@
                       <div class="col-md-6 px-4">
                         <div class="flex-grow-1 mx-2">
                           @if ($item->key_variable == 1)
-                          <h5><span class="badge bg-light-primary">{{$item->name}}</span></h5>
+                          <h5><span class="badge bg-light-primary" style="font-size: 14px;"">{{$item->name}}</span></h5>
                           @else
                             <p class="text-muted mb-1">{{$item->name}}</p>
                           @endif
@@ -70,52 +105,6 @@
                         <hr class="border border-primary-subtle" />
                       </div>
                     @endforeach
-                    {{-- <div class="col-md-6 px-4">
-                        <div class="flex-grow-1 mx-2">
-                          <p class="text-muted mb-1">Naval Strength</p>
-                          <p class="mb-0">A FUNCTION OF( Integrated Force)</p>
-                        </div>
-                    </div> --}}
-                  </div>
-                  {{-- <div class="row">
-                    <div class="col-md-6 px-4">
-                        <div class="flex-grow-1 mx-2">
-                          <p class="text-muted mb-1">number of personnel</p>
-                          <p class="mb-0">A FUNCTION OF( )</p>
-                        </div>
-                      </div>
-                      <div class="col-md-6 px-4">
-                        <div class="flex-grow-1 mx-2">
-                          <p class="text-muted mb-1">Oil and Gas</p>
-                          <p class="mb-0">A FUNCTION OF( "IGIP (Initial Gas in Place)",Oil and Gas Reserves))</p>
-                        </div>
-                      </div>
-                  </div>
-                  <hr class="border border-primary-subtle" />
-                  <div class="row">
-                    <div class="col-md-6 px-4">
-                      <div class="flex-grow-1 mx-2">
-                        <p class="text-muted mb-1">Harbour</p>
-                        <p class="mb-0">A FUNCTION OF( National Defense and Security Infrastructure,Recreation,Refulling\,Repair,Replenishment,Rest)</p>
-                      </div>
-                    </div>
-                    <div class="col-md-6 px-4">
-                      <div class="flex-grow-1 mx-2">
-                        <p class="text-muted mb-1">Development Program</p>
-                        <p class="mb-0">A FUNCTION OF( Manufacturing Improvement,Technological Innovation\)</p>
-                      </div>
-                    </div>
-                  </div>
-                  <hr class="border border-primary-subtle" />
-                  <div class="row">
-                     <div class="col-md-6 px-4">
-                        <div class="flex-grow-1 mx-2">
-                          <p class="text-muted mb-1">Hybrid Threats</p>
-                          <p class="mb-0">A FUNCTION OF( Disinformation Campaign,Proxy,Social Media Attack)</p>
-                        </div>
-                      </div>
-                  </div>
-                  <hr class="border border-primary-subtle" /> --}}
                 </div>
               </div>
             </div>
@@ -124,11 +113,117 @@
 @endsection
 
 @section('script')
-    <script src="<?= asset('assets/js/pages/menu/simulation.js') ?>"></script>
+    {{-- <script src="<?= asset('assets/js/pages/menu/simulation.js') ?>"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?= asset('assets/js/plugins/jquery.dataTables.min.js') ?>"></script>
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
-      <script>
+    
+    <script>
+      // js untuk graph 
+      document.addEventListener('DOMContentLoaded', function () {
+        var scenarioSelect = document.getElementById('scenarioSelect');
+        var scenarioForm = document.getElementById('scenarioForm');
+
+        function loadScenarios() {
+            fetch('/api/get-scenarios')
+                .then(response => response.json())
+                .then(scenarios => {
+                    scenarios.forEach(scenario => {
+                        var option = document.createElement('option');
+                        option.value = scenario.id;
+                        option.textContent = 'Skenario '+ scenario.id + ' (' + scenario.name + ')';
+                        scenarioSelect.appendChild(option);
+                    });
+                    
+                    if (scenarios.length > 0) {
+                        fetchAndRenderGraph(scenarios[0].id);
+                    }
+                })
+                .catch(error => console.error('Error loading scenarios:', error));
+        }
+
+        function fetchAndRenderGraph(scenarioId) {
+            fetch(`/api/base-model-graph-data?scenarioId=${scenarioId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data.length === 0) {
+                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada variabel</p>';
+                        return;
+                    }
+                    var series = data.data.map(item => {
+                        return {
+                            name: item.variable_name,
+                            data: item.values
+                        };
+                    });
+
+                    var options = {
+                        chart: {
+                            fontFamily: 'Inter var, sans-serif',
+                            type: 'area',
+                            height: 370,
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: ['#0d6efd', '#63C3EC'],
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                shadeIntensity: 1,
+                                type: 'vertical',
+                                inverseColors: false,
+                                opacityFrom: 0.3,
+                                opacityTo: 0
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            width: 3
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '45%',
+                                borderRadius: 4
+                            }
+                        },
+                        grid: {
+                            strokeDashArray: 4
+                        },
+                        series: series,
+                        xaxis: {
+                            categories: data.data[0].node_points.map(String),
+                            axisBorder: {
+                                show: false
+                            },
+                            axisTicks: {
+                                show: false
+                            }
+                        }
+                    };
+
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '';
+
+                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
+                    chart.render();
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada variabel</p>';
+                });
+        }
+
+        loadScenarios();
+
+        scenarioForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var scenarioId = scenarioSelect.value;
+            fetchAndRenderGraph(scenarioId);
+        });
+      });
+
       // [ Add Rows ]
       var t = $('#add-row-table').DataTable();
       var counter = 1;
@@ -138,6 +233,7 @@
 
         counter++;
       });
+
 
       $('#addRow').click();
 
