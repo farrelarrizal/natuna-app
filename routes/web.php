@@ -83,7 +83,7 @@ Route::middleware('auth')->group(function () {
     //API Data 
     Route::prefix('api')->name('api.')->group(function(){
         //data
-        Route::get('/get-scenarios', [ApiDataController::class, 'getScenarios'])->name('get.scenarios');
+        Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         //graph
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
     });
