@@ -6,6 +6,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PetaController;
 use App\Http\Controllers\HankamController;
 use App\Http\Controllers\MarineResourceController;
+use App\Http\Controllers\ApiDataController;
+use App\Http\Controllers\ToolsController;
+
+
 
 Route::get('/', function () {
     $data = [
@@ -40,6 +44,9 @@ Route::middleware('auth')->group(function () {
             Route::prefix('base-model')->name('base-model.')->group(function (){
                 Route::get('/', [HankamController::class, 'simulationBaseModel'])->name('index');
                 Route::get('edit-parameter', [HankamController::class, 'editParameterBaseModel'])->name('edit-parameter');
+                Route::put('update-variable', [HankamController::class, 'updateVariableBaseModel'])->name('update-variable');
+                Route::get('upload-model', [HankamController::class, 'uploadModelBaseModel'])->name('upload-model');
+                Route::post('uploadModel', [HankamController::class, 'uploadModel'])->name('uploadModel');
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
@@ -59,9 +66,26 @@ Route::middleware('auth')->group(function () {
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
     });
 
+    Route::prefix('tools')->name('tools.')->group(function () {
+        // Route for the index method
+        Route::get('key-variable', [ToolsController::class, 'index'])->name('key-variable.index');
+    
+        // Route for the update method
+        Route::get('key-variable/{variable}/edit', [ToolsController::class, 'edit'])->name('key-variable.edit');
+        Route::put('key-variable/{variable}', [ToolsController::class, 'update'])->name('key-variable.update');
+
+    });
+
     Route::prefix('marine-resource')->name('marine-resource.')->group(function () {
         Route::get('/', [MarineResourceController::class, 'index']);
     });
 
+    //API Data 
+    Route::prefix('api')->name('api.')->group(function(){
+        //data
+        Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
+        //graph
+        Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
+    });
 });
 

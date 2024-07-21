@@ -104,6 +104,17 @@
   </ul>
 </li>
 <li class="pc-item pc-caption">
+  <label>TOOLS</label>
+</li>
+<li class="pc-item">
+  <a href="{{ route('tools.key-variable.index') }}" class="pc-link {{ Request::route()->getName() === 'tools.key-variable.index' ? 'active' : '' }}">
+    <span class="pc-micon">
+          <i class="ph-duotone ph-toolbox"></i>
+      </span>
+      <span class="pc-mtext">Key Variable</span>
+  </a>
+</li>
+<li class="pc-item pc-caption">
   <label>MARINE RESOURCE</label>
 </li>
 <li class="pc-item pc-hasmenu">

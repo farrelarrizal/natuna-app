@@ -26,54 +26,33 @@
           </div>
         </div>
         <div class="col-md-12">
+            @if (session('success'))
+                
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                  {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="card">
               <div class="card-header">
                 <h5>Edit Parameters</h5>
               </div>
               <div class="card-body">
-                <form action="" method="post">
+                <form action="{{ route('hankam.simulation.base-model.update-variable') }}" method="post">
+                  @csrf
+                  @method('PUT')
                   <div class="form-group row">
-                    <div class="col-lg-6">
-                      <label class="form-label">Naval defense posture (percentage)</label>
-                      <input type="email" class="form-control" placeholder="Percentage" >
-                      <small class="form-text text-muted">Please enter percentage</small>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label">Naval Strength</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( Integrated Force)" >
-                      <small class="form-text text-muted">Please enter Naval Strength</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-lg-6">
-                      <label class="form-label">Number of personnel</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( )" >
-                      <small class="form-text text-muted">Please enter number of personnel</small>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label">Oil and Gas</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( 'IGIP (Initial Gas in Place)',Oil and Gas Reserves))" >
-                      <small class="form-text text-muted">Oil and Gas</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-lg-6">
-                      <label class="form-label">Harbour</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( National Defense and Security Infrastructure,Recreation,Refulling\,Repair,Replenishment,Rest)" >
-                      <small class="form-text text-muted">Please enter harbour</small>
-                    </div>
-                    <div class="col-lg-6">
-                      <label class="form-label">Development Program</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( Manufacturing Improvement,Technological Innovation\)" >
-                      <small class="form-text text-muted">Please Enter Development Program</small>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-lg-6">
-                      <label class="form-label">Hybrid Threats</label>
-                      <input type="email" class="form-control" placeholder="A FUNCTION OF( Disinformation Campaign,Proxy,Social Media Attack)" >
-                      <small class="form-text text-muted">Please enter Hybrid Threats</small>
-                    </div>
+                    @foreach ($variable as $item)
+                         <div class="col-lg-6">
+                          @if ($item->key_variable == 1)
+                            <label class="form-label"><span class="badge bg-light-primary" style="font-size: 14px;">{{$item->name}} ({{$item->level}})</span></label>
+                          @else
+                            <label class="form-label">{{$item->name}} ({{$item->level}})</label>
+                          @endif
+                          <input type="number" class="form-control" name="values[{{ $item->id }}]" value="{{$item->value}}" step="0.001">
+                          <small class="form-text text-muted">Please enter value of variable</small>
+                        </div>
+                    @endforeach
                   </div>
                   <button type="submit" class="btn btn-primary mb-4">Submit Form</button>
                 </form>
