@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 class HankamController extends Controller
 {
     //
-    public function summary(){
+    public function summary()
+    {
         $data = [
             'title' => 'Defence and Security | Summary',
             'head_title' => 'Summary',
@@ -19,7 +20,8 @@ class HankamController extends Controller
         ];
         return view('hankam.summary', $data);
     }
-    public function details(){
+    public function details()
+    {
         $data = [
             'title' => 'Defence and Security | Details',
             'head_title' => 'Details',
@@ -27,7 +29,8 @@ class HankamController extends Controller
         ];
         return view('hankam.details', $data);
     }
-    public function maps(){
+    public function maps()
+    {
         $data = [
             'title' => 'Defence and Security | Maps',
             'head_title' => 'Maps',
@@ -35,7 +38,8 @@ class HankamController extends Controller
         ];
         return view('hankam.maps', $data);
     }
-    public function threatsMilitary(){
+    public function threatsMilitary()
+    {
         $data = [
             'title' => 'Defence and Security | Military',
             'head_title' => 'Threats Military',
@@ -43,7 +47,8 @@ class HankamController extends Controller
         ];
         return view('hankam.threats.military', $data);
     }
-    public function threatsNonMilitary(){
+    public function threatsNonMilitary()
+    {
         $data = [
             'title' => 'Defence and Security | Non Military',
             'head_title' => 'Threats Non Military',
@@ -51,7 +56,8 @@ class HankamController extends Controller
         ];
         return view('hankam.threats.non-military', $data);
     }
-    public function threatsHybridMilitary(){
+    public function threatsHybridMilitary()
+    {
         $data = [
             'title' => 'Defence and Security | Hybrid Military',
             'head_title' => 'Threats Hybrid Military',
@@ -59,7 +65,8 @@ class HankamController extends Controller
         ];
         return view('hankam.threats.hybrid-military', $data);
     }
-    public function simulationBaseModel(){
+    public function simulationBaseModel()
+    {
         $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
@@ -69,8 +76,9 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.base-model.index', $data);
     }
-    public function editParameterBaseModel(){
-        $dataVariable = Variable::select('id','name', 'value', 'level', 'key_variable')->get();
+    public function editParameterBaseModel()
+    {
+        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
@@ -95,8 +103,9 @@ class HankamController extends Controller
         return redirect()->back()->with('success', 'Variables updated successfully.');
     }
 
-    public function uploadModelBaseModel(){
-        $dataModel = DB::table('models')->select('id','name', 'desc', 'pathfile')->get();
+    public function uploadModelBaseModel()
+    {
+        $dataModel = DB::table('models')->select('id', 'name', 'description', 'pathfile')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
@@ -111,30 +120,33 @@ class HankamController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
-            'file' => 'required|file|mimes:txt',
+            'file' => 'required',
         ]);
 
         $file = $request->file('file');
         $fileName = $file->hashName();
-        $path = $file->storeAs('uploads', $fileName);  
+        $path = $file->storeAs('uploads', $fileName);
 
         DB::table('models')->insert([
             'name' => $request->input('name'),
             'desc' => $request->input('desc'),
+            'description' => $request->input('desc'),
             'pathfile' => $path,
             'is_active' => $request->has('is_active'),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+
         // Redirect back with a success message
-        return redirect()->route('hankam.simulation.base-model.index')->with('success', 'Model uploaded successfully!');       
+        return redirect()->route('hankam.simulation.base-model.index')->with('success', 'Model uploaded successfully!');
     }
 
 
 
 
-    public function simulationScenarioModel(){
+    public function simulationScenarioModel()
+    {
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
@@ -142,7 +154,8 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.scenario-model.index', $data);
     }
-    public function detailScenarioModel(){
+    public function detailScenarioModel()
+    {
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
@@ -150,7 +163,8 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.scenario-model.detail', $data);
     }
-    public function simulationOutcomeScenario(){
+    public function simulationOutcomeScenario()
+    {
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
@@ -158,7 +172,8 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.outcome-scenario.index', $data);
     }
-    public function detailOutcomeScenario(){
+    public function detailOutcomeScenario()
+    {
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
