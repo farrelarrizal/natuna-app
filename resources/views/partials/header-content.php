@@ -85,13 +85,7 @@
         </a>
       </div>
     </li>
-    <li class="pc-h-item">
-      <a href="#" class="pc-head-link me-0" data-bs-toggle="offcanvas" data-bs-target="#announcement" aria-controls="announcement">
-        <svg class="pc-icon">
-          <use xlink:href="#custom-notification-status"></use>
-        </svg>
-      </a>
-    </li>
+    
     <li class="dropdown pc-h-item">
       <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
         <svg class="pc-icon">
