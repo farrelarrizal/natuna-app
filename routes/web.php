@@ -12,10 +12,12 @@ use App\Http\Controllers\ToolsController;
 
 
 Route::get('/', function () {
-    $data = [
-        'title' => 'Selamat Lebaran',
-    ];
-    return view('comingsoon', $data);
+    // if user is not logged in, redirect to login page
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+    // if user is logged in, redirect to dashboard
+    return redirect()->route('dashboard.index');
 });
 
 // Auth
@@ -41,22 +43,21 @@ Route::middleware('auth')->group(function () {
             Route::get('hybrid-military',  [HankamController::class, 'threatsHybridMilitary'])->name('hybrid-military');
         });
         Route::prefix('simulation')->name('simulation.')->group(function () {
-            Route::prefix('base-model')->name('base-model.')->group(function (){
+            Route::prefix('base-model')->name('base-model.')->group(function () {
                 Route::get('/', [HankamController::class, 'simulationBaseModel'])->name('index');
                 Route::get('edit-parameter', [HankamController::class, 'editParameterBaseModel'])->name('edit-parameter');
                 Route::put('update-variable', [HankamController::class, 'updateVariableBaseModel'])->name('update-variable');
                 Route::get('upload-model', [HankamController::class, 'uploadModelBaseModel'])->name('upload-model');
                 Route::post('uploadModel', [HankamController::class, 'uploadModel'])->name('uploadModel');
             });
-            Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
+            Route::prefix('scenario-model')->name('scenario-model.')->group(function () {
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
                 Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
             });
-            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function (){
+            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
                 Route::get('/',  [HankamController::class, 'simulationOutcomeScenario'])->name('index');
                 Route::get('detail',  [HankamController::class, 'detailOutcomeScenario'])->name('detail');
             });
-           
         });
     });
 
@@ -69,11 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('tools')->name('tools.')->group(function () {
         // Route for the index method
         Route::get('key-variable', [ToolsController::class, 'index'])->name('key-variable.index');
-    
+
         // Route for the update method
         Route::get('key-variable/{variable}/edit', [ToolsController::class, 'edit'])->name('key-variable.edit');
         Route::put('key-variable/{variable}', [ToolsController::class, 'update'])->name('key-variable.update');
-
     });
 
     Route::prefix('marine-resource')->name('marine-resource.')->group(function () {
@@ -81,11 +81,10 @@ Route::middleware('auth')->group(function () {
     });
 
     //API Data 
-    Route::prefix('api')->name('api.')->group(function(){
+    Route::prefix('api')->name('api.')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         //graph
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
     });
 });
-
