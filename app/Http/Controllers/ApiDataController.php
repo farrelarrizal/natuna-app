@@ -9,20 +9,21 @@ use App\Models\Scenario;
 use Illuminate\Support\Facades\DB;
 class ApiDataController extends Controller
 {
-    public function getScenarios(){
-        $data = Scenario::all();
+    public function getVariables(){
+        $data = Variable::all();
         return response()->json($data);
     }
 
     public function baseModelGraph(Request $request){
-        $idScenario = $request->query('scenarioId');
+        $idVariable = $request->query('variableId');
         $data = DB::table('scenario_data')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('scenarios.id', $idScenario)
+            ->where('variables.id', $idVariable)
             ->select(
                 'variables.id as variable_id',
-                'variables.name as variable_name',
+                'scenarios.id as scenario_id',
+                'scenarios.name as scenario_name',
                 'scenario_data.node_point',
                 'scenario_data.value',
             )
@@ -30,9 +31,9 @@ class ApiDataController extends Controller
 
         
         $finalData = [];
-        $groupedData = $data->groupBy('variable_id');
+        $groupedData = $data->groupBy('scenario_id');
 
-        foreach ($groupedData as $variableId => $items) {
+        foreach ($groupedData as $scenarioId => $items) {
             $nodePoints = [];
             $values = [];
 
@@ -40,11 +41,11 @@ class ApiDataController extends Controller
                 $nodePoints[] = $item->node_point;
                 $values[] = $item->value;
             }
-            $variableName = $items->first()->variable_name;
+            $scenarioName = $items->first()->scenario_name;
             
             $finalData[] = [
-                'variable_id' => $variableId,
-                'variable_name' => $variableName,
+                'scenario_id' => $scenarioId,
+                'scenario_name' => $scenarioName,
                 'node_points' => $nodePoints,
                 'values' => $values,
             ];

@@ -47,10 +47,10 @@
                 <div class="d-flex align-items-center justify-content-between">
                   
                     <h5 class="mb-0">Defence and Security Graphics</h5>
-                        <form id="scenarioForm">
+                        <form id="variableForm">
                           <div class="row row-cols-md-auto g-1 align-items-center">
                             <div class="col-6">
-                              <select id="scenarioSelect" name="scenarioId" class="form-select form-select-sm">
+                              <select id="variableSelect" name="variableId" class="form-select form-select-sm">
                               </select>
                             </div>
                             <div class="col-6">
@@ -76,7 +76,6 @@
                   </div>
                 </div>
               </div>
-
                
                 <div class="row my-3">
                     <div id="defence-and-security-graphics"></div>
@@ -122,42 +121,48 @@
     <script>
       // js untuk graph 
       document.addEventListener('DOMContentLoaded', function () {
-        var scenarioSelect = document.getElementById('scenarioSelect');
-        var scenarioForm = document.getElementById('scenarioForm');
+        var variableSelect = document.getElementById('variableSelect');
+        var variableForm = document.getElementById('variableForm');
 
-        function loadScenarios() {
-            fetch('/api/get-scenarios')
+        function loadVariables() {
+            fetch('/api/get-variables')
                 .then(response => response.json())
-                .then(scenarios => {
-                    scenarios.forEach(scenario => {
+                .then(variables => {
+                    variables.forEach(variable => {
                         var option = document.createElement('option');
-                        option.value = scenario.id;
-                        option.textContent = 'Skenario '+ scenario.id + ' (' + scenario.name + ')';
-                        scenarioSelect.appendChild(option);
+                        option.value = variable.id;
+                        option.textContent = 'Variable '+ variable.id + ' (' + variable.name + ')';
+                        variableSelect.appendChild(option);
                     });
                     
-                    if (scenarios.length > 0) {
-                        fetchAndRenderGraph(scenarios[0].id);
+                    if (variables.length > 0) {
+                        fetchAndRenderGraph(variables[0].id);
                     }
                 })
-                .catch(error => console.error('Error loading scenarios:', error));
+                .catch(error => console.error('Error loading vriables:', error));
         }
 
-        function fetchAndRenderGraph(scenarioId) {
-            fetch(`/api/base-model-graph-data?scenarioId=${scenarioId}`)
+        function fetchAndRenderGraph(variableId) {
+            fetch(`/api/base-model-graph-data?variableId=${variableId}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.data.length === 0) {
-                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada variabel</p>';
+                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
                         return;
                     }
-                    var series = data.data.map(item => {
-                        return {
-                            name: item.variable_name,
+                    function generateColors(numScenarios) {
+                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Add more base colors if needed
+                        return baseColors.slice(0, numScenarios);
+                    }
+
+                    const numScenarios = data.data.length;
+                    const colors = generateColors(numScenarios);
+                    var series = data.data.map(item => {  
+                      return {
+                            name: item.scenario_name,
                             data: item.values
                         };
                     });
-
                     var options = {
                         chart: {
                             fontFamily: 'Inter var, sans-serif',
@@ -167,7 +172,7 @@
                                 show: false
                             }
                         },
-                        colors: ['#0d6efd', '#63C3EC'],
+                        colors: colors,
                         fill: {
                             type: 'gradient',
                             gradient: {
@@ -212,16 +217,16 @@
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada variabel</p>';
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
                 });
         }
 
-        loadScenarios();
+        loadVariables();
 
-        scenarioForm.addEventListener('submit', function (event) {
+        variableForm.addEventListener('submit', function (event) {
             event.preventDefault();
-            var scenarioId = scenarioSelect.value;
-            fetchAndRenderGraph(scenarioId);
+            var variableId = variableSelect.value;
+            fetchAndRenderGraph(variableId);
         });
       });
 

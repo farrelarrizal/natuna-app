@@ -3,7 +3,7 @@
   <div class="footer-wrapper container-fluid">
     <div class="row">
       <div class="col my-1">
-        <p class="m-0">Copyright &copy; <a href="#">Tim Abmas Natuna Uhuyy</a></p>
+        <p class="m-0">Copyright &copy; <a href="#">Tim Abmas Natuna ITS</a></p>
       </div>
       <div class="col-auto my-1">
         <ul class="list-inline footer-link mb-0">

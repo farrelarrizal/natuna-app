@@ -44,7 +44,7 @@
 
                                     <a href="{{ route('login') }}" class="text-center btn btn-light-primary text-center col-12 mt-3">login</a>
                                 </div>
-                                <p class="text-center mt-3">Made with  💖ABMAS Team uhuyyy </p>
+                                <p class="text-center mt-3">Made with 🖤 ABMAS ITS </p>
                             </div>
                         </div>
                     </div>
