@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
     });
