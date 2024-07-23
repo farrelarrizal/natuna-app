@@ -25,7 +25,9 @@ class AuthController extends Controller
             return redirect()->intended('dashboard');
         }
 
-        return redirect()->back()->with('error', 'Email atau password salah');
+        $error_msg = 'Email atau password salah. ' . Auth::attempt(['email' => $email, 'password' => $password]);
+
+        return redirect()->back()->with('error', $error_msg);
     }
 
     //logout
