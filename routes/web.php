@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function () {
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
+                Route::get('createScenario', [HankamController::class, 'createScenario'])->name('createScenario');
+                Route::post('storeScenario', [HankamController::class, 'storeScenario'])->name('storeScenario');
                 Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
             });
             Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {

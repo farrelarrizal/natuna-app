@@ -54,4 +54,6 @@ class ApiDataController extends Controller
                 'data' => $finalData,
             ];
         return response()->json($response);
-}}
+    }
+    
+}

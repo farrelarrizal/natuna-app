@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sfd extends Model
 {
     use HasFactory;
+    protected $table = 'sfd';
     protected $fillable = ['model_id', 'name', 'desc'];
 
     public function modelSD()

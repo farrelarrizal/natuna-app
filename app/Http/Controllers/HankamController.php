@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Variable;
+use App\Models\Sfd;
+use App\Models\Scenario;
 use App\Models\Models;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -142,6 +144,41 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.scenario-model.index', $data);
     }
+    public function createScenario(){
+        $rowSfd = Sfd::select('id', 'name')->get();
+       
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+            'rowSfd' => $rowSfd
+        ];
+        return view('hankam.simulation.scenario-model.create', $data);
+    }
+
+
+    public function storeScenario(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'desc' => 'required|string',
+            'sfd_id' => 'required|exists:sfd,id',
+            'timestep' => 'required|integer'
+        ]);
+    
+        try {
+            Scenario::create([
+                'name' => $request->input('name'),
+                'desc' => $request->input('desc'),
+                'sfd_id' => $request->input('sfd_id'),
+                'timestep' => $request->input('timestep')
+            ]);
+    
+            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
+        }
+    }
+
     public function detailScenarioModel(){
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
