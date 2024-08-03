@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hankam')->name('hankam.')->group(function () {
         Route::get('summary', [HankamController::class, 'summary'])->name('summary');
         Route::get('details', [HankamController::class, 'details'])->name('details');
-        Route::get('maps', [HankamController::class, 'maps'])->name('maps');
+        // Route::get('maps', [HankamController::class, 'maps'])->name('maps');
         Route::get('simulation', [HankamController::class, 'simulation'])->name('simulation');
 
         Route::prefix('threats')->name('threats.')->group(function () {
@@ -64,6 +64,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
+        Route::get('maps', [DashboardController::class, 'maps'])->name('maps');
+
     });
 
     Route::prefix('tools')->name('tools.')->group(function () {

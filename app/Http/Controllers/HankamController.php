@@ -27,14 +27,14 @@ class HankamController extends Controller
         ];
         return view('hankam.details', $data);
     }
-    public function maps(){
-        $data = [
-            'title' => 'Defence and Security | Maps',
-            'head_title' => 'Maps',
-            'breadcrumb_item' => 'Defence and Security ',
-        ];
-        return view('hankam.maps', $data);
-    }
+    // public function maps(){
+    //     $data = [
+    //         'title' => 'Defence and Security | Maps',
+    //         'head_title' => 'Maps',
+    //         'breadcrumb_item' => 'Defence and Security ',
+    //     ];
+    //     return view('hankam.maps', $data);
+    // }
     public function threatsMilitary(){
         $data = [
             'title' => 'Defence and Security | Military',
