@@ -80,7 +80,9 @@ class HankamController extends Controller
     }
     public function editParameterBaseModel()
     {
-        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->get();
+        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+
+        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
@@ -93,7 +95,6 @@ class HankamController extends Controller
     {
         $validated = $request->validate([
             'values' => 'required|array',
-            'values.*' => 'numeric',
         ]);
         foreach ($validated['values'] as $id => $value) {
             $variable = Variable::find($id);
