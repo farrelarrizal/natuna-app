@@ -98,6 +98,7 @@ class HankamController extends Controller
     }
 
     public function uploadModelBaseModel(){
+        
         $dataModel = DB::table('models')->select('id','name', 'desc', 'pathfile')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
@@ -114,16 +115,22 @@ class HankamController extends Controller
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
             'file' => 'required|file|mimes:txt',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
         $file = $request->file('file');
         $fileName = $file->hashName();
         $path = $file->storeAs('uploads', $fileName);  
 
+        $image = $request->file('image');
+        $imageName = $image->hashName();
+        $pathImage = $image->storeAs('imageModels', $imageName); 
+
         DB::table('models')->insert([
             'name' => $request->input('name'),
             'desc' => $request->input('desc'),
             'pathfile' => $path,
+            'image' => $pathImage,
             'is_active' => $request->has('is_active'),
             'created_at' => now(),
             'updated_at' => now(),

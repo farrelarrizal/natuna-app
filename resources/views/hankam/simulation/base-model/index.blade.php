@@ -41,6 +41,7 @@
             
         </div>
       </div>
+      
         <div class="col-md-12">
             <div class="card">
               <div class="card-body">
@@ -83,6 +84,17 @@
               </div>
             </div>
         </div>
+        {{-- <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                  
+                <h5 class="mb-0">Model Image</h5>
+                   
+            </div>
+            </div>
+          </div>
+        </div> --}}
         <div class="col-md-12">
             <div class="card">
               <div class="card-header d-flex align-items-center justify-content-between">
