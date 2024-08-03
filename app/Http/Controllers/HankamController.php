@@ -138,12 +138,20 @@ class HankamController extends Controller
 
         DB::table('models')->where('is_active', 1)->where('id', '!=', $new_id)->update(['is_active' => 0]);
 
-        // Redirect back with a success message
+        $scriptPath = public_path('run_model_convert_insert.sh');
+        $sourceFile = '../../storage/app/' . $path;
+        $model_id = $new_id;
+        // dd($scriptPath, $sourceFile, $model_id);
+        $command = "sh $scriptPath $sourceFile $model_id";
+
+        // Construct the command string
+        $command = escapeshellcmd("sh $scriptPath '$sourceFile' $model_id");
+
+        // Execute the shell script
+        shell_exec($command);
+
         return redirect()->route('hankam.simulation.base-model.index')->with('success', 'Model uploaded successfully!');
     }
-
-
-
 
     public function simulationScenarioModel()
     {
