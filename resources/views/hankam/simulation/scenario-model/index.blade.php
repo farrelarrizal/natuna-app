@@ -21,7 +21,7 @@
                     <span>Last Edit: 17 May 2024 18:50</span>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</button>
+            <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
         </div>
     </div>
     <div class="row">

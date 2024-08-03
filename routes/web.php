@@ -21,7 +21,7 @@ Route::get('/', function () {
 // Auth
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'loginPost'])->name('login.post');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 // protected by auth middleware
 Route::middleware('auth')->group(function () {
@@ -50,6 +50,8 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
+                Route::get('createScenario', [HankamController::class, 'createScenario'])->name('createScenario');
+                Route::post('storeScenario', [HankamController::class, 'storeScenario'])->name('storeScenario');
                 Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
             });
             Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function (){
@@ -90,4 +92,3 @@ Route::middleware('auth')->group(function () {
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
     });
 });
-

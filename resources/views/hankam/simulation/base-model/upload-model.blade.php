@@ -62,7 +62,12 @@
                         </label>
                     </div>
                     <div class="fallback mb-3">
-                        <input name="file" type="file" id="file" required />
+                        <label for="file" class="form-label">Upload File</label>
+                        <input name="file" type="file" id="file" class="form-control" required />
+                    </div>
+                    <div class="fallback mb-3">
+                        <label for="image" class="form-label">Upload Image</label>
+                        <input name="image" type="file" id="image" class="form-control" required />
                     </div>
                     <button type="submit" class="btn btn-primary mb-4">Upload Model and File</button>
                 </form>

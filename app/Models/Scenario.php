@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Scenario extends Model
 {
     use HasFactory;
-    protected $fillable = ['sfd_id', 'name', 'desc'];
+    protected $fillable = ['sfd_id', 'name', 'desc', 'timestep'];
 
     public function sfd()
     {
