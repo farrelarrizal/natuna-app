@@ -25,6 +25,20 @@
         </div>
     </div>
     <div class="row">
+          <!-- Display success message -->
+          @if(Session::has('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          @endif
+
+          <!-- Display error message -->
+          @if(Session::has('error'))
+              <div class="alert alert-danger">
+                  {{ Session::get('error') }}
+              </div>
+          @endif
         <div class="col-sm-12">
             <div class="card">
               <div class="card-header">

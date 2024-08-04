@@ -206,8 +206,7 @@ class HankamController extends Controller
         ->where('sfd.id', $sfd_id)
         ->select('sfd_variable.id', 'sfd_variable.variable_id',  'variables.value', 'variables.level', 'variables.unit')
         ->get();
-    // return $row_sfd_variables;
-
+    
     $request->validate([
         'name' => 'required|string|max:255',
         'desc' => 'required|string',
@@ -216,7 +215,6 @@ class HankamController extends Controller
     ]);
     
     try {
-        // Membuat skenario baru dan mendapatkan id-nya
         $scenario = Scenario::create([
             'name' => $request->input('name'),
             'desc' => $request->input('desc'),
@@ -226,7 +224,6 @@ class HankamController extends Controller
     
         $skenario_id = $scenario->id;
         
-        // Menyimpan setiap variabel ke SfdVariable dengan skenario_id baru
         foreach ($row_sfd_variables as $variable) {
             ScenarioVariable::create([
                 'scenario_id' =>  $skenario_id,
@@ -237,11 +234,11 @@ class HankamController extends Controller
                 'level' => $variable->level,
             ]);
         }
-        return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
+        return redirect()->route('hankam.simulation.scenario-model.index')->with('success', 'Scenario created successfully!');
     } catch (\Exception $e) {
         
         Log::error('Failed to create scenario', ['error' => $e->getMessage()]);
-        return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Error: ' . $e->getMessage());
+        return redirect()->route('hankam.simulation.scenario-model.index')->with('error', 'Failed to create scenario. Error: ' . $e->getMessage());
     }
 }
     public function detailScenarioModel()
