@@ -7,8 +7,11 @@ use App\Models\Variable;
 use App\Models\Models;
 use App\Models\Sfd;
 use App\Models\Scenario;
+use App\Models\ScenarioData;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use App\Imports\ScenarioDataImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HankamController extends Controller
 {
@@ -214,22 +217,71 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.scenario-model.detail', $data);
     }
+
     public function simulationOutcomeScenario()
     {
+        $scenarios = Scenario::with('sfd')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
             'breadcrumb_item' => 'Simulation ',
+            'scenarios' => $scenarios
         ];
         return view('hankam.simulation.outcome-scenario.index', $data);
     }
-    public function detailOutcomeScenario()
+    public function detailOutcomeScenario($id)
     {
+        $scenario = Scenario::findOrFail($id);
+        $scenarioData = ScenarioData::where('scenario_id', $id)->with('variable')->get();
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
-            'breadcrumb_item' => 'Simulation ',
+            'breadcrumb_item' => 'Simulation',
+            'scenario' => $scenario,
+            'scenarioData' => $scenarioData
         ];
         return view('hankam.simulation.outcome-scenario.detail', $data);
     }
+
+    public function createOutcome($id){
+        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+
+        $dataVariable = Variable::select('id','name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+
+        $scenario = Scenario::findOrFail($id);
+        $scenarioData = ScenarioData::where('scenario_id', $id)
+        ->with('variable')
+        ->get()
+        ->unique('variable_id');
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+            'scenario' => $scenario,
+            'dataVariable' => $dataVariable,
+            'scenarioData' => $scenarioData
+        ];
+        return view('hankam.simulation.outcome-scenario.create', $data);
+    }
+
+    public function storeOutcome(Request $request) {
+        
+        // Validate the request
+        $request->validate([
+            'variable_id' => 'required|exists:variables,id',
+            'file' => 'required|mimes:xlsx',
+            'scenario_id' => 'required|exists:scenarios,id', // Ensure scenario_id is validated
+        ]);
+    
+        // Retrieve inputs
+        $variable_id = $request->input('variable_id');
+        $scenario_id = $request->input('scenario_id');
+    
+        // Import the file using Laravel Excel
+        Excel::import(new ScenarioDataImport($variable_id, $scenario_id), $request->file('file'));
+    
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'Data imported successfully.');
+    }
+
 }
