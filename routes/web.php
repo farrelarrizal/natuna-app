@@ -54,10 +54,20 @@ Route::middleware('auth')->group(function () {
                 Route::post('storeScenario', [HankamController::class, 'storeScenario'])->name('storeScenario');
                 Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
             });
-            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function (){
-                Route::get('/',  [HankamController::class, 'simulationOutcomeScenario'])->name('index');
-                Route::get('detail',  [HankamController::class, 'detailOutcomeScenario'])->name('detail');
+            // Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
+            //     Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
+            //     Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
+            //     Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
+            //     Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
+            // });
+            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
+                Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
+                Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
+                Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
+                Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
             });
+            
+            
            
         });
     });
