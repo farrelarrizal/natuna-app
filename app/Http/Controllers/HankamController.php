@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Variable;
 use App\Models\Models;
 use App\Models\Sfd;
+use App\Models\SfdVariable;
 use App\Models\Scenario;
 use App\Models\ScenarioData;
+use App\Models\ScenarioVariable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Imports\ScenarioDataImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
 class HankamController extends Controller
 {
@@ -183,7 +186,7 @@ class HankamController extends Controller
     {
         $model_id = DB::table('models')->where('is_active', 1)->first()->id;
         $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
-
+        // return $rowSfd;
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
@@ -195,27 +198,52 @@ class HankamController extends Controller
 
 
     public function storeScenario(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'desc' => 'required|string',
-            'sfd_id' => 'required|exists:sfd,id',
-            'timestep' => 'required|integer'
+{
+    $sfd_id = $request->input('sfd_id');
+
+    $row_sfd_variables = SfdVariable::join('sfd', 'sfd_variable.sfd_id', '=', 'sfd.id')
+        ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+        ->where('sfd.id', $sfd_id)
+        ->select('sfd_variable.id', 'sfd_variable.variable_id',  'variables.value', 'variables.level', 'variables.unit')
+        ->get();
+    // return $row_sfd_variables;
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'desc' => 'required|string',
+        'sfd_id' => 'required|exists:sfd,id',
+        'timestep' => 'required|integer'
+    ]);
+    
+    try {
+        // Membuat skenario baru dan mendapatkan id-nya
+        $scenario = Scenario::create([
+            'name' => $request->input('name'),
+            'desc' => $request->input('desc'),
+            'sfd_id' => $request->input('sfd_id'),
+            'timestep' => $request->input('timestep')
         ]);
-
-        try {
-            Scenario::create([
-                'name' => $request->input('name'),
-                'desc' => $request->input('desc'),
-                'sfd_id' => $request->input('sfd_id'),
-                'timestep' => $request->input('timestep')
+    
+        $skenario_id = $scenario->id;
+        
+        // Menyimpan setiap variabel ke SfdVariable dengan skenario_id baru
+        foreach ($row_sfd_variables as $variable) {
+            ScenarioVariable::create([
+                'scenario_id' =>  $skenario_id,
+                'sfd_id' => $sfd_id,
+                'variable_id' => $variable->variable_id,
+                'value' => $variable->value,
+                'unit' => $variable->unit,
+                'level' => $variable->level,
             ]);
-
-            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
-        } catch (\Exception $e) {
-            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
         }
+        return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
+    } catch (\Exception $e) {
+        
+        Log::error('Failed to create scenario', ['error' => $e->getMessage()]);
+        return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Error: ' . $e->getMessage());
     }
+}
     public function detailScenarioModel()
     {
         $data = [

@@ -19,4 +19,8 @@ class Scenario extends Model
     {
         return $this->hasMany(ScenarioData::class);
     }
+    public function scenarioVariables()
+    {
+        return $this->hasMany(ScenarioVariable::class);
+    }
 }
