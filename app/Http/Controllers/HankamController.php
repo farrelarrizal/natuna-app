@@ -241,12 +241,25 @@ class HankamController extends Controller
         return redirect()->route('hankam.simulation.scenario-model.index')->with('error', 'Failed to create scenario. Error: ' . $e->getMessage());
     }
 }
-    public function detailScenarioModel()
+    public function detailScenarioModel($id)
     {
+        $dataScenario =  Scenario::join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
+            ->where('scenarios.id', $id)
+            ->select('scenarios.name', 'scenarios.timestep', 'sfd.name as sfd_name')
+            ->firstOrFail();
+        
+        $rowsScenarioVariable = ScenarioVariable::join('scenarios', 'scenario_variables.scenario_id', '=', 'scenarios.id',)
+        ->join('sfd', 'scenario_variables.sfd_id', '=', 'sfd.id')
+        ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+        ->where('scenarios.id', $id)
+        ->select('variables.name', 'variables.value', 'variables.unit')
+        ->get();
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
             'breadcrumb_item' => 'Simulation',
+            'dataScenario' => $dataScenario,
+            'rowsScenarioVariable' => $rowsScenarioVariable
         ];
         return view('hankam.simulation.scenario-model.detail', $data);
     }
