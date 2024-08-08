@@ -20,6 +20,22 @@
 @section('content')
 @include('partials/breadcrumb')
     <div class="row">
+      @if (session('success'))
+          <div class="col-md-12">
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <strong>Success!</strong> {{ session('success') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          </div>
+      @endif
+      @if (session('error'))
+          <div class="col-md-12">
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Error!</strong> {{ session('error') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          </div>
+      @endif
       <div class="col-md-12 mb-3">
         <div class="d-flex align-items-center justify-content-between">
             <ul class="list-inline mb-3 d-flex align-items-center">

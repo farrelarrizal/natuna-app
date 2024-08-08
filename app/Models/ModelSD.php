@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ModelSD extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'desc', 'pathfile', 'is_active'];
+    protected $fillable = ['name', 'desc', 'pathfile', 'is_active', 'image'];
 
     public function variables()
     {

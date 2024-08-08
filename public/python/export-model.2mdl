@@ -11,23 +11,19 @@ Defense Score=
 
 Foreign Policy=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Misuses of AIS and Positioning Data Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Combined Deploy=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Multilateral Power=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Defense Capability=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
@@ -36,8 +32,7 @@ Defense Capability=
 
 Diplomacy Ability=
 	(Diplomatic Network*0.4)+(Foreign Policy*0.3)+(Multilateral Power*0.3)
-	~	
-	~		|
+	~		~		|
 
 Diplomatic Network=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
@@ -45,56 +40,46 @@ Diplomatic Network=
 	~		|
 
 Naval Capabilities=
-	(Defense Capability*0.3)+(Diplomacy Ability*0.3)+(Support Capabilities*0.1)+(Intelligence Ability\
-		*0.15)+(Regional Empowerment Capabilities*0.15)
+	(Defense Capability*0.3)+(Diplomacy Ability*0.3)+(Support Capabilities*0.1)+(Intelligence Ability*0.15)+(Regional Empowerment Capabilities*0.15)
 	~	Percentage
 	~		|
 
 Disinfromation Campaign Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Disinfromation Campaign Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Drug Shipping Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Drug Shipping Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
-North Natuna Defense and Security= INTEG (
-	Defense Score-Level of Threat,
-		60)
+North Natuna Defense and Security=
+	 INTEG (Defense Score-Level of Threat,60)
 	~	Percentage
 	~		|
 
 Embargo Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Embargo Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Manipulation Signal Used Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Support Capabilities=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Espionage by Maritime Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
@@ -108,13 +93,11 @@ Espionage by Maritime Severity=
 
 Piracy Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Piracy Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Firewall Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
@@ -128,53 +111,44 @@ Firewall Severity=
 
 Proxy Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Grouped Deploy=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Misuses of AIS and Positioning Data Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Regional Empowerment Capabilities=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+
+	~		~		|
 
 Manipulation Signal Used Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Natural Disaster Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Natural Disaster Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 IT System Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Illegal Fishing Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Illegal Fishing Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Intelligence Ability=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
@@ -183,23 +157,19 @@ Intelligence Ability=
 
 Military Invasion Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Smuggling Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Military Invasion Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Social Media Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Naval Defense Posture=
 	(Naval Strength*0.33)+(Naval Capabilities*0.33)+(Naval Deployment*0.33)
@@ -208,23 +178,19 @@ Naval Defense Posture=
 
 Social Media Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Proxy Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Smuggling Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Terorism Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Naval Deployment=
 	(Grouped Deploy*0.5)+(Combined Deploy*0.3)+(Unit Deploy*0.2)
@@ -233,33 +199,27 @@ Naval Deployment=
 
 Unit Deploy=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Terorism Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Sabotage Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Sabotage Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Aircraft Strength=
 	(Enablers Aircraft*0.5)+(Fighters Aircraft Score*0.5)
-	~	
-	~		|
+	~		~		|
 
 Combat Vehicle Score=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Harbour=
 	(Refuel*0.3)+(Repair*0.2)+(Recreation*0.2)+(Replenishment*0.15)+(Rest*0.15)
@@ -278,8 +238,7 @@ Repair=
 
 Replenishment=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Rest=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
@@ -293,13 +252,11 @@ Patroling=
 
 Marine Personel Forces=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Fighters Aircraft Score=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Warships Strength=
 	(Patroling*0.3)+(Striking*0.5)+(Supporting*0.2)
@@ -307,15 +264,13 @@ Warships Strength=
 	~		|
 
 Naval Strength=
-	(Warships Strength*0.5)+(Aircraft Strength*0.2)+(Harbour*0.15)+(Marine Forces Strength\
-		*0.15)
+	(Warships Strength*0.5)+(Aircraft Strength*0.2)+(Harbour*0.15)+(Marine Forces Strength\*0.15)
 	~	Dmnl
 	~		|
 
 IT System Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Recreation=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
@@ -329,13 +284,11 @@ Supporting=
 
 Enablers Aircraft=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Marine Ability Score=
 	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
-	~	
-	~		|
+	~		~		|
 
 Marine Forces Strength=
 	(Combat Vehicle Score*0.3)+(Marine Ability Score*0.3)+(Marine Personel Forces*0.4)
@@ -349,25 +302,20 @@ Striking=
 
 Hijacking Severity=
 	RANDOM UNIFORM( 1 , 4 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Hijacking Probability=
 	RANDOM UNIFORM( 1 , 5 , 1 )
-	~	
-	~		|
+	~		~		|
 
 Cyber Attack Level of Threats=
-	(Espionage by Maritime Level of Threats+Firewall Level of Threats+IT System Level of Threats\
-		+Manipulation Signal Used Level of Threats+Misuses of AIS and Positioning Data Level of Threats\
-		)/Number of Cyber Attack
+	(Espionage by Maritime Level of Threats+Firewall Level of Threats+IT System Level of Threats\+Manipulation Signal Used Level of Threats+Misuses of AIS and Positioning Data Level of Threats\)/Number of Cyber Attack
 	~	Level
 	~		|
 
 Disinfromation Campaign Level of Threats=
 	Disinfromation Campaign Probability+Disinfromation Campaign Severity
-	~	
-	~		|
+	~		~		|
 
 National Sea Threat Risk=
 	((Hybrid Risk Level+Military Risk Level+Non Military Risk Level)/3)*100
@@ -376,18 +324,15 @@ National Sea Threat Risk=
 
 Drugs Shipping Level of Threats=
 	Drug Shipping Probability+Drug Shipping Severity
-	~	
-	~		|
+	~		~		|
 
 Embargo Level of Threats=
 	Embargo Probability+Embargo Severity
-	~	
-	~		|
+	~		~		|
 
 Espionage by Maritime Level of Threats=
 	Espionage by Maritime Probability+Espionage by Maritime Severity
-	~	
-	~		|
+	~		~		|
 
 Firewall Level of Threats=
 	Firewall Probability+Firewall Severity
@@ -396,113 +341,87 @@ Firewall Level of Threats=
 
 Hijacking Level of Threats=
 	Hijacking Probability+Hijacking Severity
-	~	
-	~		|
+	~		~		|
 
 Hybrid Risk Level=
-	(Disinfromation Campaign Level of Threats+Proxy Level of Threats+Social Media Level of Threats\
-		)/(Risk Level Maximum Score*Number of Hybrid Threats)
-	~	
-	~		|
+	(Disinfromation Campaign Level of Threats+Proxy Level of Threats+Social Media Level of Threats\)/(Risk Level Maximum Score*Number of Hybrid Threats)
+	~		~		|
 
 Illegal Fishing Level of Threats=
 	Illegal Fishing Probability+Illegal Fishing Severity
-	~	
-	~		|
+	~		~		|
 
 Military Invasion Level of Threats=
 	Military Invasion Probability+Military Invasion Severity
-	~	
-	~		|
+	~		~		|
 
 IT System Level of Threats=
 	IT System Probability+IT System Severity
-	~	
-	~		|
+	~		~		|
 
 Manipulation Signal Used Level of Threats=
 	Manipulation Signal Used Probability+Manipulation Signal Used Severity
-	~	
-	~		|
+	~		~		|
 
 Piracy Level of Threats=
 	Piracy Probability+Piracy Severity
-	~	
-	~		|
+	~		~		|
 
 Military Risk Level=
-	(Cyber Attack Level of Threats+Embargo Level of Threats+Military Invasion Level of Threats\
-		+Sabotage Level of Threats+Terorism Level of Threats)/(Risk Level Maximum Score*Number of Military Threats\
-		)
-	~	
-	~		|
+	(Cyber Attack Level of Threats+Embargo Level of Threats+Military Invasion Level of Threats\+Sabotage Level of Threats+Terorism Level of Threats)/(Risk Level Maximum Score*Number of Military Threats\)
+	~		~		|
 
 Misuses of AIS and Positioning Data Level of Threats=
 	Misuses of AIS and Positioning Data Probability+Misuses of AIS and Positioning Data Severity
-	~	
-	~		|
+	~		~		|
 
 Sabotage Level of Threats=
 	Sabotage Probability+Sabotage Severity
-	~	
-	~		|
+	~		~		|
 
 Terorism Level of Threats=
 	Terorism Probability+Terorism Severity
-	~	
-	~		|
+	~		~		|
 
 Natural Disasters Level of Threats=
 	Natural Disaster Probability+Natural Disaster Severity
-	~	
-	~		|
+	~		~		|
 
 Non Military Risk Level=
-	(Drugs Shipping Level of Threats+Hijacking Level of Threats+Illegal Fishing Level of Threats\
-		+Natural Disasters Level of Threats+Piracy Level of Threats+Smuggling Level of Threats\
-		)/(Risk Level Maximum Score*Number of Non Military Threats)
-	~	
-	~		|
+	(Drugs Shipping Level of Threats+Hijacking Level of Threats+Illegal Fishing Level of Threats\+Natural Disasters Level of Threats+Piracy Level of Threats+Smuggling Level of Threats\)/(Risk Level Maximum Score*Number of Non Military Threats)
+	~		~		|
 
 Number of Cyber Attack=
 	5
-	~	
-	~		|
+	~		~		|
 
 Number of Hybrid Threats=
 	3
-	~	
-	~		|
+	~		~		|
 
 Number of Military Threats=
 	5
-	~	
-	~		|
+	~		~		|
 
 Number of Non Military Threats=
 	6
-	~	
-	~		|
+	~		~		|
 
 Social Media Level of Threats=
 	Social Media Probability+Social Media Severity
-	~	
-	~		|
+	~		~		|
 
 Risk Level Maximum Score=
 	9
-	~	
-	~		|
+	~		~		|
 
 Proxy Level of Threats=
 	Proxy Probability+Proxy Severity
-	~	
-	~		|
+	~		~		|
 
 Smuggling Level of Threats=
 	Smuggling Probability+Smuggling Severity
-	~	
-	~		|
+	~		~		|
 
 ********************************************************
 	.Control
@@ -510,7 +429,7 @@ Smuggling Level of Threats=
 		Simulation Control Parameters
 	|
 
-FINAL TIME  = 120
+FINAL TIME  = 132
 	~	Month
 	~	The final time for the simulation.
 	|

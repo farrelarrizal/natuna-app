@@ -7,14 +7,22 @@ use App\Models\Variable;
 use App\Models\ScenarioData;
 use App\Models\Scenario;
 use Illuminate\Support\Facades\DB;
+
 class ApiDataController extends Controller
 {
-    public function getVariables(){
-        $data = Variable::all();
+    public function getVariables()
+    {
+        // $data = Variable::all();
+        $active_model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $data = DB::table('variables')
+            ->where('model_id', $active_model_id)
+            ->get();
+
         return response()->json($data);
     }
 
-    public function baseModelGraph(Request $request){
+    public function baseModelGraph(Request $request)
+    {
         $idVariable = $request->query('variableId');
         $data = DB::table('scenario_data')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
@@ -29,7 +37,7 @@ class ApiDataController extends Controller
             )
             ->get();
 
-        
+
         $finalData = [];
         $groupedData = $data->groupBy('scenario_id');
 
@@ -42,7 +50,7 @@ class ApiDataController extends Controller
                 $values[] = $item->value;
             }
             $scenarioName = $items->first()->scenario_name;
-            
+
             $finalData[] = [
                 'scenario_id' => $scenarioId,
                 'scenario_name' => $scenarioName,
@@ -51,7 +59,8 @@ class ApiDataController extends Controller
             ];
         }
         $response = [
-                'data' => $finalData,
-            ];
+            'data' => $finalData,
+        ];
         return response()->json($response);
-}}
+    }
+}

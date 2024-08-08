@@ -21,10 +21,24 @@
                     <span>Last Edit: 17 May 2024 18:50</span>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</button>
+            <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
         </div>
     </div>
     <div class="row">
+          <!-- Display success message -->
+          @if(Session::has('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+          @endif
+
+          <!-- Display error message -->
+          @if(Session::has('error'))
+              <div class="alert alert-danger">
+                  {{ Session::get('error') }}
+              </div>
+          @endif
         <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
@@ -38,13 +52,28 @@
                       <tr>
                         <th>Id</th>
                         <th>Scenario Name</th>
+                        <th>Scenario Description</th>
                         <th>Create At</th>
                         <th>Action</th>
                         
                       </tr>
                     </thead>
                     <tbody>
+                      @foreach ($scenarios as $scenario)
                       <tr>
+                        <td>{{$scenario->id}}</td>
+                        <td>{{$scenario->name}}</td>
+                        <td>{{$scenario->desc}}</td>
+                        <td>{{$scenario->created_at}}</td>
+                        <td>
+                          <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
+                          <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
+                          <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
+                          <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
+                        </td>
+                      </tr>
+                      @endforeach
+                      {{-- <tr>
                         <td>1</td>
                         <td>Scenario Version 1</td>
                         <td>17/05/2024 08:50</td>
@@ -152,7 +181,7 @@
                             <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
                             <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
                         </td>
-                    </tr>
+                    </tr> --}}
                     </tbody>
                     <tfoot>
                       <tr>

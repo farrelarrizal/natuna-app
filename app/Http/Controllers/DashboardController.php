@@ -31,4 +31,13 @@ class DashboardController extends Controller
         ];
         return view('dashboard.recommendation', $data);
     }
+
+    public function maps(){
+        $data = [
+            'title' => 'Dashboard | Maps',
+            'head_title' => 'Maps',
+            'breadcrumb_item' => 'Dashboard',
+        ];
+        return view('dashboard.maps', $data);
+    }
 }

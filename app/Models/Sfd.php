@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sfd extends Model
 {
     use HasFactory;
+    protected $table = 'sfd';
     protected $fillable = ['model_id', 'name', 'desc'];
 
     public function modelSD()
@@ -18,5 +19,13 @@ class Sfd extends Model
     public function scenarios()
     {
         return $this->hasMany(Scenario::class);
+    }
+    public function scenarioVariables()
+    {
+        return $this->hasMany(ScenarioVariable::class);
+    }
+    public function sfdVariables()
+    {
+        return $this->hasMany(SfdVariable::class);
     }
 }

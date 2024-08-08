@@ -21,7 +21,7 @@ Route::get('/', function () {
 // Auth
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'loginPost'])->name('login.post');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 // protected by auth middleware
 Route::middleware('auth')->group(function () {
@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('hankam')->name('hankam.')->group(function () {
         Route::get('summary', [HankamController::class, 'summary'])->name('summary');
         Route::get('details', [HankamController::class, 'details'])->name('details');
-        Route::get('maps', [HankamController::class, 'maps'])->name('maps');
+        // Route::get('maps', [HankamController::class, 'maps'])->name('maps');
         Route::get('simulation', [HankamController::class, 'simulation'])->name('simulation');
 
         Route::prefix('threats')->name('threats.')->group(function () {
@@ -50,12 +50,24 @@ Route::middleware('auth')->group(function () {
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function (){
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
-                Route::get('detail',  [HankamController::class, 'detailScenarioModel'])->name('detail');
+                Route::get('createScenario', [HankamController::class, 'createScenario'])->name('createScenario');
+                Route::post('storeScenario', [HankamController::class, 'storeScenario'])->name('storeScenario');
+                Route::get('detail/{id}',  [HankamController::class, 'detailScenarioModel'])->name('detail');
             });
-            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function (){
-                Route::get('/',  [HankamController::class, 'simulationOutcomeScenario'])->name('index');
-                Route::get('detail',  [HankamController::class, 'detailOutcomeScenario'])->name('detail');
+            // Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
+            //     Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
+            //     Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
+            //     Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
+            //     Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
+            // });
+            Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
+                Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
+                Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
+                Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
+                Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
             });
+            
+            
            
         });
     });
@@ -64,6 +76,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
+        Route::get('maps', [DashboardController::class, 'maps'])->name('maps');
+
     });
 
     Route::prefix('tools')->name('tools.')->group(function () {
@@ -88,4 +102,3 @@ Route::middleware('auth')->group(function () {
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
     });
 });
-
