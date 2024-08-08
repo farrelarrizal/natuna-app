@@ -20,4 +20,12 @@ class Sfd extends Model
     {
         return $this->hasMany(Scenario::class);
     }
+    public function scenarioVariables()
+    {
+        return $this->hasMany(ScenarioVariable::class);
+    }
+    public function sfdVariables()
+    {
+        return $this->hasMany(SfdVariable::class);
+    }
 }

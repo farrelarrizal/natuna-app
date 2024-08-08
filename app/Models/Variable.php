@@ -19,4 +19,12 @@ class Variable extends Model
     {
         return $this->hasMany(ScenarioData::class);
     }
+    public function scenarioVariables()
+    {
+        return $this->hasMany(ScenarioVariable::class);
+    }
+    public function sfdVariables()
+    {
+        return $this->hasMany(SfdVariable::class);
+    }
 }
