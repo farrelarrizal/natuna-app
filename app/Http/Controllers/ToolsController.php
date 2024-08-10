@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Variable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ToolsController extends Controller
 {
     public function index()
     {
-        $variables = Variable::all();
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $variables = Variable::where('model_id', $model_id)->get();
         $data = [
             'title' => 'Tools | Key Variable',
             'head_title' => 'Key Variable',
@@ -37,10 +39,10 @@ class ToolsController extends Controller
             'breadcrumb_item' => 'Tools',
             'variable' => $variable,
         ];
-    
+
         return view('tools.key-variable.edit')->with($data);
     }
-    
+
     public function update(Request $request, Variable $variable)
     {
         $request->validate([
@@ -58,5 +60,4 @@ class ToolsController extends Controller
 
         return redirect()->route('tools.key-variable.index')->with('success', 'Variable updated successfully.');
     }
-
 }

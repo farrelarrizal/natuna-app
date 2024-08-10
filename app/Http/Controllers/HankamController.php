@@ -129,7 +129,7 @@ class HankamController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'desc' => ['required', 'string', 'max:255'],
             'file' => ['required', 'file'],
-            'image' => ['file', 'mimes:jpeg,png,jpg,gif,svg']
+            'image' => ['file', 'required']
         ]);
 
         $file = $request->file('file');
@@ -167,16 +167,23 @@ class HankamController extends Controller
 
     public function simulationScenarioModel()
     {
+        $scenarios = Scenario::join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
+            ->select('scenarios.id', 'scenarios.name', 'scenarios.desc', 'sfd.name as sfd_name', 'scenarios.timestep', 'scenarios.created_at')
+            ->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
             'breadcrumb_item' => 'Simulation',
+            'scenarios' => $scenarios
         ];
         return view('hankam.simulation.scenario-model.index', $data);
     }
-    public function createScenario(){
-        $rowSfd = Sfd::select('id', 'name')->get();
-       
+    public function createScenario()
+    {
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
@@ -187,14 +194,15 @@ class HankamController extends Controller
     }
 
 
-    public function storeScenario(Request $request) {
+    public function storeScenario(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
             'sfd_id' => 'required|exists:sfd,id',
             'timestep' => 'required|integer'
         ]);
-    
+
         try {
             Scenario::create([
                 'name' => $request->input('name'),
@@ -202,7 +210,7 @@ class HankamController extends Controller
                 'sfd_id' => $request->input('sfd_id'),
                 'timestep' => $request->input('timestep')
             ]);
-    
+
             return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
         } catch (\Exception $e) {
             return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
@@ -242,7 +250,7 @@ class HankamController extends Controller
         ];
         return view('hankam.simulation.outcome-scenario.detail', $data);
     }
-
+  
     public function createOutcome($id){
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
 
