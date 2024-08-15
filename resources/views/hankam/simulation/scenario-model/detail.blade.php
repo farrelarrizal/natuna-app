@@ -40,51 +40,88 @@
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
-              <h5>Scenario Details</h5>
+              <h5>Add Scenario Details</h5>
               
             </div>
             <div class="card-body">
                 <div class="row">
-                  <div class="col-lg-4">
+                  <div class="col-lg-6">
                     <p class="mb-1">Scenario Name</p>
-                    <div class="alert alert-secondary" role="alert">{{$dataScenario->name}}</div>
-                  </div>
-                  <div class="col-lg-4">
-                    <p class="mb-1">Time Step</p>
-                    <div class="alert alert-secondary" role="alert">{{$dataScenario->timestep}}</div>
-                  </div>
-                  <div class="col-lg-4">
-                    <p class="mb-1">SFD</p>
-                    <div class="alert alert-secondary" role="alert">{{$dataScenario->sfd_name}}</div>
+                    <div class="alert alert-secondary" role="alert">Scenario Version 1</div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <p class="mb-1">Naval defense posture (percentage)</p>
+                    <div class="alert alert-secondary" role="alert">percentage</div>
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="mb-1">Naval Strength</p>
+                    <div class="alert alert-secondary" role="alert">A FUNCTION OF( Integrated Force)</div>
+                  </div>
                 </div>
+                  
+                <div class="row">
+                  <div class="col-lg-6">
+                    <p class="mb-1">Harbour</p>
+                    <div class="alert alert-secondary" role="alert">A FUNCTION OF( National Defense and Security Infrastructure,Recreation,Refulling\,Repair,Replenishment,Rest)</div>
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="mb-1">Development Program</p>
+                    <div class="alert alert-secondary" role="alert">A FUNCTION OF( Manufacturing Improvement,Technological Innovation\)</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <p class="mb-1">Hybrid Threats</p>
+                    <div class="alert alert-secondary" role="alert">A FUNCTION OF( Disinformation Campaign,Proxy,Social Media Attack)</div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-              <h5>Scenario Variable</h5>
+            <div class="card-header">
+              <h5>Final Time</h5>
             </div>
-            <div class="card-body p-0 income-scroll">
-              <div class="mt-3 mb-3">
-                <div class="row">
-                  @foreach ($rowsScenarioVariable as $item)
-                    <div class="col-md-6 px-4">
-                      <div class="flex-grow-1 mx-2">
-                        
-                        <p class="text-muted mb-1">{{$item->name}}({{$item->unit}})</p>
-                       
-                        <p class="mb-0">{{$item->value}} </p>
+            <div class="card-body">
+              <form action="">
+                <div class="form-group row">
+                  
+                  {{-- <div class="col-md-2">
+                    <p>Final Time:</p>
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                      id="ex8"
+                      data-slider-id="ex1Slider"
+                      type="text"
+                      data-slider-min="0"
+                      data-slider-max="20"
+                      data-slider-step="1"
+                      data-slider-value="14"
+                    >
+                  </div> --}}
+                  <label class="col-form-label col-lg-3 col-sm-12">Basic Setup</label>
+                  <div class="col-lg-6 col-md-12 col-sm-12">
+                    
+                      <div class="row align-items-center">
+                        <div class="col-4">
+                          <input type="text" class="form-control" id="pc-no_ui_slider-1-input" placeholder="Quantity">
+                        </div>
+                        <div class="col-8">
+                          <div id="pc-no_ui_slider-1" class="pc-no_ui_slider--drag-danger"></div>
+                        </div>
                       </div>
-                      <hr class="border border-primary-subtle" />
                     </div>
-                  @endforeach
                 </div>
+                <button type="submit" class="btn btn-primary">Add Scenario</button>
+              </form>
             </div>
           </div>
-      </div>
+        </div>
     </div>
 @endsection
 

@@ -38,16 +38,31 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-          <!-- Display validation errors -->
-          @if($errors->any())
-              <div class="alert alert-danger">
-                  <ul>
-                      @foreach($errors->all() as $error)
-                          <li>{{ $error }}</li>
-                      @endforeach
-                  </ul>
-              </div>
-          @endif
+            <!-- Display success message -->
+            @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Success!</strong> {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+
+        <!-- Display error message -->
+        @if(Session::has('error'))
+            <div class="alert alert-danger">
+                {{ Session::get('error') }}
+            </div>
+        @endif
+
+        <!-- Display validation errors -->
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         </div>
         <div class="col-sm-12">
           <div class="card">
@@ -80,7 +95,7 @@
                   </div>
 
                   <div class="col-lg-12 mb-3">
-                    <label class="form-label">Time Step</label>
+                    <label class="form-label">Final Step</label>
                     <input class="form-control" type="number" name="timestep" id="" value="132">
                   </div>
                   <div class="col-lg-12 mb-3">

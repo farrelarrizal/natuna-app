@@ -25,20 +25,6 @@
         </div>
     </div>
     <div class="row">
-          <!-- Display success message -->
-          @if(Session::has('success'))
-              <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-          @endif
-
-          <!-- Display error message -->
-          @if(Session::has('error'))
-              <div class="alert alert-danger">
-                  {{ Session::get('error') }}
-              </div>
-          @endif
         <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
@@ -73,115 +59,7 @@
                         </td>
                       </tr>
                       @endforeach
-                      {{-- <tr>
-                        <td>1</td>
-                        <td>Scenario Version 1</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    <tr>
-                        <td>2</td>
-                        <td>Scenario Version 2</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Scenario Version 3</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Scenario Version 4</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Scenario Version 5</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Scenario Version 6</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Scenario Version 7</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>Scenario Version 8</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>Scenario Version 9</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>Scenario Version 10</td>
-                        <td>17/05/2024 08:50</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
-                            <a href="{{route('hankam.simulation.scenario-model.detail')}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                            <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
-                            <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                    </tr> --}}
+                    
                     </tbody>
                     <tfoot>
                       <tr>
