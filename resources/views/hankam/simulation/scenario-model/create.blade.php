@@ -95,7 +95,7 @@
                   </div>
 
                   <div class="col-lg-12 mb-3">
-                    <label class="form-label">Time Step</label>
+                    <label class="form-label">Final Step</label>
                     <input class="form-control" type="number" name="timestep" id="" value="132">
                   </div>
                   <div class="col-lg-12 mb-3">

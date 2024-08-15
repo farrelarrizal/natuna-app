@@ -84,7 +84,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h5>Time</h5>
+              <h5>Final Time</h5>
             </div>
             <div class="card-body">
               <form action="">
