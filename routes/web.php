@@ -100,5 +100,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         //graph
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
+        Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');
     });
 });

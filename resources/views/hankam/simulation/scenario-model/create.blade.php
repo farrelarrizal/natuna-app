@@ -64,6 +64,30 @@
             </div>
         @endif
         </div>
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                  <h5 class="mb-0">Defence and Security Graphics</h5>
+                      <form id="variableForm">
+                        <div class="row row-cols-md-auto g-1 align-items-center">
+                          <div class="col-6">
+                            <select id="variableSelect" name="variableId" class="form-select form-select-sm">
+                            </select>
+                          </div>
+                          <div class="col-6">
+                            <button type="submit" class="btn btn-primary btn-sm button-send">Send</button>
+                          </div>
+                        </div>
+                      </form>
+                  
+              </div>
+              <div class="row my-3">
+                  <div id="defence-and-security-graphics"></div>
+              </div>
+            </div>
+          </div>
+      </div>
         <div class="col-sm-12">
           <div class="card">
             <div class="card-header">
@@ -218,5 +242,84 @@
           slider.noUiSlider.set(this.value);
         });
       })();
+      
+      function fetchAndRenderGraph(variableId) {
+            fetch(`/api/base-model-graph-data?variableId=${variableId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data.length === 0) {
+                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
+                        return;
+                    }
+                    function generateColors(numScenarios) {
+                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Add more base colors if needed
+                        return baseColors.slice(0, numScenarios);
+                    }
+
+                    const numScenarios = data.data.length;
+                    const colors = generateColors(numScenarios);
+                    var series = data.data.map(item => {  
+                      return {
+                            name: item.scenario_name,
+                            data: item.values
+                        };
+                    });
+                    var options = {
+                        chart: {
+                            fontFamily: 'Inter var, sans-serif',
+                            type: 'area',
+                            height: 370,
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: colors,
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                shadeIntensity: 1,
+                                type: 'vertical',
+                                inverseColors: false,
+                                opacityFrom: 0.3,
+                                opacityTo: 0
+                            }
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            width: 3
+                        },
+                        plotOptions: {
+                            bar: {
+                                columnWidth: '45%',
+                                borderRadius: 4
+                            }
+                        },
+                        grid: {
+                            strokeDashArray: 4
+                        },
+                        series: series,
+                        xaxis: {
+                            categories: data.data[0].node_points.map(String),
+                            axisBorder: {
+                                show: false
+                            },
+                            axisTicks: {
+                                show: false
+                            }
+                        }
+                    };
+
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '';
+
+                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
+                    chart.render();
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
+                });
+        }
     </script>
 @endsection
