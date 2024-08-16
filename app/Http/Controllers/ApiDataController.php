@@ -20,7 +20,15 @@ class ApiDataController extends Controller
 
         return response()->json($data);
     }
+    public function getKeyVariableActive()
+    {
+        // $data = Variable::all();
+        $data = DB::table('variables')
+            ->where('key_variable', 1)
+            ->get();
 
+        return response()->json($data);
+    }
     public function baseModelGraph(Request $request)
     {
         $idVariable = $request->query('variableId');
@@ -66,8 +74,6 @@ class ApiDataController extends Controller
 
     public function variabelActiveGraph()
     {
-
-       
         $data = DB::table('scenario_data')
                 // ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')

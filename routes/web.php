@@ -98,6 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('api')->name('api.')->group(function(){
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
+        Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
         //graph
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
         Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');

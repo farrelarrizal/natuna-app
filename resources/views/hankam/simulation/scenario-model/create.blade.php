@@ -68,6 +68,7 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between">
+                
                   <h5 class="mb-0">Defence and Security Graphics</h5>
                       <form id="variableForm">
                         <div class="row row-cols-md-auto g-1 align-items-center">
@@ -82,6 +83,14 @@
                       </form>
                   
               </div>
+              {{-- <div class="pc-component">
+                  <div class="alert alert-primary my-3" role="alert">
+                      <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
+                      Information Notes 
+                      <p>Additional description and information about copywriting.</p>
+                    </div>
+              </div> --}}
+             
               <div class="row my-3">
                   <div id="defence-and-security-graphics"></div>
               </div>
@@ -209,41 +218,30 @@
     <script src="<?= asset('assets/js/plugins/wNumb.min.js') ?>"></script>
     <script src="<?= asset('assets/js/plugins/nouislider.min.js') ?>"></script>
     <script>
-      (function () {
-        // init slider
-        var slider = document.getElementById('pc-no_ui_slider-1');
+      // js untuk graph 
+      document.addEventListener('DOMContentLoaded', function () {
+        var variableSelect = document.getElementById('variableSelect');
+        var variableForm = document.getElementById('variableForm');
 
-        noUiSlider.create(slider, {
-          start: [0],
-          step: 35,
-          range: {
-            min: [0],
-            max: [135]
-          },
-          format: wNumb({
-            decimals: 0
-          }),
-          tooltips: [
-            true,
-            wNumb({
-              decimals: 1
-            })
-          ],
-        });
+        function loadVariables() {
+            fetch('/api/get-variables-active')
+                .then(response => response.json())
+                .then(variables => {
+                    variables.forEach(variable => {
+                        var option = document.createElement('option');
+                        option.value = variable.id;
+                        option.textContent = 'Variable '+ variable.id + ' (' + variable.name + ')';
+                        variableSelect.appendChild(option);
+                    });
+                    
+                    if (variables.length > 0) {
+                        fetchAndRenderGraph(variables[0].id);
+                    }
+                })
+                .catch(error => console.error('Error loading vriables:', error));
+        }
 
-        // init slider input
-        var sliderInput = document.getElementById('pc-no_ui_slider-1-input');
-
-        slider.noUiSlider.on('update', function (values, handle) {
-          sliderInput.value = values[handle];
-        });
-
-        sliderInput.addEventListener('change', function () {
-          slider.noUiSlider.set(this.value);
-        });
-      })();
-      
-      function fetchAndRenderGraph(variableId) {
+        function fetchAndRenderGraph(variableId) {
             fetch(`/api/base-model-graph-data?variableId=${variableId}`)
                 .then(response => response.json())
                 .then(data => {
@@ -321,5 +319,49 @@
                     document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
                 });
         }
+
+        loadVariables();
+
+        variableForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var variableId = variableSelect.value;
+            fetchAndRenderGraph(variableId);
+        });
+      });
+      (function () {
+        // init slider
+        var slider = document.getElementById('pc-no_ui_slider-1');
+
+        noUiSlider.create(slider, {
+          start: [0],
+          step: 35,
+          range: {
+            min: [0],
+            max: [135]
+          },
+          format: wNumb({
+            decimals: 0
+          }),
+          tooltips: [
+            true,
+            wNumb({
+              decimals: 1
+            })
+          ],
+        });
+
+        // init slider input
+        var sliderInput = document.getElementById('pc-no_ui_slider-1-input');
+
+        slider.noUiSlider.on('update', function (values, handle) {
+          sliderInput.value = values[handle];
+        });
+
+        sliderInput.addEventListener('change', function () {
+          slider.noUiSlider.set(this.value);
+        });
+      })();
+      
+      
     </script>
 @endsection
