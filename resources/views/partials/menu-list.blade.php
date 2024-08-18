@@ -24,6 +24,17 @@
     <span class="pc-mtext">Recommendation</span>
   </a>
 </li>
+{{-- <li class="pc-item">
+  <a href="{{ route('dashboard.recommendation') }}" class="pc-link {{ Request::route()->getName() === 'dashboard.recommendation' ? 'active' : '' }}">
+    <span class="pc-micon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path d="M10.5 13.75C13.9173 13.75 16.6875 11.0824 16.6875 7.79168C16.6875 4.50098 13.9173 1.83334 10.5 1.83334C7.08274 1.83334 4.3125 4.50098 4.3125 7.79168C4.3125 11.0824 7.08274 13.75 10.5 13.75Z" fill="#5B6B79"/>
+        <path opacity="0.4" d="M6.3933 12.3933L6.38416 19.1583C6.38416 19.9833 6.96166 20.3866 7.67666 20.0475L10.1333 18.8833C10.335 18.7825 10.6741 18.7825 10.8758 18.8833L13.3417 20.0475C14.0475 20.3775 14.6342 19.9833 14.6342 19.1583V12.2283" fill="#5B6B79"/>
+      </svg>
+    </span>
+    <span class="pc-mtext">Policy Brief</span>
+  </a>
+</li> --}}
 <li class="pc-item">
   <a href="{{ route('dashboard.maps') }}" class="pc-link {{ Request::route()->getName() === 'dashboard.maps' ? 'active' : '' }}">
     <span class="pc-micon">
@@ -73,7 +84,7 @@
     <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.hybrid-military') }}">Hybrid Threats</a></li>
   </ul>
 </li>
-<li class="pc-item">
+{{-- <li class="pc-item">
   <a href="{{ route('hankam.details') }}" class="pc-link {{ Request::route()->getName() === 'hankam.details' ? 'active' : '' }}">
     <span class="pc-micon">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -85,7 +96,7 @@
     </span>
     <span class="pc-mtext">Details</span>
   </a>
-</li>
+</li> --}}
 
 <li class="pc-item pc-hasmenu">
   <a href="#!" class="pc-link {{ Request::route()->getName() === 'hankam.simulation.base-model.index' || Request::route()->getName() === 'hankam.simulation.scenario-model.index' || Request::route()->getName() === 'hankam.simulatiaon.outcome-scenario.index' ? 'active' : '' }}">
