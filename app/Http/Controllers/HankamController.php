@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Variable;
-use App\Models\Models;
+use App\Models\ModelSD;
 use App\Models\Sfd;
 use App\Models\Scenario;
 use App\Models\ScenarioData;
@@ -73,13 +73,15 @@ class HankamController extends Controller
     public function simulationBaseModel()
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+        $image = $get_active_model_id->image;
 
         $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
-            'variable' => $dataVariable
+            'variable' => $dataVariable,
+            'image' =>$image
         ];
         return view('hankam.simulation.base-model.index', $data);
     }
@@ -138,7 +140,7 @@ class HankamController extends Controller
 
         $fileImage = $request->file('image');
         $imageName = $fileImage->hashName();
-        $pathImage = $fileImage->storeAs('imageModels', $imageName);
+        $pathImage = $fileImage->storeAs('imageModels', $imageName, 'public');
 
         $new_id = DB::table('models')->insertGetId([
             'name' => $request->name,
@@ -216,7 +218,7 @@ class HankamController extends Controller
             return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
         }
     }
-    public function detailScenarioModel()
+    public function detailScenarioModel($id)
     {
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',

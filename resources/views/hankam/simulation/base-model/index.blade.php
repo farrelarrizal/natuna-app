@@ -100,6 +100,20 @@
             </div>
         </div>
         <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+    
+             <div class="row mt-3">
+              <img src="{{ Storage::url($image) }}" alt="Model Image">
+            </div>
+             
+              <div class="row my-3">
+                  <div id="defence-and-security-graphics"></div>
+              </div>
+            </div>
+          </div>
+      </div>
+        <div class="col-md-12">
             <div class="card">
               <div class="card-header d-flex align-items-center justify-content-between">
                 <h5>Variable Detail</h5>
@@ -121,7 +135,7 @@
                         <hr class="border border-primary-subtle" />
                       </div>
                     @endforeach
-                </div>
+                  </div>
               </div>
             </div>
         </div>
