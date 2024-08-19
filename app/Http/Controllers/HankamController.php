@@ -272,13 +272,80 @@ class HankamController extends Controller
     }
     public function detailScenarioModel($id)
     {
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
+        $scenario = Scenario::findOrFail($id);
+        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
             'breadcrumb_item' => 'Simulation',
+            'rowSfd' => $rowSfd,
+            'scenario' => $scenario,
+            'dataVariable' => $dataVariable,
         ];
         return view('hankam.simulation.scenario-model.detail', $data);
     }
+
+
+    public function editVariableScenarioModel($id)
+    {
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
+        $scenario = Scenario::findOrFail($id);
+        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+        
+        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')
+                                ->where('model_id', $get_active_model_id->id)
+                                ->get();
+
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+            'rowSfd' => $rowSfd,
+            'scenario' => $scenario,
+            'dataVariable' => $dataVariable  
+        ];
+
+        return view('hankam.simulation.scenario-model.edit', $data);
+    }
+
+    public function updateVariableScenarioModel(Request $request, $id)
+    {
+        try {
+            $validatedScenario = $request->validate([
+                'name' => 'required|string|max:255',
+                'desc' => 'required|string',
+                'sfd_id' => 'required|exists:sfd,id',
+                'timestep' => 'required|integer',
+            ]);
+            $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+
+            $scenario = Scenario::findOrFail($id);
+            $scenario->update($validatedScenario);
+
+            foreach ($request->input('values', []) as $variableId => $value) {
+                $variable = Variable::where('model_id', $model_id)->find($variableId);
+
+                if ($variable) {
+                    $variable->value = $value;
+                    $variable->save();
+                } else {
+                    return redirect()->back()->withErrors(['error' => 'Invalid variable ID: ' . $variableId]);
+                }
+            }
+
+            return redirect()->route('hankam.simulation.scenario-model.detail', ['id' => $id])
+                            ->with('success', 'Variables updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to update variables. Please try again.');
+        }
+    }
+
+
 
     public function simulationOutcomeScenario()
     {
