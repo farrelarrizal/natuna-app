@@ -85,7 +85,7 @@
         </a>
       </div>
     </li>
-    
+
     <li class="dropdown pc-h-item">
       <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
         <svg class="pc-icon">
@@ -206,21 +206,21 @@
                 <img src="<?= asset('assets/images/user/avatar-2.jpg') ?>" alt="user-image" class="user-avtar wid-35" />
               </div>
               <div class="flex-grow-1 ms-3">
-                <h6 class="mb-1">Carson Darrin 🖖</h6>
-                <span>carson.darrin@company.io</span>
+                <h6 class="mb-1">Admin</h6>
+                <span>admin</span>
               </div>
             </div>
             <hr class="border-secondary border-opacity-50" />
             <div class="d-grid mb-3">
-            <form action="<?php echo route('logout'); ?>" method="POST">
-              <?php echo csrf_field(); ?>
+              <form action="<?php echo route('logout'); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="btn btn-primary">
-                    <svg class="pc-icon me-2">
-                        <use xlink:href="#custom-logout-1-outline"></use>
-                    </svg>Logout
+                  <svg class="pc-icon me-2">
+                    <use xlink:href="#custom-logout-1-outline"></use>
+                  </svg>Logout
                 </button>
-            </form>
-            
+              </form>
+
             </div>
           </div>
         </div>

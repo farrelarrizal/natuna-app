@@ -22,7 +22,7 @@ class AuthController extends Controller
         $password = $request->password;
 
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            return redirect()->intended('dashboard');
+            return redirect()->intended('dashboard/executive-summary');
         }
 
         return redirect()->back()->with('error', 'Email atau password salah');

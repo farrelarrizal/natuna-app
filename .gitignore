@@ -22,3 +22,4 @@ yarn-error.log
 *.mdl
 *.vdfx
 *.csv
+/venv

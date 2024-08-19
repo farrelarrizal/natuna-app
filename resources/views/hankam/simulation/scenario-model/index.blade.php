@@ -18,7 +18,7 @@
                 </li>
                 <li class="list-inline-item text-filter">
                     <h5 class="mb-0">Defense and Security Scenario Model</h5>
-                    <span>Base Model </span>
+                    <span>Scenario Model </span>
                 </li>
             </ul>
             <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
@@ -58,7 +58,7 @@
                         <td>
                           <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
                           <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                          <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
+                          <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
                           <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
                         </td>
                       </tr>

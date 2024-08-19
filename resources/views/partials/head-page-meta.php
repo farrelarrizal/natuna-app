@@ -8,4 +8,4 @@
 <meta name="author" content="Phoenixcoded">
 
 <!-- [Favicon] icon -->
-<link rel="icon" href="<?= asset('assets/images/favicon.svg') ?>" type="image/x-icon">
+<link rel="icon" href="<?= asset('assets/images/logo-dasina.png') ?>" type="image/x-icon">
