@@ -22,9 +22,10 @@ class ApiDataController extends Controller
     }
     public function getKeyVariableActive()
     {
-        // $data = Variable::all();
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
         $data = DB::table('variables')
             ->where('key_variable', 1)
+            ->where('model_id', $model_id)
             ->get();
 
         return response()->json($data);
@@ -75,7 +76,7 @@ class ApiDataController extends Controller
     public function variabelActiveGraph()
     {
         $data = DB::table('scenario_data')
-                // ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
+            // ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', 6)
             ->select(
@@ -85,8 +86,8 @@ class ApiDataController extends Controller
             )
             ->get();
 
-            return $data;
-            
+        return $data;
+
         $finalData = [];
         $groupedData = $data->groupBy('scenario_id');
 
@@ -111,5 +112,42 @@ class ApiDataController extends Controller
             'data' => $finalData,
         ];
         return response()->json($response);
+    }
+
+    public function downloadScenarioModel($id)
+    {
+        $scenario = DB::table('scenarios')->where('id', $id)->first();
+        $scenario_name = $scenario->name;
+
+        $final_time = $scenario->timestep;
+
+
+        $base_model = DB::table('models')->where('is_active', 1)->first();
+        $base_model_name = $base_model->name;
+
+        # lower case and replace space with underscore
+        $base_model_name = str_replace(' ', '', strtolower($base_model_name));
+        $scenario_name = str_replace(' ', '', strtolower($scenario_name));
+
+        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $final_time . '.mdl';
+
+        # call the shell script to generate the model
+        // ./run_model_export.sh -f ../../storage/app/uploads/Q029J5Z56q6tKbGmsm62wH0RGZCmrOSTlAilcQqx.bin -e ../../storage/app/scenarioModels/export-model-final.mdl -t 125 -s 10
+        $command = './run_model_export.sh -f ' . storage_path('app/' . $base_model->pathfile) . ' -e ' . storage_path('app/scenarioModels/' . $scenario_filename) . ' -t ' . $final_time . ' -s ' . $scenario->id;
+        $output = shell_exec($command);
+
+        $scenario->export_path = 'scenarioModels/' . $scenario_filename;
+
+        # update the db first
+        DB::table('scenarios')->where('id', $id)->update(['export_path' => $scenario->export_path]);
+
+        if (!$scenario) {
+            return response()->json([
+                'message' => 'Scenario not found',
+            ], 404);
+        }
+
+        $filepath = storage_path('app/' . $scenario->export_path);
+        return response()->download($filepath);
     }
 }

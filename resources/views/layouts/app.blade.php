@@ -31,6 +31,9 @@
     <!-- [Page Specific JS] start-->
 <!-- Apex Chart -->
 <script src="<?= asset('assets/js/plugins/apexcharts.min.js') ?>"></script>
+<!-- Sweet Alert -->
+<script src="<?= asset('assets/js/plugins/sweetalert2.all.min.js') ?>"></script>
+<script src="<?= asset('assets/js/pages/ac-alert.js') ?>"></script>
 <!-- [Page Specific JS] end -->
 @include('partials/customizer')
 @yield('script')

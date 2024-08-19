@@ -104,12 +104,12 @@
                       data-slider-value="14"
                     >
                   </div> --}}
-                  <label class="col-form-label col-lg-3 col-sm-12">Basic Setup</label>
+                  <label class="col-form-label col-lg-3 col-sm-12">Final Time (Month)</label>
                   <div class="col-lg-6 col-md-12 col-sm-12">
                     
                       <div class="row align-items-center">
                         <div class="col-4">
-                          <input type="text" class="form-control" id="pc-no_ui_slider-1-input" placeholder="Quantity">
+                          <input type="text" class="form-control" id="pc-no_ui_slider-1-input" placeholder="0">
                         </div>
                         <div class="col-8">
                           <div id="pc-no_ui_slider-1" class="pc-no_ui_slider--drag-danger"></div>

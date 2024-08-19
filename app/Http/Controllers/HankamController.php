@@ -18,11 +18,53 @@ class HankamController extends Controller
     //
     public function summary()
     {
+        $naval_strength = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Strength')
+            ->first();
+
+        if ($naval_strength == null) {
+            $naval_strength = 0;
+        } else {
+            $naval_strength = $naval_strength->value;
+        }
+
+        $naval_deployment = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Deployment')
+            ->first();
+
+        if ($naval_deployment == null) {
+            $naval_deployment = 0;
+        } else {
+            $naval_deployment = $naval_deployment->value;
+        }
+
+        $naval_capabilities = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Capabilities')
+            ->first();
+
+        # if len naval_capabilities == 0, then naval_capabilities = 0
+        if ($naval_capabilities == null) {
+            $naval_capabilities = 0;
+        }
+
         $data = [
             'title' => 'Defence and Security | Summary',
             'head_title' => 'Summary',
             'breadcrumb_item' => 'Defence and Security',
+            'naval_strength' => $naval_strength,
+            'naval_deployment' => $naval_deployment,
+            'naval_capabilities' => $naval_capabilities
         ];
+
         return view('hankam.summary', $data);
     }
     public function details()
@@ -81,7 +123,7 @@ class HankamController extends Controller
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
             'variable' => $dataVariable,
-            'image' =>$image
+            'image' => $image
         ];
         return view('hankam.simulation.base-model.index', $data);
     }
@@ -131,7 +173,7 @@ class HankamController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'desc' => ['required', 'string', 'max:255'],
             'file' => ['required', 'file'],
-            'image' => ['file', 'required']
+            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg']
         ]);
 
         $file = $request->file('file');
@@ -140,13 +182,19 @@ class HankamController extends Controller
 
         $fileImage = $request->file('image');
         $imageName = $fileImage->hashName();
-        $pathImage = $fileImage->storeAs('imageModels', $imageName, 'public');
+
+        # store to assets/imageModels
+
+        $pathImage = $fileImage->move(public_path('assets/imageModels'), $imageName);
+
+
+        // $pathImage = $fileImage->storeAs('imageModels', $imageName);
 
         $new_id = DB::table('models')->insertGetId([
             'name' => $request->name,
             'desc' => $request->desc,
             'pathfile' => $path,
-            'image' => $pathImage,
+            'image' => 'assets/imageModels/' . $imageName,
             'is_active' => 1
         ]);
 
@@ -169,7 +217,11 @@ class HankamController extends Controller
 
     public function simulationScenarioModel()
     {
-        $scenarios = Scenario::join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
+        # join scenarios, sfd, and models
+        $scenarios = DB::table('scenarios')
+            ->join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
+            ->join('models', 'sfd.model_id', '=', 'models.id')
+            ->where('models.is_active', 1)
             ->select('scenarios.id', 'scenarios.name', 'scenarios.desc', 'sfd.name as sfd_name', 'scenarios.timestep', 'scenarios.created_at')
             ->get();
 
@@ -230,7 +282,13 @@ class HankamController extends Controller
 
     public function simulationOutcomeScenario()
     {
-        $scenarios = Scenario::with('sfd')->get();
+        $scenarios = DB::table('scenarios')
+            ->join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
+            ->join('models', 'sfd.model_id', '=', 'models.id')
+            ->where('models.is_active', 1)
+            ->select('scenarios.id', 'scenarios.name', 'scenarios.desc', 'sfd.name as sfd_name', 'scenarios.timestep', 'scenarios.created_at')
+            ->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
@@ -257,13 +315,17 @@ class HankamController extends Controller
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
 
-        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)
+            ->where('key_variable', 1)
+            ->get();
 
         $scenario = Scenario::findOrFail($id);
         $scenarioData = ScenarioData::where('scenario_id', $id)
             ->with('variable')
             ->get()
             ->unique('variable_id');
+
+
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',

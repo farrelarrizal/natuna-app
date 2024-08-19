@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('css')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -23,7 +24,7 @@
             <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
         </ul>
       </div>
-      <div class="col-sm-4 mb-2">
+      {{-- <div class="col-sm-4 mb-2">
         <form action="">
           <select class="form-select">
             <option selected="">Year</option>
@@ -54,10 +55,10 @@
         </select>
         </form>
         
-      </div>
+      </div> --}}
     </div>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
@@ -84,8 +85,8 @@
                   <div class="col-md-4 col-xl-4">
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
-                        <p class="text-muted mb-1">Average Score</p>
-                        <h5 class="mb-0 p-3 color-block text-blue-500">4,175/5</h5>
+                        <p class="text-muted mb-1">Naval Strength</p>
+                        <h5 class="mb-0 p-3 color-block text-blue-500">{{ $naval_strength}}/100</h5>
                       </div>
                       <div class="col-6">
                         <div id="average-score-graph"></div>
@@ -96,7 +97,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Deployment</p>
-                        <h5 class="mb-0 p-3 color-block text-red-500">3,625/5</h5>
+                        <h5 class="mb-0 p-3 color-block text-red-500">{{ $naval_deployment }}/5</h5>
                       </div>
                       <div class="col-6">
                         <div id="naval-deployment-graph"></div>
@@ -106,8 +107,8 @@
                   <div class="col-md-4 col-xl-4">
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
-                        <p class="text-muted mb-1">Naval Capacity</p>
-                        <h5 class="mb-0 p-3 color-block text-green-500">4,485/5</h5>
+                        <p class="text-muted mb-1">Naval Capabilties</p>
+                        <h5 class="mb-0 p-3 color-block text-green-500">{{ $naval_capabilities }}/5</h5>
                       </div>
                       <div class="col-6">
                         <div id="naval-capacity-graph"></div>
@@ -116,19 +117,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="mb-0">Safest Region</h5>
-                    </div>
-                    <div class="my-3">
-                        <div id="safes-region-graph"></div>
-                        <h6 class="text-center mt-3">North Natuna <small class="text-primary"><i class="ti ti-arrow-up-right"></i> 30.6%</small></h6>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-md-12">

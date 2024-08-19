@@ -26,14 +26,14 @@
           </ul> 
         </div>
         <div class="col-sm-7">
-          <form action="" method="post">
+          {{-- <form action="" method="post">
             <select name="" id="" class="form-select">
               <option selected>Select SFD</option>
                 <option value="sfd-1">SFD 1</option>
                 <option value="sfd-2">SFD 2</option>
                 <option value="sfd-3">SFD 3</option>
             </select>
-          </form>
+          </form> --}}
       </div>  
     </div>
     <div class="row">
@@ -128,7 +128,7 @@
                   </div>
 
                   <div class="col-lg-12 mb-3">
-                    <label class="form-label">Final Step</label>
+                    <label class="form-label">Final Time</label>
                     <input class="form-control" type="number" name="timestep" id="" value="132">
                   </div>
                   <div class="col-lg-12 mb-3">

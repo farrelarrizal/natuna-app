@@ -18,7 +18,7 @@
                 </li>
                 <li class="list-inline-item text-filter">
                     <h5 class="mb-0">Defense and Security Scenario Model</h5>
-                    <span>Last Edit: 17 May 2024 18:50</span>
+                    <span>Base Model </span>
                 </li>
             </ul>
             <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
@@ -39,7 +39,9 @@
                         <th>Id</th>
                         <th>Scenario Name</th>
                         <th>Scenario Description</th>
-                        <th>Create At</th>
+                        <th>SFD Name</th>
+                        <th>Final Time</th>
+                        <th>Created At</th>
                         <th>Action</th>
                         
                       </tr>
@@ -50,9 +52,11 @@
                         <td>{{$scenario->id}}</td>
                         <td>{{$scenario->name}}</td>
                         <td>{{$scenario->desc}}</td>
+                        <td>{{$scenario->sfd_name}}</td>
+                        <td>{{$scenario->timestep}}</td>
                         <td>{{$scenario->created_at}}</td>
                         <td>
-                          <button type="button" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Export</button>
+                          <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
                           <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
                           <button type="button" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</button>
                           <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
@@ -65,8 +69,10 @@
                       <tr>
                         <th>Id</th>
                         <th>Scenario Name</th>
-                        <th>Create At</th>
-                        <th>Action</th>
+                        <th>Scenario Description</th>
+                        <th>SFD Name</th>
+                        <th>Final Time</th>
+                        <th>Created At</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -225,6 +231,59 @@
 
       $('input.column_filter').on('keyup click', function () {
         filterColumn($(this).parents('tr').attr('data-column'));
+      });
+
+      // if button download clicked show the sweet alert
+      $('.download').on('click', function(){
+        Swal.fire({
+          title: 'Download Scenario',
+          text: "Are you sure want to download this scenario?",
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, download it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // loading animation
+            Swal.fire({
+              title: 'Downloading...',
+              html: 'Please wait while we download the scenario',
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+              }
+            })
+
+            // hit controller to download the scenario
+            $.ajax({
+              data: {
+                id: $(this).data('id')
+              },
+              url: '{{route('api.scenario-model.download', ':id')}}'.replace(':id', $(this).data('id')),
+              type: 'GET',
+              // wait until the download is finished
+              success: function(response){
+                Swal.fire({
+                  title: 'Download Success',
+                  text: 'Scenario has been downloaded',
+                  icon: 'success',
+                  timer: 2000,
+                  timerProgressBar: true
+                })
+              }
+              // if error
+            }).fail(function(){
+              Swal.fire({
+                title: 'Download Failed',
+                text: 'Scenario download failed',
+                icon: 'error',
+                timer: 2000,
+                timerProgressBar: true
+              })
+            })
+          }
+        })
       });
     </script>
 @endsection
