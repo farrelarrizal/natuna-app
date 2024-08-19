@@ -161,106 +161,115 @@
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
     
     <script>
-      // js untuk graph 
       document.addEventListener('DOMContentLoaded', function () {
-        var variableSelect = document.getElementById('variableSelect');
-        var variableForm = document.getElementById('variableForm');
+    var variableSelect = document.getElementById('variableSelect');
+    var variableForm = document.getElementById('variableForm');
 
-        function loadVariables() {
-            fetch('/api/get-variables-active')
-                .then(response => response.json())
-                .then(variables => {
-                    variables.forEach(variable => {
-                        var option = document.createElement('option');
-                        option.value = variable.id;
-                        option.textContent = 'Variable ' + variable.name 
-                        variableSelect.appendChild(option);
-                    });
-                    
-                    if (variables.length > 0) {
-                        fetchAndRenderGraph(variables[0].id);
-                    }
-                })
-                .catch(error => console.error('Error loading vriables:', error));
-        }
-
-        function fetchAndRenderGraph(variableId) {
-            fetch(`/api/base-model-graph-data?variableId=${variableId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.data.length === 0) {
-                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
-                        return;
-                    }
-                    function generateColors(numScenarios) {
-                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Add more base colors if needed
-                        return baseColors.slice(0, numScenarios);
-                    }
-
-                    const numScenarios = data.data.length;
-                    const colors = generateColors(numScenarios);
-                    var series = data.data.map(item => {  
-                      return {
-                            name: item.scenario_name,
-                            data: item.values
-                        };
-                    });
-                    var options = {
-                        chart: {
-                            fontFamily: 'Inter var, sans-serif',
-                            type: 'area',
-                            height: 370,
-                            toolbar: {
-                                show: false
-                            }
-                        },
-                        colors: colors,
-                        fill: {
-                            type: 'gradient',
-                            gradient: {
-                                shadeIntensity: 1,
-                                type: 'vertical',
-                                inverseColors: false,
-                                opacityFrom: 0.3,
-                                opacityTo: 0
-                            }
-                        },
-                        dataLabels: {
-                            enabled: false
-                        },
-                        stroke: {
-                            width: 3
-                        },
-                        plotOptions: {
-                            bar: {
-                                columnWidth: '45%',
-                                borderRadius: 4
-                            }
-                        },
-                        grid: {
-                            strokeDashArray: 4
-                        },
-                        series: series,
-                        xaxis: {
-                            categories: data.data[0].node_points.map(String),
-                            axisBorder: {
-                                show: false
-                            },
-                            axisTicks: {
-                                show: false
-                            }
-                        }
-                    };
-
-                    document.querySelector('#defence-and-security-graphics').innerHTML = '';
-
-                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
-                    chart.render();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
+    function loadVariables() {
+        fetch('/api/get-variables-active')
+            .then(response => response.json())
+            .then(variables => {
+                variables.forEach(variable => {
+                    var option = document.createElement('option');
+                    option.value = variable.id;
+                    option.textContent = 'Variable ' + variable.name 
+                    variableSelect.appendChild(option);
                 });
+
+                if (variables.length > 0) {
+                    fetchAndRenderGraph(variables[0].id);
+                }
+            })
+            .catch(error => console.error('Error loading variables:', error));
+    }
+
+    function fetchAndRenderGraph(variableId) {
+        fetch(`/api/base-model-graph-data?variableId=${variableId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.data.length === 0) {
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
+                    return;
+                }
+
+                function generateColors(numScenarios) {
+                    const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Tambahkan lebih banyak warna jika diperlukan
+                    return baseColors.slice(0, numScenarios);
+                }
+
+                const numScenarios = data.data.length;
+                const colors = generateColors(numScenarios);
+
+                var series = data.data.map(item => {  
+                    return {
+                        name: item.scenario_name,
+                        data: item.values
+                    };
+                });
+
+                const xaxisCategories = data.data[0].node_points.map(String);
+
+                var options = {
+                    chart: {
+                        fontFamily: 'Inter var, sans-serif',
+                        type: 'area',
+                        height: 370,
+                        toolbar: {
+                            show: false
+                        }
+                    },
+                    colors: colors,
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            type: 'vertical',
+                            inverseColors: false,
+                            opacityFrom: 0.3,
+                            opacityTo: 0
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        width: 3
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '45%',
+                            borderRadius: 4
+                        }
+                    },
+                    grid: {
+                        strokeDashArray: 4
+                    },
+                    series: series,
+                    xaxis: {
+                        categories: xaxisCategories,
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        },
+                        labels: {
+                            show: true,
+                            step: 2 // Tampilkan setiap 2 titik data pada sumbu x
+                        },
+                        tickAmount: Math.floor(xaxisCategories.length / 10) // Mengatur jumlah tick pada sumbu x
+                    }
+                };
+
+                document.querySelector('#defence-and-security-graphics').innerHTML = '';
+
+                var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
+                chart.render();
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
+            });
         }
 
         loadVariables();
@@ -270,7 +279,9 @@
             var variableId = variableSelect.value;
             fetchAndRenderGraph(variableId);
         });
-      });
+    });
+
+
 
       // [ Add Rows ]
       var t = $('#add-row-table').DataTable();

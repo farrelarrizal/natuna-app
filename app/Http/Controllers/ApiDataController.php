@@ -76,43 +76,55 @@ class ApiDataController extends Controller
     public function variabelActiveGraph()
     {
         $data = DB::table('scenario_data')
-            // ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
+            ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', 6)
+            ->join('models', 'models.id', '=', 'variables.model_id')
+            ->where('models.is_active', 1)
+            ->where('variables.key_variable', 1)
             ->select(
-                'variables.id as variable_id',
+                'scenarios.id as scenario_id',
+                'scenarios.name as scenario_name',
+                'variables.name as variable_name',
                 'scenario_data.node_point',
-                'scenario_data.value',
+                'scenario_data.value'
             )
             ->get();
 
-        return $data;
-
+        // Kelompokkan data berdasarkan scenario_id dan variable_name
         $finalData = [];
-        $groupedData = $data->groupBy('scenario_id');
+        $groupedData = $data->groupBy('variable_name');
 
-        foreach ($groupedData as $scenarioId => $items) {
-            $nodePoints = [];
-            $values = [];
+        foreach ($groupedData as $variableName => $items) {
+            $scenarioData = $items->groupBy('scenario_id');
 
-            foreach ($items as $item) {
-                $nodePoints[] = $item->node_point;
-                $values[] = $item->value;
+            foreach ($scenarioData as $scenarioId => $scenarioItems) {
+                $nodePoints = [];
+                $values = [];
+
+                foreach ($scenarioItems as $item) {
+                    $nodePoints[] = $item->node_point;
+                    $values[] = $item->value;
+                }
+                $scenarioName = $scenarioItems->first()->scenario_name;
+
+                $finalData[] = [
+                    'variable_name' => $variableName,
+                    'scenario_id' => $scenarioId,
+                    'scenario_name' => $scenarioName,
+                    'node_points' => $nodePoints,
+                    'values' => $values,
+                ];
             }
-            $scenarioName = $items->first()->scenario_name;
-
-            $finalData[] = [
-                'scenario_id' => $scenarioId,
-                'scenario_name' => $scenarioName,
-                'node_points' => $nodePoints,
-                'values' => $values,
-            ];
         }
+
+        // Mengembalikan data sebagai JSON
         $response = [
             'data' => $finalData,
         ];
         return response()->json($response);
     }
+
+
 
     public function downloadScenarioModel($id)
     {
