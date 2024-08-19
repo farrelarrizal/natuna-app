@@ -1,0 +1,807 @@
+{UTF-8}
+Level of Threat=
+	National Sea Threat Risk/North Natuna Defense and Security
+	~	1
+	~		|
+
+Defense Score=
+	Naval Defense Posture/North Natuna Defense and Security
+	~	Dmnl/Year
+	~		|
+
+Foreign Policy=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Combined Deploy=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Multilateral Power=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Defense Capability=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	1
+	~		|
+
+Diplomacy Ability=
+	(Diplomatic Network*0.4)+(Foreign Policy*0.3)+(Multilateral Power*0.3)
+	~	
+	~		|
+
+Diplomatic Network=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	1
+	~		|
+
+Naval Capabilities=
+	(Defense Capability*0.3)+(Diplomacy Ability*0.3)+(Support Capabilities*0.1)+(Intelligence Ability*0.15)+(Regional Empowerment Capabilities*0.15)
+	~	Percentage
+	~		|
+
+Disinfromation Campaign Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Disinfromation Campaign Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Drug Shipping Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Drug Shipping Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+North Natuna Defense and Security=
+	 INTEG (Defense Score-Level of Threat,60)
+	~	Percentage
+	~		|
+
+Embargo Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Embargo Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Manipulation Signal Used Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Support Capabilities=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Espionage by Maritime Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	Level
+	~		|
+
+Espionage by Maritime Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	Level
+	~		|
+
+Piracy Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Piracy Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Firewall Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	Level
+	~		|
+
+Firewall Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	Level
+	~		|
+
+Proxy Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Grouped Deploy=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Regional Empowerment Capabilities=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+
+	~	
+	~		|
+
+Manipulation Signal Used Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Natural Disaster Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Natural Disaster Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+IT System Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Illegal Fishing Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Illegal Fishing Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Intelligence Ability=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	1
+	~		|
+
+Military Invasion Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Smuggling Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Military Invasion Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Social Media Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Naval Defense Posture=
+	(Naval Strength*0.33)+(Naval Capabilities*0.33)+(Naval Deployment*0.33)
+	~	Percentage
+	~		|
+
+Social Media Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Proxy Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Smuggling Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Terorism Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Naval Deployment=
+	(Grouped Deploy*0.5)+(Combined Deploy*0.3)+(Unit Deploy*0.2)
+	~	Percentage
+	~		|
+
+Unit Deploy=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Terorism Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Sabotage Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Sabotage Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Aircraft Strength=
+	(Enablers Aircraft*0.5)+(Fighters Aircraft Score*0.5)
+	~	
+	~		|
+
+Combat Vehicle Score=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Harbour=
+	(Refuel*0.3)+(Repair*0.2)+(Recreation*0.2)+(Replenishment*0.15)+(Rest*0.15)
+	~	Percentage
+	~		|
+
+Refuel=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Repair=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Replenishment=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Rest=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Patroling=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Marine Personel Forces=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Fighters Aircraft Score=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Warships Strength=
+	(Patroling*0.3)+(Striking*0.5)+(Supporting*0.2)
+	~	Percentage
+	~		|
+
+Naval Strength=
+	(Warships Strength*0.5)+(Aircraft Strength*0.2)+(Harbour*0.15)+(Marine Forces Strength\
+*0.15)
+	~	Dmnl
+	~		|
+
+IT System Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Recreation=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Supporting=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Enablers Aircraft=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Marine Ability Score=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	
+	~		|
+
+Marine Forces Strength=
+	(Combat Vehicle Score*0.3)+(Marine Ability Score*0.3)+(Marine Personel Forces*0.4)
+	~	Percentage
+	~		|
+
+Striking=
+	(RANDOM UNIFORM( 1 , 5 , 1 ))*20
+	~	Percentage
+	~		|
+
+Hijacking Severity=
+	RANDOM UNIFORM( 1 , 4 , 1 )
+	~	
+	~		|
+
+Hijacking Probability=
+	RANDOM UNIFORM( 1 , 5 , 1 )
+	~	
+	~		|
+
+Cyber Attack Level of Threats=
+	(Espionage by Maritime Level of Threats+Firewall Level of Threats+IT System Level of Threats\
++Manipulation Signal Used Level of Threats+Misuses of AIS and Positioning Data Level of Threats\
+)/Number of Cyber Attack
+	~	Level
+	~		|
+
+Disinfromation Campaign Level of Threats=
+	Disinfromation Campaign Probability+Disinfromation Campaign Severity
+	~	
+	~		|
+
+National Sea Threat Risk=
+	((Hybrid Risk Level+Military Risk Level+Non Military Risk Level)/3)*100
+	~	Percentage
+	~		|
+
+Drugs Shipping Level of Threats=
+	Drug Shipping Probability+Drug Shipping Severity
+	~	
+	~		|
+
+Embargo Level of Threats=
+	Embargo Probability+Embargo Severity
+	~	
+	~		|
+
+Espionage by Maritime Level of Threats=
+	Espionage by Maritime Probability+Espionage by Maritime Severity
+	~	
+	~		|
+
+Firewall Level of Threats=
+	Firewall Probability+Firewall Severity
+	~	Level
+	~		|
+
+Hijacking Level of Threats=
+	Hijacking Probability+Hijacking Severity
+	~	
+	~		|
+
+Hybrid Risk Level=
+	(Disinfromation Campaign Level of Threats+Proxy Level of Threats+Social Media Level of Threats\
+)/(Risk Level Maximum Score*Number of Hybrid Threats)
+	~	
+	~		|
+
+Illegal Fishing Level of Threats=
+	Illegal Fishing Probability+Illegal Fishing Severity
+	~	
+	~		|
+
+Military Invasion Level of Threats=
+	Military Invasion Probability+Military Invasion Severity
+	~	
+	~		|
+
+IT System Level of Threats=
+	IT System Probability+IT System Severity
+	~	
+	~		|
+
+Manipulation Signal Used Level of Threats=
+	Manipulation Signal Used Probability+Manipulation Signal Used Severity
+	~	
+	~		|
+
+Piracy Level of Threats=
+	Piracy Probability+Piracy Severity
+	~	
+	~		|
+
+Military Risk Level=
+	(Cyber Attack Level of Threats+Embargo Level of Threats+Military Invasion Level of Threats\
++Sabotage Level of Threats+Terorism Level of Threats)/(Risk Level Maximum Score*Number of Military Threats\
+)
+	~	
+	~		|
+
+Misuses of AIS and Positioning Data Level of Threats=
+	Misuses of AIS and Positioning Data Probability+Misuses of AIS and Positioning Data Severity
+	~	
+	~		|
+
+Sabotage Level of Threats=
+	Sabotage Probability+Sabotage Severity
+	~	
+	~		|
+
+Terorism Level of Threats=
+	Terorism Probability+Terorism Severity
+	~	
+	~		|
+
+Natural Disasters Level of Threats=
+	Natural Disaster Probability+Natural Disaster Severity
+	~	
+	~		|
+
+Non Military Risk Level=
+	(Drugs Shipping Level of Threats+Hijacking Level of Threats+Illegal Fishing Level of Threats\
++Natural Disasters Level of Threats+Piracy Level of Threats+Smuggling Level of Threats\
+)/(Risk Level Maximum Score*Number of Non Military Threats)
+	~	
+	~		|
+
+Number of Cyber Attack=
+	5
+	~	
+	~		|
+
+Number of Hybrid Threats=
+	3
+	~	
+	~		|
+
+Number of Military Threats=
+	5
+	~	
+	~		|
+
+Number of Non Military Threats=
+	6
+	~	
+	~		|
+
+Social Media Level of Threats=
+	Social Media Probability+Social Media Severity
+	~	
+	~		|
+
+Risk Level Maximum Score=
+	9
+	~	
+	~		|
+
+Proxy Level of Threats=
+	Proxy Probability+Proxy Severity
+	~	
+	~		|
+
+Smuggling Level of Threats=
+	Smuggling Probability+Smuggling Severity
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 125
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 1
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*[CLD] Natuna Sea Threats
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,67,0
+10,1,Hijacking Level of Threats,395,417,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Illegal Fishing Level of Threats,385,544,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Natural Disasters Level of Threats,453,668,64,64,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Drugs Shipping Level of Threats,583,727,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,5,Smuggling Level of Threats,733,737,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,6,Piracy Level of Threats,856,671,53,53,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Hijacking Probability,246,352,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,8,Hijacking Severity,238,425,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,7,1,1,0,0,0,0,192,0,-1--1--1,,1|(328,360)|
+1,10,8,1,1,0,0,0,0,192,0,-1--1--1,,1|(299,444)|
+10,11,Illegal Fishing Probability,224,512,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,Illegal Fishing Severity,247,598,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,13,Natural Disaster Probability,308,703,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,14,Natural Disaster Severity,356,767,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,15,Drug Shipping Probability,498,827,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,16,Drug Shipping Severity,611,852,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,17,Smuggling Probability,778,855,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,18,Smuggling Severity,858,814,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,19,Piracy Probability,948,776,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,20,Piracy Severity,994,717,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,21,11,2,1,0,0,0,0,192,0,-1--1--1,,1|(299,505)|
+1,22,12,2,1,0,0,0,0,192,0,-1--1--1,,1|(326,597)|
+1,23,13,3,1,0,0,0,0,192,0,-1--1--1,,1|(365,670)|
+1,24,14,3,1,0,0,0,0,192,0,-1--1--1,,1|(410,760)|
+1,25,15,4,1,0,0,0,0,192,0,-1--1--1,,1|(513,784)|
+1,26,16,4,1,0,0,0,0,192,0,-1--1--1,,1|(614,812)|
+1,27,17,5,1,0,0,0,0,192,0,-1--1--1,,1|(743,817)|
+1,28,18,5,1,0,0,0,0,192,0,-1--1--1,,1|(828,770)|
+1,29,19,6,1,0,0,0,0,192,0,-1--1--1,,1|(882,741)|
+1,30,20,6,1,0,0,0,0,192,0,-1--1--1,,1|(951,679)|
+10,31,Non Military Risk Level,625,547,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,32,1,31,1,0,0,0,0,192,0,-1--1--1,,1|(514,458)|
+1,33,2,31,1,0,0,0,0,192,0,-1--1--1,,1|(492,524)|
+1,34,3,31,1,0,0,0,0,192,0,-1--1--1,,1|(525,597)|
+1,35,4,31,1,0,0,0,0,192,0,-1--1--1,,1|(616,638)|
+1,36,5,31,1,0,0,0,0,192,0,-1--1--1,,1|(703,631)|
+1,37,6,31,1,0,0,0,0,192,0,-1--1--1,,1|(765,581)|
+10,38,Risk Level Maximum Score,879,518,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,39,38,31,1,0,0,0,0,192,0,-1--1--1,,1|(754,511)|
+10,40,Number of Non Military Threats,551,396,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,41,40,31,1,0,0,0,0,192,0,-1--1--1,,1|(604,451)|
+10,42,Military Risk Level,694,233,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,43,Military Invasion Level of Threats,458,230,53,53,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,44,Terorism Level of Threats,505,112,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,45,Sabotage Level of Threats,804,50,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,46,Embargo Level of Threats,886,141,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,47,Number of Military Threats,539,318,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,48,47,42,1,0,0,0,0,192,0,-1--1--1,,1|(635,297)|
+1,49,43,42,1,0,0,0,0,192,0,-1--1--1,,1|(577,247)|
+1,50,44,42,1,0,0,0,0,192,0,-1--1--1,,1|(591,195)|
+1,51,45,42,1,0,0,0,0,192,0,-1--1--1,,1|(762,156)|
+1,52,46,42,1,0,0,0,0,192,0,-1--1--1,,1|(800,205)|
+10,53,Military Invasion Probability,308,195,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,54,Military Invasion Severity,311,264,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,55,53,43,1,0,0,0,0,192,0,-1--1--1,,1|(377,186)|
+1,56,54,43,1,0,0,0,0,192,0,-1--1--1,,1|(381,269)|
+10,57,Terorism Probability,356,80,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,58,Terorism Severity,359,140,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,59,57,44,1,0,0,0,0,192,0,-1--1--1,,1|(433,75)|
+1,60,58,44,1,0,0,0,0,192,0,-1--1--1,,1|(429,139)|
+10,61,Embargo Probability,1021,76,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,62,Embargo Severity,1038,145,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,63,61,46,1,0,0,0,0,192,0,-1--1--1,,1|(950,96)|
+1,64,62,46,1,0,0,0,0,192,0,-1--1--1,,1|(970,170)|
+10,65,Sabotage Probability,919,-51,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,66,Sabotage Severity,939,6,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,67,65,45,1,0,0,0,0,192,0,-1--1--1,,1|(864,-36)|
+1,68,66,45,1,0,0,0,0,192,0,-1--1--1,,1|(891,34)|
+10,69,Cyber Attack Level of Threats,619,-22,58,58,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,70,69,42,1,0,0,0,0,192,0,-1--1--1,,1|(689,95)|
+10,71,Number of Cyber Attack,627,121,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,72,71,69,1,0,0,0,0,192,0,-1--1--1,,1|(609,56)|
+10,73,Misuses of AIS and Positioning Data Level of Threats,461,-18,78,78,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,74,Misuses of AIS and Positioning Data Probability,284,13,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,75,Misuses of AIS and Positioning Data Severity,279,-78,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,76,Manipulation Signal Used Level of Threats,462,-173,76,76,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,77,Manipulation Signal Used Probability,272,-152,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,78,Manipulation Signal Used Severity,309,-245,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,79,IT System Level of Threats,588,-189,54,54,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,80,IT System Probability,471,-313,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,81,IT System Severity,610,-314,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,82,Espionage by Maritime Level of Threats,715,-176,72,72,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,83,Espionage by Maritime Probability,758,-317,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,84,Espionage by Maritime Severity,874,-257,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,85,Firewall Level of Threats,760,-63,51,51,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,86,Firewall Probability,881,-171,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,87,Firewall Severity,897,-124,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,88,75,73,1,0,0,0,0,192,0,-1--1--1,,1|(387,-66)|
+1,89,74,73,1,0,0,0,0,192,0,-1--1--1,,1|(384,14)|
+1,90,78,76,1,0,0,0,0,192,0,-1--1--1,,1|(404,-229)|
+1,91,77,76,1,0,0,0,0,192,0,-1--1--1,,1|(361,-148)|
+1,92,80,79,1,0,0,0,0,192,0,-1--1--1,,1|(495,-258)|
+1,93,81,79,1,0,0,0,0,192,0,-1--1--1,,1|(619,-271)|
+1,94,83,82,1,0,0,0,0,192,0,-1--1--1,,1|(719,-275)|
+1,95,84,82,1,0,0,0,0,192,0,-1--1--1,,1|(786,-197)|
+1,96,86,85,1,0,0,0,0,192,0,-1--1--1,,1|(813,-142)|
+1,97,87,85,1,0,0,0,0,192,0,-1--1--1,,1|(833,-75)|
+1,98,73,69,1,0,0,0,0,192,0,-1--1--1,,1|(542,12)|
+1,99,85,69,1,0,0,0,0,192,0,-1--1--1,,1|(692,-9)|
+1,100,82,69,1,0,0,0,0,192,0,-1--1--1,,1|(689,-104)|
+1,101,79,69,1,0,0,0,0,192,0,-1--1--1,,1|(592,-99)|
+1,102,76,69,1,0,0,0,0,192,0,-1--1--1,,1|(540,-80)|
+10,103,Hybrid Risk Level,1071,427,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,104,38,103,1,0,0,0,0,192,0,-1--1--1,,1|(999,500)|
+1,105,38,42,1,0,0,0,0,192,0,-1--1--1,,1|(750,406)|
+10,106,Social Media Level of Threats,1139,315,57,57,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,107,Proxy Level of Threats,1226,466,60,60,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,108,Disinfromation Campaign Level of Threats,1074,613,86,86,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,109,Social Media Probability,1216,190,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,110,Proxy Probability,1274,347,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,111,Disinfromation Campaign Probability,1268,674,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,112,Social Media Severity,1268,252,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,113,Proxy Severity,1292,588,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,114,Disinfromation Campaign Severity,1195,757,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,115,109,106,1,0,0,0,0,192,0,-1--1--1,,1|(1153,233)|
+1,116,112,106,1,0,0,0,0,192,0,-1--1--1,,1|(1217,302)|
+1,117,110,107,1,0,0,0,0,192,0,-1--1--1,,1|(1232,390)|
+1,118,113,107,1,0,0,0,0,192,0,-1--1--1,,1|(1256,545)|
+1,119,111,108,1,0,0,0,0,192,0,-1--1--1,,1|(1186,617)|
+1,120,114,108,1,0,0,0,0,192,0,-1--1--1,,1|(1111,707)|
+1,121,108,103,1,0,0,0,0,192,0,-1--1--1,,1|(1054,501)|
+1,122,107,103,1,0,0,0,0,192,0,-1--1--1,,1|(1139,454)|
+1,123,106,103,1,0,0,0,0,192,0,-1--1--1,,1|(1086,369)|
+10,124,National Sea Threat Risk,840,377,64,64,2,3,0,4,-1,0,0,0,-1--1--1,192-255-192,|||0-0-0,0,0,0,0,0,0
+1,125,31,124,1,0,0,0,0,192,0,-1--1--1,,1|(714,439)|
+1,126,42,124,1,0,0,0,0,192,0,-1--1--1,,1|(787,280)|
+1,127,103,124,1,0,0,0,0,192,0,-1--1--1,,1|(964,422)|
+10,128,Number of Hybrid Threats,1009,277,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,129,128,103,1,0,0,0,0,192,0,-1--1--1,,1|(1023,339)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*[SFD] Naval Strength
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,110,0
+10,1,Combat Vehicle Score,528,433,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Marine Ability Score,247,258,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Marine Forces Strength,410,325,58,58,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,4,2,3,1,0,0,0,0,192,0,-1--1--1,,1|(338,264)|
+10,5,Aircraft Strength,479,112,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,6,Warships Strength,846,212,55,55,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,Naval Strength,632,262,59,59,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,8,5,7,1,0,0,0,0,192,0,-1--1--1,,1|(584,163)|
+1,9,3,7,1,0,0,0,0,192,0,-1--1--1,,1|(506,278)|
+1,10,6,7,1,0,0,0,0,192,0,-1--1--1,,1|(754,258)|
+10,11,Fighters Aircraft Score,335,56,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,12,Enablers Aircraft,334,180,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,13,11,5,1,0,0,0,0,192,0,-1--1--1,,1|(410,61)|
+1,14,12,5,1,0,0,0,0,192,0,-1--1--1,,1|(404,176)|
+1,15,1,3,1,0,0,0,0,192,0,-1--1--1,,1|(502,387)|
+10,16,Marine Personel Forces,281,413,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,17,16,3,1,0,0,0,0,192,0,-1--1--1,,1|(317,375)|
+10,18,Harbour,793,381,49,49,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,18,7,1,0,0,0,0,192,0,-1--1--1,,1|(703,344)|
+10,20,Rest,956,329,43,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,21,Replenishment,982,405,62,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,22,Repair,825,502,43,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,23,Recreation,943,464,49,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,24,Refuel,686,493,43,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,25,24,18,1,0,0,0,0,192,0,-1--1--1,,1|(717,442)|
+1,26,23,18,1,0,0,0,0,192,0,-1--1--1,,1|(877,450)|
+1,27,22,18,1,0,0,0,0,192,0,-1--1--1,,1|(794,446)|
+1,28,21,18,1,0,0,0,0,192,0,-1--1--1,,1|(882,404)|
+1,29,20,18,1,0,0,0,0,192,0,-1--1--1,,1|(894,363)|
+10,30,Striking,946,95,43,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,31,Patroling,1031,175,49,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,32,Supporting,1025,267,49,23,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,33,30,6,1,0,0,0,0,192,0,-1--1--1,,1|(886,130)|
+1,34,31,6,1,0,0,0,0,192,0,-1--1--1,,1|(948,179)|
+1,35,32,6,1,0,0,0,0,192,0,-1--1--1,,1|(937,254)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*[SFD] Naval Deployment
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Naval Deployment,502,271,61,61,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Unit Deploy,335,336,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Grouped Deploy,503,111,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Combined Deploy,724,329,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,5,2,1,1,0,0,0,0,192,0,-1--1--1,,1|(394,284)|
+1,6,3,1,1,0,0,0,0,192,0,-1--1--1,,1|(525,155)|
+1,7,4,1,1,0,0,0,0,192,0,-1--1--1,,1|(619,334)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*[SFD] Naval Capabilities
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Naval Capabilities,534,263,56,56,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,2,Support Capabilities,366,373,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,3,Regional Empowerment Capabilities,370,152,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,Intelligence Ability,579,91,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,5,Diplomacy Ability,725,215,52,52,2,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,6,Defense Capability,692,399,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,7,2,1,1,0,0,0,0,192,0,-1--1--1,,1|(452,352)|
+1,8,3,1,1,0,0,0,0,192,0,-1--1--1,,1|(439,224)|
+1,9,4,1,1,0,0,0,0,192,0,-1--1--1,,1|(546,148)|
+1,10,5,1,1,0,0,0,0,192,0,-1--1--1,,1|(628,221)|
+1,11,6,1,1,0,0,0,0,192,0,-1--1--1,,1|(647,336)|
+10,12,Diplomatic Network,928,134,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,13,Multilateral Power,905,210,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,14,Foreign Policy,916,285,75,30,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,12,5,1,0,0,0,0,192,0,-1--1--1,,1|(798,148)|
+1,16,13,5,0,0,0,0,0,192,0,-1--1--1,,1|(0,0)|
+1,17,14,5,1,0,0,0,0,192,0,-1--1--1,,1|(798,269)|
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*[SFD] Naval Defense Posture
+$-1--1--1,0,|12||-1--1--1|-1--1--1|-1--1--1|-1--1--1|-1--1--1|96,96,100,0
+10,1,Naval Defense Posture,489,325,59,59,2,3,0,2,-1,0,0,0,0-0-0,0-0-0,|||0-0-0,0,0,0,0,0,0
+10,2,Naval Strength,372,399,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+10,3,Naval Capabilities,432,205,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,4,3,1,1,0,0,0,0,192,0,-1--1--1,,1|(470,240)|
+1,5,2,1,1,0,0,0,0,192,0,-1--1--1,,1|(405,349)|
+10,6,Naval Deployment,625,396,75,30,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||0-0-0,0,0,0,0,0,0
+1,7,6,1,1,0,0,0,0,192,0,-1--1--1,,1|(550,395)|
+10,8,North Natuna Defense and Security,755,207,55,22,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,9,48,552,207,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,9,100,0,0,22,0,192,0,-1--1--1,,1|(592,207)|
+1,11,12,8,4,0,0,22,0,192,0,-1--1--1,,1|(667,207)|
+11,12,0,629,207,6,8,34,3,0,0,3,0,0,0,0,0,0,0,0,0
+10,13,Defense Score,629,169,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,14,48,968,207,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,15,17,8,100,0,0,22,0,192,0,-1--1--1,,1|(844,207)|
+1,16,17,14,4,0,0,22,0,192,0,-1--1--1,,1|(924,207)|
+11,17,0,884,207,6,8,34,3,0,0,3,0,0,0,0,0,0,0,0,0
+10,18,Level of Threat,884,169,75,30,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,19,1,12,1,0,0,0,0,192,0,-1--1--1,,1|(598,281)|
+10,20,National Sea Threat Risk,1017,348,75,30,8,2,0,32,-1,0,0,0,-1--1--1,-1--1--1,|||128-128-128,0,0,0,0,0,0
+1,21,8,12,1,0,0,0,0,192,0,-1--1--1,,1|(724,256)|
+1,22,8,18,1,0,0,0,0,192,0,-1--1--1,,1|(816,265)|
+1,23,20,18,1,0,0,0,0,192,0,-1--1--1,,1|(932,300)|
+///---\\\
+:L<%^E!@
+1:run_3.vdfx
+1:Skenario_Do Nothing.vdfx
+4:Time
+5:National Sea Threat Risk
+9:Skenario_Do Nothing_1
+19:110,1
+24:1
+25:120
+26:120
+22:24 Hour,1 Day
+22:Year,Tahun
+23:0
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:1
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
+105:0,0,0,0,0,0,0,0,0,0
+104:Courier|12||0-0-0|0-0-0|-1--1--1|0-0-255|192-192-192|-1--1--1

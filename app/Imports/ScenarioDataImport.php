@@ -22,7 +22,7 @@ class ScenarioDataImport implements ToModel, WithHeadingRow
         return new ScenarioData([
             'scenario_id' => $this->scenario_id,
             'variable_id' => $this->variable_id,
-            'node_point' => $row['node_point'],
+            'node_point' => $row['time'],
             'value' => $row['value'],
         ]);
     }

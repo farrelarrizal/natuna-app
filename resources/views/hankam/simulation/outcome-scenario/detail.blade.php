@@ -60,7 +60,7 @@
                             <th>Scenario Name</th>
                             <th>Variable ID</th>
                             <th>Variable Name</th>
-                            <th>Node Point</th>
+                            <th>Time (Month)</th>
                             <th>Value</th>
                         </tr>
                     </thead>
@@ -82,7 +82,7 @@
                             <th>Scenario Name</th>
                             <th>Variable ID</th>
                             <th>Variable Name</th>
-                            <th>Node Point</th>
+                            <th>Time (Month)</th>
                             <th>Value</th>
                         </tr>
                     </tfoot>

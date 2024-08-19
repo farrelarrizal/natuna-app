@@ -46,12 +46,12 @@
                 </li>
                 <li class="list-inline-item text-filter">
                     <h5 class="mb-0">Defense and Security Scenario Model</h5>
-                    <span>Last Edit: 17 May 2024 18:50</span>
+                    {{-- <span>Last Edit: 17 May 2024 18:50</span> --}}
                 </li>
             </ul>
             <div class="d-flex flex-wrap gap-2">
               <a href="{{route('hankam.simulation.base-model.edit-parameter')}}" class="btn btn-warning "><i class="ti ti-pencil"></i><span class="text-truncate w-100">&nbsp;Edit Parameter</span></a>
-              <button type="button" class="btn btn-secondary"><i class="ti ti-upload"></i><span class="text-truncate w-100">&nbsp;Export Model</span></button>
+              {{-- <button type="button" class="btn btn-secondary"><i class="ti ti-upload"></i><span class="text-truncate w-100">&nbsp;Export Model</span></button> --}}
               <a href="{{route('hankam.simulation.base-model.upload-model')}}" class="btn btn-info "><i class="ti ti-file-upload"></i><span class="text-truncate w-100">&nbsp;Import Model</span></a>
             </div>
             
@@ -101,12 +101,14 @@
         </div>
         <div class="col-md-12">
           <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+              <h5>Causal Loop Diagram</h5>
+            </div>
             <div class="card-body">
     
-             <div class="row mt-3">
-              <img src="{{ Storage::url($image) }}" alt="Model Image">
-            </div>
-             
+              <div class="row mt-3">
+                <img src="{{ asset($image) }}" alt="image" class="img-fluid" width="100%">
+              </div>
               <div class="row my-3">
                   <div id="defence-and-security-graphics"></div>
               </div>
@@ -116,21 +118,31 @@
         <div class="col-md-12">
             <div class="card">
               <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>Variable Detail</h5>
+                <h5>Model Variables</h5>
               </div>
               <div class="card-body p-0 income-scroll">
                 <div class="mt-3 mb-3">
                   <div class="row">
                     @foreach ($variable as $item)
                       <div class="col-md-6 px-4">
-                        <div class="flex-grow-1 mx-2">
-                          @if ($item->key_variable == 1)
-                          <h5><span class="badge bg-light-primary" style="font-size: 14px;"">{{$item->name}}</span></h5>
-                          @else
+                        <div class="flex-grow-1 mx-2" >
+                          <div class="div d-flex">
+
                             <p class="text-muted mb-1">{{$item->name}}</p>
-                          @endif
-                          
-                          <p class="mb-0">{{$item->value}} ({{$item->level}})</p>
+                              
+                            @if ($item->key_variable == 1)
+                            <span class="badge bg-light-primary mx-2" >Key Variable</span></p>
+                            @endif
+                          </div>
+                        
+                          <p class="mb-0">{{$item->value}} 
+
+                            @if($item->level != 'NULL')
+                            <span class="mx-2" >({{$item->level}})</span></p>
+                            @endif
+
+                            
+                          </p>
                         </div>
                         <hr class="border border-primary-subtle" />
                       </div>
@@ -155,13 +167,13 @@
         var variableForm = document.getElementById('variableForm');
 
         function loadVariables() {
-            fetch('/api/get-variables')
+            fetch('/api/get-variables-active')
                 .then(response => response.json())
                 .then(variables => {
                     variables.forEach(variable => {
                         var option = document.createElement('option');
                         option.value = variable.id;
-                        option.textContent = 'Variable '+ variable.id + ' (' + variable.name + ')';
+                        option.textContent = 'Variable ' + variable.name 
                         variableSelect.appendChild(option);
                     });
                     

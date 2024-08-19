@@ -73,7 +73,7 @@
     <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.hybrid-military') }}">Hybrid Threats</a></li>
   </ul>
 </li>
-<li class="pc-item">
+{{-- <li class="pc-item">
   <a href="{{ route('hankam.details') }}" class="pc-link {{ Request::route()->getName() === 'hankam.details' ? 'active' : '' }}">
     <span class="pc-micon">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -85,7 +85,7 @@
     </span>
     <span class="pc-mtext">Details</span>
   </a>
-</li>
+</li> --}}
 
 <li class="pc-item pc-hasmenu">
   <a href="#!" class="pc-link {{ Request::route()->getName() === 'hankam.simulation.base-model.index' || Request::route()->getName() === 'hankam.simulation.scenario-model.index' || Request::route()->getName() === 'hankam.simulatiaon.outcome-scenario.index' ? 'active' : '' }}">

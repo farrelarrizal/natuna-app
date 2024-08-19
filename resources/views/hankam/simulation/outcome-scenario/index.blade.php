@@ -39,9 +39,8 @@
                                 <th>Sfd</th>
                                 <th>Scenario Name</th>
                                 <th>Scenario Description</th>
-                                <th>timestep</th>
+                                <th>Final Time</th>
                                 <th>Create At</th>
-                                <th>Update At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -49,12 +48,11 @@
                             @foreach($scenarios as $scenario)
                                 <tr>
                                     <td>{{ $scenario->id }}</td>
-                                    <td>{{ $scenario->sfd->name }}</td>
+                                    <td>{{ $scenario->sfd_name }}</td>
                                     <td>{{ $scenario->name }}</td>
                                     <td>{{ $scenario->desc }}</td>
                                     <td>{{ $scenario->timestep }}</td>
                                     <td>{{ $scenario->created_at }}</td>
-                                    <td>{{ $scenario->updated_at }}</td>
                                     <td>
                                         <a href="{{ route('hankam.simulation.outcome-scenario.detail', $scenario->id) }}"
                                             class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
@@ -72,9 +70,8 @@
                                 <th>Sfd</th>
                                 <th>Scenario Name</th>
                                 <th>Scenario Description</th>
-                                <th>timestep</th>
+                                <th>Final Time</th>
                                 <th>Create At</th>
-                                <th>Update At</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
