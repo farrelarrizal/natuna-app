@@ -204,12 +204,7 @@ class HankamController extends Controller
         $sourceFile = '../../storage/app/' . $path;
         $model_id = $new_id;
         // dd($scriptPath, $sourceFile, $model_id);
-        $command = "sh $scriptPath $sourceFile $model_id";
-
-        // Construct the command string
-        $command = escapeshellcmd("sh $scriptPath '$sourceFile' $model_id");
-
-        // Execute the shell script
+        $command = "./run_model_convert_insert.sh $sourceFile $model_id";
         shell_exec($command);
 
         return redirect()->route('hankam.simulation.base-model.index')->with('success', 'Model uploaded successfully!');
@@ -296,10 +291,10 @@ class HankamController extends Controller
         $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
         $scenario = Scenario::findOrFail($id);
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
-        
+
         $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')
-                                ->where('model_id', $get_active_model_id->id)
-                                ->get();
+            ->where('model_id', $get_active_model_id->id)
+            ->get();
 
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
@@ -307,7 +302,7 @@ class HankamController extends Controller
             'breadcrumb_item' => 'Simulation',
             'rowSfd' => $rowSfd,
             'scenario' => $scenario,
-            'dataVariable' => $dataVariable  
+            'dataVariable' => $dataVariable
         ];
 
         return view('hankam.simulation.scenario-model.edit', $data);
@@ -339,7 +334,7 @@ class HankamController extends Controller
             }
 
             return redirect()->route('hankam.simulation.scenario-model.detail', ['id' => $id])
-                            ->with('success', 'Variables updated successfully.');
+                ->with('success', 'Variables updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to update variables. Please try again.');
         }
