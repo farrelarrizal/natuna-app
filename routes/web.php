@@ -12,10 +12,11 @@ use App\Http\Controllers\ToolsController;
 
 
 Route::get('/', function () {
-    $data = [
-        'title' => 'Selamat Lebaran',
-    ];
-    return view('comingsoon', $data);
+    # if not authenticated, redirect to login page
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+    return redirect()->route('dashboard.executive-summary');
 });
 
 // Auth
@@ -80,6 +81,7 @@ Route::middleware('auth')->group(function () {
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
         Route::get('maps', [DashboardController::class, 'maps'])->name('maps');
+        Route::get('policy-brief', [DashboardController::class, 'policyBrief'])->name('policy-brief');
     });
 
     Route::prefix('tools')->name('tools.')->group(function () {
@@ -100,7 +102,7 @@ Route::middleware('auth')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
-        
+
         //graph
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
         Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');

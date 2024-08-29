@@ -26,7 +26,6 @@
                                 <div class="col-md-4">
                                     <h4 class="mt-4 text-center f-24"><b>ABMAS Coming Soon</b></h4>
                                     <p class="mt-3 mb-0 text-center text-muted f-16">Something new is on it's way</p>
-                                    <p class="mt-0 mb-4 text-center text-muted f-16">In <strong>Samil and Dito</strong> We Trust!</p>
                                     <div class="row timer-block mt-4 justify-content-center" id="timer-block">
                                         <div class="col-auto">
                                             <span class="avtar avtar-xl">..</span>
@@ -44,7 +43,7 @@
 
                                     <a href="{{ route('login') }}" class="text-center btn btn-light-primary text-center col-12 mt-3">login</a>
                                 </div>
-                                <p class="text-center mt-3">Made with  💖ABMAS Team uhuyyy </p>
+                                <p class="text-center mt-3">Made with  💖 ABMAS ITS </p>
                             </div>
                         </div>
                     </div>
