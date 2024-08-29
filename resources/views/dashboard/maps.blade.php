@@ -192,7 +192,8 @@
         L.control.layers(baseMaps, overLayers).addTo(map);
 
         // Load GeoJSON file
-        fetch('<?= asset('assets/json/natuna.geojson') ?>')
+        // fetch('<?= asset('assets/json/natuna.geojson') ?>')
+        fetch('/assets/json/natuna.geojson')
             .then(response => response.json())
             .then(data => {
                 var geoJsonLayer = L.geoJson(data, {
@@ -205,6 +206,15 @@
                                 popupContent = '<b>Karang Unarang</b><br>Penjelasan: Karang Unarang adalah lokasi mercusuar dan menjadi titik strategis untuk navigasi dan pemantauan aktivitas laut. Mercusuar ini membantu kapal-kapal dalam menentukan posisi mereka di wilayah yang sering dilalui oleh kapal kargo internasional.<br><br><i>Sumber daya yang ada di Karang Unarang: <br> a. Sumber Daya Alam: Gas alam dan minyak bumi di sekitar perairannya. <br> b. Sumber Daya Perikanan: Ikan pelagis dan ikan demersal, udang, dan teripang. <br> c. Pariwisata: Pantai yang indah dan potensi wisata alam. <br> d. Sumber Daya Mineral: Potensi bahan tambang seperti granit.</i>';
                             } else if (feature.properties.name === 'ZEE') {
                                 popupContent = '<b>Laut Cina Selatan di dekat perbatasan ZEE Indonesia</b><br>Penjelasan: Titik ini merupakan bagian dari perairan yang sering menjadi sengketa di Laut Cina Selatan, di mana terjadi tumpang tindih klaim wilayah antara beberapa negara. Keberadaan militer dan patroli rutin di daerah ini penting untuk mempertahankan hak maritim Indonesia dan memastikan keamanan jalur pelayaran internasional.<br><br><i>Sumber daya yang ada di Laut Cina Selatan: <br> a. Minyak dan Gas Bumi: Cadangan besar minyak dan gas alam di bawah dasar laut. <br> b. Sumber Daya Perikanan: Beragam jenis ikan, termasuk ikan tuna, cakalang, dan kerapu. <br> c. Keanekaragaman Hayati Laut: Terumbu karang dan berbagai jenis biota laut.</i>';
+                            } else if (feature.properties.name === 'PULAULAUT') {
+                                popupContent = 'Pulau ini adalah salah satu pulau terbesar di wilayah Natuna Utara yang menawarkan pantai pasir putih yang indah, air laut yang jernih, dan terumbu karang yang mempesona. Selain wisata bahari, tempat ini juga sering menjadi lokasi penangkapan ikan. <br>';
+                            } else if (feature.properties.name === 'KARANGLUCIPARABESAR') {
+                                popupContent = 'Karang Lucipara Besar merupakan salah satu spot terbaik untuk diving karena terumbu karangnya yang sangat indah dan beragam spesies ikan. Tempat ini juga merupakan habitat penting bagi biota laut.';
+                            } else if (feature.properties.name === 'BLOCKDALPHA') {
+                                popupContent = 'Blok D Alpha merupakan wilayah yang merupakan bagian dari Cekungan Natuna Timur. Cekungan ini dikenal memiliki potensi cadangan gas alam yang cukup besar serta terdapat cadangan minyak bumi di dalamnya.';
+                            } else if (feature.properties.name === 'TELUKBUTON') {
+                                popupContent = 'Teluk buton dikenal karena keindahan alamnya yang masih alami, dengan pantai berpasir putih, air laut yang jernih, dan dikelilingi oleh hutan tropis. Selain menjadi lokasi penting untuk kegiatan perikanan, Teluk Buton juga memiliki potensi besar sebagai destinasi wisata bahari yang belum banyak dikembangkan.';
+
                             } else {
                                 popupContent = Object.keys(feature.properties).map(function (key) {
                                     return '<b>' + key + ':</b> ' + feature.properties[key];
