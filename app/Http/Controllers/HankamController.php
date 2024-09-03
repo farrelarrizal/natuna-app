@@ -65,7 +65,7 @@ class HankamController extends Controller
             'naval_capabilities' => $naval_capabilities
         ];
 
-        return view('hankam.summary', $data);
+        return view('summary.hankam', $data);
     }
     public function details()
     {

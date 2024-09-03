@@ -19,16 +19,36 @@
             <div class="dt-responsive table-responsive">
               <table id="footer-search" class="table table-striped table-bordered nowrap">
                 <tr>
-                    <th>Model ID</th>
-                    <th>Name</th>
+                    <th>No</th>
+                    <th>Variable Name</th>
                     <th>Key Variable</th>
+                    <th>Editable Variable</th>
                     <th width="280px">Action</th>
                 </tr>
                 @foreach ($variables as $variable)
                 <tr>
-                    <td>{{ $variable->model_id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $variable->name }}</td>
-                    <td>{{ $variable->key_variable ? 'Yes' : 'No' }}</td>
+                    <td>
+                      <!-- center -->
+                      <div class="d-flex justify-content-center">
+                        @if ($variable->key_variable)
+                            <span class="btn btn-sm btn-light-success">Yes</span>
+                        @else
+                            <span class="btn btn-sm btn-light-danger">No</span>
+                        @endif
+                        {{-- <span class="btn btn-sm btn-light-danger">{{ $variable->key_variable ? 'Yes' : 'No' }}</span> --}}
+                      </div>
+                    </td>
+                    <td>
+                        <span class="btn btn-sm btn-light-danger">No</span>
+
+                        {{-- @if ($variable->editable_variable)
+                            <span class="btn btn-sm btn-light-success">Yes</span>
+                        @else
+                            <span class="btn btn-sm btn-light-danger">No</span>
+                        @endif --}}
+                    </td>
                     <td>
                         
                             <a class="btn btn-info" href="{{ route('tools.key-variable.edit', $variable->id) }}">Edit</a>
@@ -45,4 +65,13 @@
 @endsection
 
 @section('script')
+    <script>
+        let table = $('#footer-search').DataTable({
+            "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "All"]],
+            "order": [[0, 'asc']],
+            "columnDefs": [
+                { "orderable": false, "targets": 4 }
+            ]
+        });
+    </script>
 @endsection

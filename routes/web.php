@@ -8,7 +8,7 @@ use App\Http\Controllers\HankamController;
 use App\Http\Controllers\MarineResourceController;
 use App\Http\Controllers\ApiDataController;
 use App\Http\Controllers\ToolsController;
-
+use App\Http\Controllers\FormsController;
 
 
 Route::get('/', function () {
@@ -30,8 +30,13 @@ Route::middleware('auth')->group(function () {
     Route::get('peta-geografi', [PetaController::class, 'geografi'])->name('peta-geografi');
     Route::get('peta-keamanan', [PetaController::class, 'keamanan'])->name('peta-keamanan');
 
+    Route::prefix('summary')->name('summary.')->group(function () {
+        Route::get('defence-security', [HankamController::class, 'summary'])->name('hankam');
+        Route::get('defence-infrastructure', [HankamController::class, 'infraSummary'])->name('infra-hankam');
+        Route::get('marine-resource', [MarineResourceController::class, 'summary'])->name('marine-resource');
+    });
+
     Route::prefix('hankam')->name('hankam.')->group(function () {
-        Route::get('summary', [HankamController::class, 'summary'])->name('summary');
         Route::get('details', [HankamController::class, 'details'])->name('details');
         // Route::get('maps', [HankamController::class, 'maps'])->name('maps');
         Route::get('simulation', [HankamController::class, 'simulation'])->name('simulation');
@@ -56,17 +61,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('detail/{id}',  [HankamController::class, 'detailScenarioModel'])->name('detail');
                 Route::get('edit-variable/{id}', [HankamController::class, 'editVariableScenarioModel'])->name('edit-variable');
                 Route::put('update-variables/{id}', [HankamController::class, 'updateVariableScenarioModel'])->name('update-variables');
-                // Route::get('edit-scenario/{id}', [HankamController::class, 'editScenarioModel'])->name('edit-scenario');
-                // Route::put('update-scenario', [HankamController::class, 'updateScenarioModel'])->name('update-scenario');
-
-
             });
-            // Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
-            //     Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
-            //     Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
-            //     Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
-            //     Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
-            // });
+
             Route::prefix('outcome-scenario')->name('outcome-scenario.')->group(function () {
                 Route::get('/', [HankamController::class, 'simulationOutcomeScenario'])->name('index');
                 Route::get('createOutcome/{id}', [HankamController::class, 'createOutcome'])->name('createOutcome');
@@ -84,6 +80,20 @@ Route::middleware('auth')->group(function () {
         Route::get('policy-brief', [DashboardController::class, 'policyBrief'])->name('policy-brief');
     });
 
+    // forms
+    Route::prefix('forms')->name('forms.')->group(function () {
+        Route::get('', [FormsController::class, 'index'])->name('index');
+        Route::get('create', [FormsController::class, 'create'])->name('create');
+        Route::post('store', [FormsController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [FormsController::class, 'edit'])->name('edit');
+        Route::put('update/{id}', [FormsController::class, 'update'])->name('update');
+        Route::delete('delete/{id}', [FormsController::class, 'delete'])->name('delete');
+        Route::get('show/{id}', [FormsController::class, 'show'])->name('show');
+        Route::get('view/{id}', [FormsController::class, 'showForm'])->name('showForm');
+    });
+
+
+
     Route::prefix('tools')->name('tools.')->group(function () {
         // Route for the index method
         Route::get('key-variable', [ToolsController::class, 'index'])->name('key-variable.index');
@@ -91,6 +101,17 @@ Route::middleware('auth')->group(function () {
         // Route for the update method
         Route::get('key-variable/{variable}/edit', [ToolsController::class, 'edit'])->name('key-variable.edit');
         Route::put('key-variable/{variable}', [ToolsController::class, 'update'])->name('key-variable.update');
+
+        // Route for recommendation
+        Route::prefix('recommendation')->name('recommendation.')->group(function () {
+            Route::get('/', [ToolsController::class, 'recommendation'])->name('index');
+            Route::get('create', [ToolsController::class, 'createRecommendation'])->name('create');
+            Route::post('store', [ToolsController::class, 'storeRecommendation'])->name('store');
+            Route::get('edit/{id}', [ToolsController::class, 'editRecommendation'])->name('edit');
+            Route::put('update/{id}', [ToolsController::class, 'updateRecommendation'])->name('update');
+            Route::delete('delete/{id}', [ToolsController::class, 'deleteRecommendation'])->name('delete');
+            Route::get('show/{id}', [ToolsController::class, 'showRecommendation'])->name('show');
+        });
     });
 
     Route::prefix('marine-resource')->name('marine-resource.')->group(function () {

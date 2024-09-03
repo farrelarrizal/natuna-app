@@ -14,26 +14,6 @@
 @section('content')
 @include('partials/breadcrumb')
   <div class="row mb-2">
-    <div class="col-sm-3 mb-2">
-      <ul class="list-inline d-flex align-items-center">
-        <li class="list-inline-item">
-            <div class="avtar avtar-s bg-light-warning">
-                <i class="ti ti-file-text f-20"></i>
-            </div>
-        </li>
-        <li class="list-inline-item text-filter"><h5 class="mb-0">Filter Views</h5></li>
-      </ul>
-    </div>
-    <div class="col-sm-4">
-      <div class="input-group date w-auto">
-            <input type="text" class="form-control" placeholder="Select date" id="pc-datepicker-2">
-            <span class="input-group-text">
-                <i class="feather icon-calendar"></i>
-            </span>
-        </div>
-    </div>
-    <div class="col-sm-5"></div>
-  </div>
   <div class="row">
       <div class="col-md-12">
           <div class="card">
@@ -60,34 +40,25 @@
               <div class="row align-items-center justify-content-center">
                 <div class="col-md-4 col-xl-4">
                   <div class="mt-3 row align-items-center">
-                    <div class="col-6">
+                    <div class="col-12">
                       <p class="text-muted mb-1">Defence and Security Score</p>
                       <h5 class="mb-0 p-3 color-block text-blue-500">4,175/5</h5>
                     </div>
-                    <div class="col-6">
-                      <div id="defence-security-graph"></div>
-                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-xl-4">
                   <div class="mt-3 row align-items-center">
-                    <div class="col-6">
+                    <div class="col-12">
                       <p class="text-muted mb-1">Infrastruktur Hankam Score</p>
                       <h5 class="mb-0 p-3 color-block text-red-500">3,625/5</h5>
                     </div>
-                    <div class="col-6">
-                      <div id="infrastructure-hankam-graph"></div>
-                    </div>
                   </div>
                 </div>
                 <div class="col-md-4 col-xl-4">
                   <div class="mt-3 row align-items-center">
-                    <div class="col-6">
+                    <div class="col-12">
                       <p class="text-muted mb-1">Marine Resources Potential Score</p>
                       <h5 class="mb-0 p-3 color-block text-green-500">4,485/5</h5>
-                    </div>
-                    <div class="col-6">
-                      <div id="marine-potential-graph"></div>
                     </div>
                   </div>
                 </div>
