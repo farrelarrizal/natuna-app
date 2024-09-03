@@ -60,4 +60,44 @@ class ToolsController extends Controller
 
         return redirect()->route('tools.key-variable.index')->with('success', 'Variable updated successfully.');
     }
+
+    public function recommendation()
+    {
+        $data = [
+            'title' => 'Tools | Recommendation',
+            'head_title' => 'Recommendation',
+            'breadcrumb_item' => 'Tools',
+        ];
+        return view('tools.recommendation.index', $data);
+    }
+
+    public function createRecommendation()
+    {
+        $data = [
+            'title' => 'Tools | Recommendation',
+            'head_title' => 'Add Recommendation',
+            'breadcrumb_item' => 'Tools',
+        ];
+        return view('tools.recommendation.create', $data);
+    }
+
+    public function editRecommendation($id)
+    {
+        $data = [
+            'title' => 'Tools | Recommendation',
+            'head_title' => 'Edit Recommendation',
+            'breadcrumb_item' => 'Tools',
+        ];
+        return view('tools.recommendation.edit', $data);
+    }
+
+    public function showRecommendation($id)
+    {
+        $data = [
+            'title' => 'Tools | Recommendation',
+            'head_title' => 'Recommendation',
+            'breadcrumb_item' => 'Tools',
+        ];
+        return view('tools.recommendation.show', $data);
+    }
 }

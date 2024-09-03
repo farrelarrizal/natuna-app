@@ -65,7 +65,8 @@
                     <div class="pc-component">
                         <div class="alert alert-primary my-3" role="alert">
                             <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
-                            Informatin Notes</div>
+                            This maps is using AIS data from MarineTraffic</div>    
+                        </div>
                     </div>
                     <div class="my-3">
                         <div id="mtmap" style="width: 100%; height: 450px; border: 0;">
