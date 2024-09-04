@@ -62,7 +62,7 @@
             <div class="card">
                 <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                  <h5 class="mb-0">Defence and Security Overview</h5>
+                  <h5 class="mb-0">Defence Infrastructure Overview</h5>
                   
                   <div class="dropdown">
                     <a
@@ -88,7 +88,7 @@
                         <p class="text-muted mb-1">Naval Strength</p>
                         <h5 class="mb-0 p-3 color-block text-blue-500">{{ $naval_strength}}/100</h5>
                       </div>
-                     
+                      
                     </div>
                   </div>
                   <div class="col-md-4 col-xl-4">
@@ -118,7 +118,7 @@
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between">
                 
-                  <h5 class="mb-0">Defence and Security Graphics</h5>
+                  <h5 class="mb-0">Defence Infrastructure Graphics</h5>
                       {{-- <form id="variableForm">
                         <div class="row row-cols-md-auto g-1 align-items-center">
                           <div class="col-6">
@@ -150,7 +150,7 @@
             <div class="card">
               <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
-                    <h5 class="mb-0">Natuna Sea Defence and Security Trends</h5>
+                    <h5 class="mb-0">Natuna Sea Defence Infrastructure Trends</h5>
                 </div>
                 <div class="pc-component">
                     <div class="alert alert-primary my-3" role="alert">
