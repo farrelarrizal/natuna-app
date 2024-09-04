@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('delete/{id}', [FormsController::class, 'delete'])->name('delete');
         Route::get('show/{id}', [FormsController::class, 'show'])->name('show');
         Route::get('view/{id}', [FormsController::class, 'showForm'])->name('showForm');
+        Route::post('storeAnswer', [FormsController::class, 'storeAnswer'])->name('storeAnswer');
     });
 
 
@@ -123,8 +124,10 @@ Route::middleware('auth')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
-
+        Route::get('/search-variables', [ApiDataController::class, 'searchVariables']);
+        Route::get('/search-sfd', [ApiDataController::class, 'searchSFD']);
         //graph
+
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
         Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');
         Route::get('/scenario-model/download/{id}', [ApiDataController::class, 'downloadScenarioModel'])->name('scenario-model.download');
