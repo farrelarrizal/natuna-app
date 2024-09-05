@@ -53,10 +53,10 @@
 </li>
 
 <li class="pc-item pc-caption">
-  <label>DEFENCE AND SECURITY</label>
+  <label>Summary</label>
 </li>
 <li class="pc-item">
-  <a href="{{ route('hankam.summary') }}" class="pc-link {{ Request::route()->getName() === 'hankam.summary' ? 'active' : '' }}">
+  <a href="{{ route('summary.hankam') }}" class="pc-link">
     <span class="pc-micon">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <path opacity="0.4" d="M18.7917 6.41668V13.75H5.82087C4.38171 13.75 3.20837 14.9233 3.20837 16.3625V6.41668C3.20837 2.75001 4.12504 1.83334 7.79171 1.83334H14.2084C17.875 1.83334 18.7917 2.75001 18.7917 6.41668Z" fill="#5B6B79"/>
@@ -65,11 +65,42 @@
         <path d="M11.9167 10.3125H7.33337C6.95754 10.3125 6.64587 10.0008 6.64587 9.625C6.64587 9.24917 6.95754 8.9375 7.33337 8.9375H11.9167C12.2925 8.9375 12.6042 9.24917 12.6042 9.625C12.6042 10.0008 12.2925 10.3125 11.9167 10.3125Z" fill="#5B6B79"/>
       </svg>
     </span>
-    <span class="pc-mtext">Summary</span>
+    <span class="pc-mtext">Defence and Security</span>
   </a>
 </li>
+<li class="pc-item">
+  <a href="{{ route('summary.infra-hankam') }}" class="pc-link">
+    <span class="pc-micon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path opacity="0.4" d="M18.7917 6.41668V13.75H5.82087C4.38171 13.75 3.20837 14.9233 3.20837 16.3625V6.41668C3.20837 2.75001 4.12504 1.83334 7.79171 1.83334H14.2084C17.875 1.83334 18.7917 2.75001 18.7917 6.41668Z" fill="#5B6B79"/>
+        <path d="M18.7917 13.75V16.9583C18.7917 18.7275 17.3525 20.1667 15.5834 20.1667H6.41671C4.64754 20.1667 3.20837 18.7275 3.20837 16.9583V16.3625C3.20837 14.9233 4.38171 13.75 5.82087 13.75H18.7917Z" fill="#5B6B79"/>
+        <path d="M14.6667 7.10416H7.33337C6.95754 7.10416 6.64587 6.79249 6.64587 6.41666C6.64587 6.04082 6.95754 5.72916 7.33337 5.72916H14.6667C15.0425 5.72916 15.3542 6.04082 15.3542 6.41666C15.3542 6.79249 15.0425 7.10416 14.6667 7.10416Z" fill="#5B6B79"/>
+        <path d="M11.9167 10.3125H7.33337C6.95754 10.3125 6.64587 10.0008 6.64587 9.625C6.64587 9.24917 6.95754 8.9375 7.33337 8.9375H11.9167C12.2925 8.9375 12.6042 9.24917 12.6042 9.625C12.6042 10.0008 12.2925 10.3125 11.9167 10.3125Z" fill="#5B6B79"/>
+      </svg>
+    </span>
+    <span class="pc-mtext">Defence Infrastructure</span>
+  </a>
+</li>
+<li class="pc-item">
+  <a href="{{ route('summary.marine-resource') }}" class="pc-link">
+    <span class="pc-micon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path opacity="0.4" d="M18.7917 6.41668V13.75H5.82087C4.38171 13.75 3.20837 14.9233 3.20837 16.3625V6.41668C3.20837 2.75001 4.12504 1.83334 7.79171 1.83334H14.2084C17.875 1.83334 18.7917 2.75001 18.7917 6.41668Z" fill="#5B6B79"/>
+        <path d="M18.7917 13.75V16.9583C18.7917 18.7275 17.3525 20.1667 15.5834 20.1667H6.41671C4.64754 20.1667 3.20837 18.7275 3.20837 16.9583V16.3625C3.20837 14.9233 4.38171 13.75 5.82087 13.75H18.7917Z" fill="#5B6B79"/>
+        <path d="M14.6667 7.10416H7.33337C6.95754 7.10416 6.64587 6.79249 6.64587 6.41666C6.64587 6.04082 6.95754 5.72916 7.33337 5.72916H14.6667C15.0425 5.72916 15.3542 6.04082 15.3542 6.41666C15.3542 6.79249 15.0425 7.10416 14.6667 7.10416Z" fill="#5B6B79"/>
+        <path d="M11.9167 10.3125H7.33337C6.95754 10.3125 6.64587 10.0008 6.64587 9.625C6.64587 9.24917 6.95754 8.9375 7.33337 8.9375H11.9167C12.2925 8.9375 12.6042 9.24917 12.6042 9.625C12.6042 10.0008 12.2925 10.3125 11.9167 10.3125Z" fill="#5B6B79"/>
+      </svg>
+    </span>
+    <span class="pc-mtext">Marine Resource</span>
+  </a>
+</li>
+
+
+<li class="pc-item pc-caption">
+  <label>System Dynamics</label>
+</li>
 <li class="pc-item pc-hasmenu">
-  <a href="#!" class="pc-link {{ Request::route()->getName() === 'hankam.threats.military' || Request::route()->getName() === 'hankam.threats.non-military' || Request::route()->getName() === 'hankam.threats.hybrid-military' ? 'active' : '' }}">
+  <a href="#!" class="pc-link">
     <span class="pc-micon">
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
         <path opacity="0.4" d="M9.13002 1.99017L4.08836 3.87851C3.12586 4.24517 2.33752 5.38184 2.33752 6.41767V13.8427C2.33752 14.5852 2.82336 15.566 3.41919 16.006L8.46086 19.7735C9.35002 20.4427 10.8075 20.4427 11.6967 19.7735L16.7384 16.006C17.3342 15.5568 17.82 14.5852 17.82 13.8427V6.41767C17.82 5.39101 17.0317 4.24517 16.0692 3.88767L11.0275 1.99934C10.5142 1.79767 9.65252 1.79767 9.13002 1.99017Z" fill="#5B6B79"/>
@@ -116,6 +147,17 @@
     <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.outcome-scenario.index') }}">Outcome Scenario</a></li>
   </ul>
 </li>
+<li class="pc-item">
+  <a href="{{ route('forms.index') }}" class="pc-link {{ Request::route()->getName() === 'forms.index' ? 'active' : '' }}">
+    <span class="pc-micon">
+      <!-- survey icon -->
+      <i class="fas fa-clipboard-list"></i>
+    </span>
+    <span class="pc-mtext">Forms</span>
+  </a>
+</li>
+
+
 <li class="pc-item pc-caption">
   <label>TOOLS</label>
 </li>
@@ -127,43 +169,12 @@
       <span class="pc-mtext">Key Variable</span>
   </a>
 </li>
-{{-- <li class="pc-item pc-caption">
-  <label>MARINE RESOURCE</label>
+<li class="pc-item">
+  <a href="{{ route('tools.recommendation.index') }}" class="pc-link">
+    <span class="pc-micon">
+          <i class="fas fa-chart-line"></i>
+      </span>
+      <span class="pc-mtext">Master Recommendation</span>
+  </a>
 </li>
-<li class="pc-item pc-hasmenu">
-  <a href="#!" class="pc-link">
-    <span class="pc-micon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path d="M18.1499 11.056H3.84996C3.6483 11.056 3.46497 10.9185 3.4008 10.726C0.879971 2.3935 13.6033 -0.805661 15.07 8.14101C16.5916 8.33351 17.7924 9.19516 18.5349 10.3502C18.7366 10.6527 18.5074 11.056 18.1499 11.056Z" fill="#5B6B79"/>
-        <path opacity="0.4" d="M18.3333 14.521H3.66663C3.29079 14.521 2.97913 14.2093 2.97913 13.8335C2.97913 13.4577 3.29079 13.146 3.66663 13.146H18.3333C18.7091 13.146 19.0208 13.4577 19.0208 13.8335C19.0208 14.2093 18.7091 14.521 18.3333 14.521Z" fill="#5B6B79"/>
-        <path opacity="0.4" d="M16.5 17.271H5.5C5.12417 17.271 4.8125 16.9593 4.8125 16.5835C4.8125 16.2077 5.12417 15.896 5.5 15.896H16.5C16.8758 15.896 17.1875 16.2077 17.1875 16.5835C17.1875 16.9593 16.8758 17.271 16.5 17.271Z" fill="#5B6B79"/>
-        <path opacity="0.4" d="M13.75 20.021H8.25C7.87417 20.021 7.5625 19.7093 7.5625 19.3335C7.5625 18.9577 7.87417 18.646 8.25 18.646H13.75C14.1258 18.646 14.4375 18.9577 14.4375 19.3335C14.4375 19.7093 14.1258 20.021 13.75 20.021Z" fill="#5B6B79"/>
-      </svg>
-    </span>
-    <span class="pc-mtext">Marine Resource</span>
-    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
-  </a>
-  <ul class="pc-submenu">
-    <li class="pc-item"><a class="pc-link" href="#">xxx</a></li>
-    <li class="pc-item"><a class="pc-link" href="#">yyy</a></li>
-    <li class="pc-item"><a class="pc-link" href="#">zzz</a></li>
-  </ul>
-</li> --}}
 
-{{-- other --}}
-{{-- <li class="pc-item pc-hasmenu">
-  <a href="#!" class="pc-link">
-    <span class="pc-micon">
-      <svg class="pc-icon">
-        <use xlink:href="#custom-shapes"></use>
-      </svg>
-    </span>
-    <span class="pc-mtext">Peta</span>
-    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
-    <span class="pc-badge">2</span>
-  </a>
-  <ul class="pc-submenu">
-    <li class="pc-item"><a class="pc-link" href="{{route('peta-geografi')}}">Geografi</a></li>
-    <li class="pc-item"><a class="pc-link" href="{{route('peta-keamanan')}}">Keamanan</a></li>
-  </ul>
-</li> --}}

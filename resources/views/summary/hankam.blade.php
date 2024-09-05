@@ -88,9 +88,7 @@
                         <p class="text-muted mb-1">Naval Strength</p>
                         <h5 class="mb-0 p-3 color-block text-blue-500">{{ $naval_strength}}/100</h5>
                       </div>
-                      <div class="col-6">
-                        <div id="average-score-graph"></div>
-                      </div>
+                     
                     </div>
                   </div>
                   <div class="col-md-4 col-xl-4">
@@ -99,9 +97,7 @@
                         <p class="text-muted mb-1">Naval Deployment</p>
                         <h5 class="mb-0 p-3 color-block text-red-500">{{ $naval_deployment }}/5</h5>
                       </div>
-                      <div class="col-6">
-                        <div id="naval-deployment-graph"></div>
-                      </div>
+                      
                     </div>
                   </div>
                   <div class="col-md-4 col-xl-4">
@@ -110,9 +106,7 @@
                         <p class="text-muted mb-1">Naval Capabilties</p>
                         <h5 class="mb-0 p-3 color-block text-green-500">{{ $naval_capabilities }}/5</h5>
                       </div>
-                      <div class="col-6">
-                        <div id="naval-capacity-graph"></div>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>

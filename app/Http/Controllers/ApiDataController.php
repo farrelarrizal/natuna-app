@@ -162,4 +162,43 @@ class ApiDataController extends Controller
         $filepath = storage_path('app/' . $scenario->export_path);
         return response()->download($filepath);
     }
+    
+    public function searchVariables(Request $request)
+    {
+        $query = $request->input('query');
+        $active_model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        
+        $results = DB::table('variables')
+            ->where('model_id', $active_model_id)
+            ->where('name', 'like', "%{$query}%")
+            ->get();
+
+        $formattedResults = $results->map(function ($variable) {
+            return [
+                'label' => $variable->name,
+                'value' => $variable->id,
+            ];
+        });
+
+        return response()->json($formattedResults);
+    }
+    public function searchSFD(Request $request)
+    {
+        $query = $request->input('query');
+        $active_model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        
+        $results = DB::table('sfd')
+            ->where('model_id', $active_model_id)
+            ->where('name', 'like', "%{$query}%")
+            ->get();
+
+        $formattedResults = $results->map(function ($sfd) {
+            return [
+                'label' => $sfd->name,
+                'value' => $sfd->name,
+            ];
+        });
+
+        return response()->json($formattedResults);
+    }
 }

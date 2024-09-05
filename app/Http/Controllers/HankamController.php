@@ -65,7 +65,58 @@ class HankamController extends Controller
             'naval_capabilities' => $naval_capabilities
         ];
 
-        return view('hankam.summary', $data);
+        return view('summary.hankam', $data);
+    }
+    public function infraSummary()
+    {
+        $naval_strength = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Strength')
+            ->first();
+
+        if ($naval_strength == null) {
+            $naval_strength = 0;
+        } else {
+            $naval_strength = $naval_strength->value;
+        }
+
+        $naval_deployment = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Deployment')
+            ->first();
+
+        if ($naval_deployment == null) {
+            $naval_deployment = 0;
+        } else {
+            $naval_deployment = $naval_deployment->value;
+        }
+
+        $naval_capabilities = DB::table('models')
+            ->join('variables', 'models.id', '=', 'variables.model_id')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('models.is_active', 1)
+            ->where('variables.name', 'Naval Capabilities')
+            ->first();
+
+        # if len naval_capabilities == 0, then naval_capabilities = 0
+        if ($naval_capabilities == null) {
+            $naval_capabilities = 0;
+        }
+
+        $data = [
+            'title' => 'Defence Infrastructure | Summary',
+            'head_title' => 'Summary',
+            'breadcrumb_item' => 'Defence Infrastructure',
+            'naval_strength' => $naval_strength,
+            'naval_deployment' => $naval_deployment,
+            'naval_capabilities' => $naval_capabilities
+        ];
+
+        return view('summary.defence-infrastructure', $data);
     }
     public function details()
     {
