@@ -25,53 +25,27 @@
                       </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no=1;
+                        @endphp
+                        @foreach ($survey as $item)
+                       
                         <tr>
-                            <td>1</td>
+                            <td>{{$no++}}</td>
                             <td>
                                 <div>
-                                    <p>Survey Naval Sea Threats</p>
+                                    <p>{{$item->name}}</p>
                                 </div>
                             </td>
-                            <td>Naval Sea Threats</td>
+                            <td>{{$item->sfd_name}}</td>
                             <td>
                                 <!-- isi survey -->
-                                <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-success"><i class="fas fa-share"></i> Fill Survey</a>
+                                <a href="{{route('forms.showForm', $item->id)}}" class="btn btn-sm btn-success"><i class="fas fa-share"></i> Fill Survey</a>
                                 <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a>
-                                <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
+                                <a href="{{route('forms.show', $item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                Survey Naval Sea Threats
-                            </td>
-                            <td>
-                                <span class="btn btn-sm btn-light-danger">Variable Relation Not Yet Setup </span>
-                                </span>
-                            <td>
-                                <!-- isi survey -->
-                                <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-success"><i class="fas fa-share"></i> Fill Survey</a>
-                                <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a>
-                                <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
-                            </td>
-                        </tr>
-                      {{-- @foreach ($scenarios as $scenario)
-                      <tr>
-                        <td>{{$scenario->id}}</td>
-                        <td>{{$scenario->name}}</td>
-                        <td>{{$scenario->desc}}</td>
-                        <td>{{$scenario->sfd_name}}</td>
-                        <td>{{$scenario->timestep}}</td>
-                        <td>{{$scenario->created_at}}</td>
-                        <td>
-                          <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
-                          <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                          <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
-                          <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                      </tr>
-                      @endforeach
-                     --}}
+                        @endforeach
                     </tbody>
                     <tfoot>
                       <tr>
