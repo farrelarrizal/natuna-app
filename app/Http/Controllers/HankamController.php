@@ -169,12 +169,14 @@ class HankamController extends Controller
         $image = $get_active_model_id->image;
 
         $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        $dataSfd = Sfd::select('name')->where('model_id', $get_active_model_id->id)->get();
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
             'variable' => $dataVariable,
-            'image' => $image
+            'image' => $image,
+            'sfd' => $dataSfd            
         ];
         return view('hankam.simulation.base-model.index', $data);
     }

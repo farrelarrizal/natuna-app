@@ -124,6 +124,8 @@ Route::middleware('auth')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
+        Route::get('/get-sfd', [ApiDataController::class, 'getSfd'])->name('get.sfd');
+
         Route::get('/search-variables', [ApiDataController::class, 'searchVariables']);
         Route::get('/search-sfd', [ApiDataController::class, 'searchSFD']);
         //graph
