@@ -111,11 +111,10 @@ class FormsController extends Controller
             'title' => 'Forms',
             'head_title' => 'Expert Survey - Forms',
             'breadcrumb_item' => 'Forms',
-            'questions' => $question,  // Add questions to the data array
-            'groupedResponses' => $groupedResponses,  // Add grouped responses to the data array
+            'questions' => $question,  
+            'groupedResponses' => $groupedResponses,  
         ];
 
-        // Pass the data array to the view
         return view('forms.show', $data);
     }
 
@@ -156,20 +155,69 @@ class FormsController extends Controller
         ]);
     }
     public function storeAnswer(Request $request)
-{
-    $form_id = $request->input('form_id');
-    $answers = $request->input('answers');
+    {
+        $form_id = $request->input('form_id');
+        $answers = $request->input('answers');
 
-    foreach ($answers as $question_id => $value) {
-        DB::table('answers')->insert([
-            'question_id' => $question_id,
-            'user_id' => Auth::id(),
-            'value' => $value,
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
+        foreach ($answers as $question_id => $value) {
+            DB::table('answers')->insert([
+                'question_id' => $question_id,
+                'user_id' => Auth::id(),
+                'value' => $value,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+        }
+        return redirect()->route('forms.index')->with('success', 'Answers submitted successfully.');
     }
-    return redirect()->route('forms.index')->with('success', 'Answers submitted successfully.');
-}
+    public function edit($id)
+    {
+        $forms = DB::table('forms')
+        ->join('question', 'question.form_id', '=', 'forms.id')
+        ->select(
+            'forms.id as form_id',
+            'forms.name',
+            'forms.sfd_name',
+            'forms.description',
+            'question.question',
+            'question.max_value',
+            'question.has_realational_to_variable',
+            'question.max_label'
+        )
+        ->where('forms.id', $id)
+        ->get();
+        
+        $forms;
+        $response = [];
+
+        foreach ($forms as $form) {
+            if (!isset($response[$form->form_id])) {
+                $response[$form->form_id] = [
+                    'id' => $form->form_id,
+                    'name' => $form->name,
+                    'sfd_name' => $form->sfd_name,
+                ];
+            }
+
+            $response[$form->form_id]['question'][] = [
+                'form_id' => $form->form_id,
+                'question' => $form->question,
+                'max_value' => $form->max_value,
+                'has_realational_to_variable' => $form->has_realational_to_variable,
+                'max_label' => $form->max_label
+            ];
+        }
+
+        $response = array_values($response);
+        // return $response;
+        $data = [
+            'title' => 'Forms',
+            'head_title' => 'Expert Survey - Forms',
+            'breadcrumb_item' => 'Forms',
+            'survey' => $response,
+        ];
+
+        return view('forms.edit', $data);
+    }
 
 }
