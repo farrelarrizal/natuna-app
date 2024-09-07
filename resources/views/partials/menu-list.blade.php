@@ -51,6 +51,24 @@
     <span class="pc-mtext">Maps</span>
   </a>
 </li>
+<li class="pc-item pc-hasmenu">
+  <a href="#!" class="pc-link">
+    <span class="pc-micon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <path opacity="0.4" d="M9.13002 1.99017L4.08836 3.87851C3.12586 4.24517 2.33752 5.38184 2.33752 6.41767V13.8427C2.33752 14.5852 2.82336 15.566 3.41919 16.006L8.46086 19.7735C9.35002 20.4427 10.8075 20.4427 11.6967 19.7735L16.7384 16.006C17.3342 15.5568 17.82 14.5852 17.82 13.8427V6.41767C17.82 5.39101 17.0317 4.24517 16.0692 3.88767L11.0275 1.99934C10.5142 1.79767 9.65252 1.79767 9.13002 1.99017Z" fill="#5B6B79"/>
+        <path d="M14.6666 10.6068C12.3933 10.6068 10.5416 12.4585 10.5416 14.7318C10.5416 17.0052 12.3933 18.8568 14.6666 18.8568C16.94 18.8568 18.7916 17.0052 18.7916 14.7318C18.7916 12.4493 16.94 10.6068 14.6666 10.6068Z" fill="#5B6B79"/>
+        <path d="M19.25 20.2227C19.0025 20.2227 18.7734 20.1218 18.5992 19.9568C18.5625 19.911 18.5167 19.8652 18.4892 19.8102C18.4525 19.7643 18.425 19.7093 18.4067 19.6543C18.3792 19.5993 18.3609 19.5443 18.3517 19.4893C18.3425 19.4252 18.3334 19.3702 18.3334 19.306C18.3334 19.1868 18.3609 19.0677 18.4067 18.9577C18.4525 18.8385 18.5167 18.7468 18.5992 18.6552C18.81 18.4443 19.1309 18.3435 19.4242 18.4077C19.4884 18.4168 19.5434 18.4352 19.5984 18.4627C19.6534 18.481 19.7084 18.5085 19.7542 18.5452C19.8092 18.5727 19.855 18.6185 19.9009 18.6552C19.9834 18.7468 20.0475 18.8385 20.0934 18.9577C20.1392 19.0677 20.1667 19.1868 20.1667 19.306C20.1667 19.5443 20.0659 19.7827 19.9009 19.9568C19.855 19.9935 19.8092 20.0302 19.7542 20.0668C19.7084 20.1035 19.6534 20.131 19.5984 20.1493C19.5434 20.1768 19.4884 20.1952 19.4242 20.2043C19.3692 20.2135 19.305 20.2227 19.25 20.2227Z" fill="#5B6B79"/>
+      </svg>
+    </span>
+    <span class="pc-mtext">Threats</span>
+    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+  </a>
+  <ul class="pc-submenu">
+    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.military') }}">Military Threats</a></li>
+    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.non-military') }}">Non-Military Threats</a></li>
+    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.hybrid-military') }}">Hybrid Threats</a></li>
+  </ul>
+</li>
 
 <li class="pc-item pc-caption">
   <label>Summary</label>
@@ -99,24 +117,6 @@
 <li class="pc-item pc-caption">
   <label>System Dynamics</label>
 </li>
-<li class="pc-item pc-hasmenu">
-  <a href="#!" class="pc-link">
-    <span class="pc-micon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-        <path opacity="0.4" d="M9.13002 1.99017L4.08836 3.87851C3.12586 4.24517 2.33752 5.38184 2.33752 6.41767V13.8427C2.33752 14.5852 2.82336 15.566 3.41919 16.006L8.46086 19.7735C9.35002 20.4427 10.8075 20.4427 11.6967 19.7735L16.7384 16.006C17.3342 15.5568 17.82 14.5852 17.82 13.8427V6.41767C17.82 5.39101 17.0317 4.24517 16.0692 3.88767L11.0275 1.99934C10.5142 1.79767 9.65252 1.79767 9.13002 1.99017Z" fill="#5B6B79"/>
-        <path d="M14.6666 10.6068C12.3933 10.6068 10.5416 12.4585 10.5416 14.7318C10.5416 17.0052 12.3933 18.8568 14.6666 18.8568C16.94 18.8568 18.7916 17.0052 18.7916 14.7318C18.7916 12.4493 16.94 10.6068 14.6666 10.6068Z" fill="#5B6B79"/>
-        <path d="M19.25 20.2227C19.0025 20.2227 18.7734 20.1218 18.5992 19.9568C18.5625 19.911 18.5167 19.8652 18.4892 19.8102C18.4525 19.7643 18.425 19.7093 18.4067 19.6543C18.3792 19.5993 18.3609 19.5443 18.3517 19.4893C18.3425 19.4252 18.3334 19.3702 18.3334 19.306C18.3334 19.1868 18.3609 19.0677 18.4067 18.9577C18.4525 18.8385 18.5167 18.7468 18.5992 18.6552C18.81 18.4443 19.1309 18.3435 19.4242 18.4077C19.4884 18.4168 19.5434 18.4352 19.5984 18.4627C19.6534 18.481 19.7084 18.5085 19.7542 18.5452C19.8092 18.5727 19.855 18.6185 19.9009 18.6552C19.9834 18.7468 20.0475 18.8385 20.0934 18.9577C20.1392 19.0677 20.1667 19.1868 20.1667 19.306C20.1667 19.5443 20.0659 19.7827 19.9009 19.9568C19.855 19.9935 19.8092 20.0302 19.7542 20.0668C19.7084 20.1035 19.6534 20.131 19.5984 20.1493C19.5434 20.1768 19.4884 20.1952 19.4242 20.2043C19.3692 20.2135 19.305 20.2227 19.25 20.2227Z" fill="#5B6B79"/>
-      </svg>
-    </span>
-    <span class="pc-mtext">Threats</span>
-    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
-  </a>
-  <ul class="pc-submenu">
-    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.military') }}">Military Threats</a></li>
-    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.non-military') }}">Non-Military Threats</a></li>
-    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.hybrid-military') }}">Hybrid Threats</a></li>
-  </ul>
-</li>
 {{-- <li class="pc-item">
   <a href="{{ route('hankam.details') }}" class="pc-link {{ Request::route()->getName() === 'hankam.details' ? 'active' : '' }}">
     <span class="pc-micon">
@@ -143,8 +143,10 @@
   </a>
   <ul class="pc-submenu">
     <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.base-model.index') }}">Base Model</a></li>
-    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.scenario-model.index') }}">Scenario Model</a></li>
-    <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.outcome-scenario.index') }}">Outcome Scenario</a></li>
+    @if (Auth::user()->role === 'SUPERADMIN')
+      <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.scenario-model.index') }}">Scenario Model</a></li>
+      <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.outcome-scenario.index') }}">Outcome Scenario</a></li>
+    @endif
   </ul>
 </li>
 <li class="pc-item">
@@ -156,25 +158,26 @@
     <span class="pc-mtext">Forms</span>
   </a>
 </li>
-
-
-<li class="pc-item pc-caption">
-  <label>TOOLS</label>
-</li>
-<li class="pc-item">
-  <a href="{{ route('tools.key-variable.index') }}" class="pc-link {{ Request::route()->getName() === 'tools.key-variable.index' ? 'active' : '' }}">
-    <span class="pc-micon">
-          <i class="ti ti-key"></i>
-      </span>
-      <span class="pc-mtext">Key Variable</span>
-  </a>
-</li>
-<li class="pc-item">
-  <a href="{{ route('tools.recommendation.index') }}" class="pc-link">
-    <span class="pc-micon">
-          <i class="fas fa-chart-line"></i>
-      </span>
-      <span class="pc-mtext">Master Recommendation</span>
-  </a>
-</li>
+  
+@if (Auth::user()->role === 'SUPERADMIN')
+  <li class="pc-item pc-caption">
+    <label>Tools</label>
+  </li>
+  <li class="pc-item">
+    <a href="{{ route('tools.key-variable.index') }}" class="pc-link {{ Request::route()->getName() === 'tools.key-variable.index' ? 'active' : '' }}">
+      <span class="pc-micon">
+            <i class="ti ti-key"></i>
+        </span>
+        <span class="pc-mtext">Key Variable</span>
+    </a>
+  </li>
+  <li class="pc-item">
+    <a href="{{ route('tools.recommendation.index') }}" class="pc-link">
+      <span class="pc-micon">
+            <i class="fas fa-chart-line"></i>
+        </span>
+        <span class="pc-mtext">Master Recommendation</span>
+    </a>
+  </li>
+@endif
 
