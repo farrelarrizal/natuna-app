@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Imports\ScenarioDataImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class HankamController extends Controller
 {
@@ -168,7 +169,11 @@ class HankamController extends Controller
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
         $image = $get_active_model_id->image;
 
-        $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        if (Auth::user()->role == 'SUPERADMIN') {
+            $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        } else {
+            $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->where('key_variable', 1)->get();
+        }
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
