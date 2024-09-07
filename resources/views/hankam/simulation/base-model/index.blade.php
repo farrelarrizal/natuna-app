@@ -51,6 +51,19 @@
 
                     {{-- <span>Last Edit: 17 May 2024 18:50</span> --}}
                 </li>
+                {{-- <li class="list-inline-item d-flex align-items-center">
+                    <div class="col-auto">
+                        <select id="sfdSelect" name="sfdId" class="form-select form-select-sm">
+                            <option value="">Select SFD</option>
+                            @foreach($sfds as $sfd)
+                                <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-auto ms-2">
+                        <button id="loadVariablesBtn" class="btn btn-primary btn-sm button-send">Load Variables</button>
+                    </div>
+                </li> --}}
                 <li class="list-inline-item d-flex align-items-center">
                     <div class="col-auto">
                         <select id="sfdSelect" name="sfdId" class="form-select form-select-sm">
@@ -120,31 +133,54 @@
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5>Stock Flow Diagram</h5>
-                <button class="btn btn-primary" id="uploadBtn">
+                <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
                     Upload SFD Image
                 </button>
             </div>
             <div class="card-body">
 
                 <div class="row mt-3">
-                    <img src="{{ asset($image) }}" alt="image" class="img-fluid" width="100%">
+                    <img src="{{ asset(session('sfd') ?: $sfd) }}" alt="image" class="img-fluid" width="100%">
                 </div>
 
             </div>
         </div>
     </div>
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadModalLabel">Upload SFD Image</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('hankam.simulation.base-model.upload-sfd') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="sfdImage" class="form-label">Choose an image to upload</label>
+                        <input type="file" class="form-control" id="sfdImage" name="sfd" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                              
+            </div>
+          </div>
+        </div>
+      </div>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5>Causal Loop Diagram</h5>
-                <button class="btn btn-primary" id="uploadBtn">
-                    Upload SFD Image
+                <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal2">
+                    Upload CLD Image
                 </button>
             </div>
             <div class="card-body">
 
                 <div class="row mt-3">
-                    <img src="{{ asset($image) }}" alt="image" class="img-fluid" width="100%">
+                    <img src="{{ asset(session('image') ?: $image) }}" alt="image" class="img-fluid" width="100%">
+
+                    {{-- <img src="{{ asset($image) }}" alt="image" class="img-fluid" width="100%"> --}}
                 </div>
                 <div class="row my-3">
                     <div id="defence-and-security-graphics"></div>
@@ -152,6 +188,40 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="uploadModal2" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="uploadModalLabel">Upload SFD Image</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('hankam.simulation.base-model.upload-cld') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="cldImage" class="form-label">Choose an image to upload</label>
+                        <input type="file" class="form-control" id="cldImage" name="image" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+                              
+            </div>
+          </div>
+        </div>
+      </div>
+      {{-- <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5>Model Variables</h5>
+            </div>
+            <div class="card-body p-0 income-scroll">
+                <div class="mt-3 mb-3">
+                    <div class="row" id="variable-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
@@ -188,7 +258,7 @@
         </div>
     </div>
 </div>
-</div>
+
 @endsection
 
 @section('script')
@@ -196,14 +266,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="<?= asset('assets/js/plugins/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
+{{-- <script>
+    $(document).ready(function() {
+        $('#loadVariablesBtn').on('click', function(e) {
+            e.preventDefault();
+            var sfdId = $('#sfdSelect').val();
 
+            if (sfdId) {
+                $.ajax({
+                    url: "{{ route('base-model.get-variables') }}",
+                    type: "GET",
+                    data: { sfdId: sfdId },
+                    success: function(response) {
+                        $('#variable-container').html(response.html);
+                    },
+                    error: function(xhr) {
+                        alert("An error occurred while fetching variables.");
+                    }
+                });
+            } else {
+                alert("Please select an SFD first.");
+            }
+        });
+    });
+
+</script> --}}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var variableSelect = document.getElementById('variableSelect');
         var variableForm = document.getElementById('variableForm');
 
         function loadSfd() {
-            // Show a loading message while the data is being fetched
             var sfdSelect = document.getElementById('sfdSelect');
 
             sfdSelect.innerHTML = '<option value="">Loading...</option>';
@@ -212,18 +305,17 @@
                 .then(response => response.json())
 
                 .then(sfdData => {
-                    sfdSelect.innerHTML = ''; // Clear the existing option
+                    sfdSelect.innerHTML = ''; 
                     var defaultOption = document.createElement('option');
                     defaultOption.value = '';
                     defaultOption.textContent = 'Select SFD';
                     sfdSelect.appendChild(defaultOption);
 
-                    // Populate the select with SFD data
                     sfdData.forEach(sfd => {
                         var option = document.createElement('option');
-                        option.value = sfd.id; // Assuming the id is the value
+                        option.value = sfd.id; 
                         option.textContent = 'SFD ' + sfd
-                            .name // Assuming the name is the display text
+                            .name 
                         sfdSelect.appendChild(option);
 
                     });
