@@ -5,7 +5,7 @@ def connect_db():
         host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
         user="admin",
         passwd="cujwiq-suqhu2-bycpuB",
-        database="web-app"
+        database="web-app-dev"
     )
     return connection
 
@@ -120,94 +120,139 @@ def get_sfd_name(file_name):
     model[-1] = temp
     number_of_sfd = 0
     sfds = []
-    
+
     for m in model:
-        if 'SFD' in m:
+        temp1 = m.split('\n')[0].strip()
+        if temp1 != '~':
             number_of_sfd += 1
-            sfd_name = m.split('\n')[0].split('[SFD]')[-1].strip()
+            sfd_name = temp1
             sfds.append(sfd_name)
-            
     return sfds
 
-def insert_sfd_name(sfds, model_id):
-    values = []
-    for sfd in sfds:
-        values.append(f"('{sfd}', {model_id})")
-    
+
+def get_sfd_id(model_id):
     conn = connect_db()
-    query = "INSERT INTO sfd (name, model_id) VALUES " + ", ".join(values)
-    res = execute_query(query, conn)
-    if res != True:
-        print(res)
+    try:
+        query = f"SELECT id, name FROM sfd WHERE model_id = {model_id}"
+        result = read_query(query, conn)
+    except Exception as e:
+        print(str(e))
+    finally:
+        conn.close()
+        return result
+    
+def get_variable_id(model_id):
+    conn = connect_db()
+    try:
+        query = f"SELECT id, name FROM variables WHERE model_id = '{model_id}'"
+        result = read_query(query, conn)
+    except Exception as e:
+        print(str(e))
+    finally:
+        conn.close()
+        return result
+
+
+def insert_sfd_name(sfds, model_id):
+    print(sfds)
+    conn = connect_db()
+    try:
+        values = []
+        for sfd in sfds:
+            values.append(f"('{sfd}', {model_id})")
         
-    conn.close()
-    
+        query = "INSERT INTO sfd (name, model_id) VALUES " + ", ".join(values)
+        res = execute_query(query, conn)
+        if res != True:
+            print(res)
+    except Exception as e:
+        print(str(e))
+    finally:
+        conn.close()
+
+
 def get_sfd(file_name, model_id):
-    model = load_raw(file_name).split('********************************************************')[-1].split('*')
-    
-    # last model modify to split "///---\\\"
-    temp =  model[-1].split('///---\\\n')[0]
-    
-    #change the last model to temp
-    model[-1] = temp
-    number_of_sfd = 0
-    all_sfd_variables = []
-    
-    for m in model:
-        if 'SFD' in m:
+    try:
+        model = load_raw(file_name).split('********************************************************')[-1].split('*')
+
+        temp = model[-1].split('///---\\\n')[0]
+        model[-1] = temp
+        
+        number_of_sfd = 0
+        all_sfd_variables = []
+
+        # Load data from the database
+        sfd_ids = dict(get_sfd_id(model_id))
+        variable_ids = dict(get_variable_id(model_id))
+        print(variable_ids)
+        
+        df_sfd = pd.DataFrame(sfd_ids.items(), columns=['id', 'name'])
+        df_variable = pd.DataFrame(variable_ids.items(), columns=['id', 'name'])  
+
+        for m in model:
             number_of_sfd += 1
-            sfd_name = m.split('\n')[0].split('[SFD]')[-1].strip()
+            sfd_name = m.split('\n')[0].strip()
             sfd_variables = []
             variables = m.split('\n')
 
             for variable in variables:
-                # if startwith 10 get the variable name
+                # Handle exceptions and extract valid variable names
                 try:
                     if variable.startswith('10'):
-                        # print(variable_name)
                         variable_name = variable.split(',')[2].strip()
-                        #  if variable not string then skip
-                        if not variable_name[0].isalpha():
-                            continue
-                        sfd_variables.append(variable_name)
-                except Exception as e:
-                    pass
-            
+                        if variable_name and variable_name[0].isalpha():  # Check if valid string
+                            sfd_variables.append(variable_name)
+                except IndexError:
+                    continue  # Skip if index issues arise
+
+            # Add extracted variables to the list
             for variable in sfd_variables:
                 all_sfd_variables.append({
                     'sfd_name': sfd_name,
                     'variable': variable.strip(),
-                    'model_id': model_id
+                    'model_id': model_id,
                 })
-    result = pd.read_json(json.dumps(all_sfd_variables))
-    
-    # find the id of the sfd
-    conn = connect_db()
-    query = f"SELECT id, name FROM sfd WHERE model_id = {model_id}"
-    sfd = read_query(query, conn)
-    master_sfd = pd.DataFrame(sfd, columns=['sfd_id', 'name'])
-    result = pd.merge(result, master_sfd, left_on='sfd_name', right_on='name', how='left')
-    
-    # fill the id of the variable
-    query = f"SELECT id as variable_id, name FROM variables WHERE model_id = {model_id}"
-    variables = read_query(query, conn)
-    master_variables = pd.DataFrame(variables, columns=['variable_id', 'name'])
-    result = pd.merge(result, master_variables, left_on='variable', right_on='name', how='left')
-    
-    result = result[['sfd_id', 'variable_id', 'model_id']]
-    return result
 
-def insert_sfd_variables(df):
-    values = []
-    for idx, row in df.iterrows():
-        values.append(f"({row['sfd_id']}, {row['variable_id']})")
+        # Create dataframe for the final result
+        df = pd.DataFrame(all_sfd_variables)
+
+        # Perform merging outside of the loop for efficiency
+        if not df.empty:
+            df = df.merge(df_sfd, left_on='sfd_name', right_on='name', how='inner')
+            df = df.merge(df_variable, left_on='variable', right_on='name', how='inner')
+            df = df[['id_x', 'id_y', 'model_id']]
+            df.columns = ['sfd_id', 'variable_id', 'model_id']
+        
+        return df
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        # show the error
+        
+        return pd.DataFrame()  # Return an empty dataframe on error
+
     
+def insert_sfd_variables(df):
     conn = connect_db()
-    query = "INSERT INTO sfd_variable (sfd_id, variable_id) VALUES " + ", ".join(values)
-    res = execute_query(query, conn)
-    if res != True:
-        print(res)
-    conn.close()
+    try:
+        values = []
+        for idx, row in df.iterrows():
+            values.append(f"({row['sfd_id']}, {row['variable_id']})")
+        
+        query = "INSERT INTO sfd_variable (sfd_id, variable_id) VALUES " + ", ".join(values)
+        
+        try:
+            res = execute_query(query, conn)
+            if res != True:
+                print(res)
+        except Exception as e:
+            print(str(e))
+            print('Error')
+            print('ERROR DETAIL : ', res)
+            print('ERROR QUERY : ', query)
+    except Exception as e:
+        print(str(e))
+    finally:
+        conn.close()
 
 if __name__ == '__main__':
     import json
@@ -217,6 +262,14 @@ if __name__ == '__main__':
     import argparse
     import warnings
     warnings.filterwarnings('ignore')
+    import logging
+    import uuid
+    
+    LOG_ID = str(uuid.uuid4())
+    # setup logging
+    logging.basicConfig(level=logging.INFO)
+    
+    logger = logging.getLogger(f"LOG_ID: {LOG_ID} | Model Convert")
     
 
     parser = argparse.ArgumentParser(description='Convert Model File to Database')
@@ -244,16 +297,24 @@ if __name__ == '__main__':
     insert_variables(model)
     print('Model Variables Loaded')
     
-    # Register SFD
+    # Register SFD  
+    logger.info('LOG_ID: {LOG_ID} | Loading SFD Name')
     sfds = get_sfd_name(file_name)
-    
     insert_sfd_name(sfds, model_id)
-    print('SFD Names Loaded')
+    logger.info(f"LOG_ID: {LOG_ID} | SFD Name Loaded : {sfds}")
+    logger.info('LOG_ID: {LOG_ID} | SFD Name Loaded')
     
     # Load SFD Variables
+    logger.info('LOG_ID: {LOG_ID} | Loading SFD VARIABLES')
     sfd_variables = get_sfd(file_name, model_id)
+    logger.info(f"LOG_ID: {LOG_ID} | SFD Variables Loaded : {sfd_variables}")
+    logger.info(f"LOG_ID: {LOG_ID} | SFD Variables Loaded : {sfd_variables.shape}")
+    
+    logger.info('LOG_ID: {LOG_ID} | Inserting SFD')
     insert_sfd_variables(sfd_variables)
-    print('SFD Variables Loaded')
+    logger.info('LOG_ID: {LOG_ID} | SFD Variables Loaded')
+    
+    logger.info('LOG_ID: {LOG_ID} | Model Convert Completed')
     
     
     
