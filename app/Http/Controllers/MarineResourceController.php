@@ -10,7 +10,7 @@ class MarineResourceController extends Controller
     //
     public function summary(){
         // diganti dengan nama variable
-        $variables = ['Naval Strength', 'Naval Strength'];
+        $variables = ['Marine Resource Utilization', 'Potential Economic Value of North Natuna Sea'];
 
         $variableIds = DB::table('variables')
             ->join('models', 'models.id', '=', 'variables.model_id')
@@ -20,7 +20,7 @@ class MarineResourceController extends Controller
 
         $var_1 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Marine Resource Utilization'] ?? null)  //nama disesuaikan
             ->first();
     
         if ($var_1 == null) {
@@ -31,7 +31,7 @@ class MarineResourceController extends Controller
             
         $var_2 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Potential Economic Value of North Natuna Sea'] ?? null)  //nama disesuaikan
             ->first();
 
         if ($var_2 == null) {

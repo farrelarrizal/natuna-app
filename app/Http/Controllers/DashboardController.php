@@ -17,7 +17,7 @@ class DashboardController extends Controller
     }
     public function executiveSummary()
     {
-        $variables = ['Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
+        $variables = ['North Natuna Defense and Security', 'National Defense and Security Infrastructure', 'Marine Resource Utilizatio'];
 
         $variableIds = DB::table('variables')
             ->join('models', 'models.id', '=', 'variables.model_id')
@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
         $first_var = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['North Natuna Defense and Security'] ?? null)  //nama disesuaikan
             ->first();
  
         if ($first_var == null) {
@@ -38,7 +38,7 @@ class DashboardController extends Controller
          
         $second_var = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Deployment'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['National Defense and Security Infrastructure'] ?? null)  //nama disesuaikan
             ->first();
 
         if ($second_var == null) {
@@ -49,7 +49,7 @@ class DashboardController extends Controller
         
         $third_var = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Capabilities'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Marine Resource Utilizatio'] ?? null)  //nama disesuaikan
             ->first();
 
         # if len naval_capabilities == 0, then naval_capabilities = 0

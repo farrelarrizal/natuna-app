@@ -18,13 +18,45 @@ class HankamController extends Controller
     //
     public function summary()
     {   
-        $variables = ['Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
+        $variables = ['North Natuna Defense and Security', 'National Sea Threat Risk', 'Naval Defense Posture', 'Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
 
         $variableIds = DB::table('variables')
             ->join('models', 'models.id', '=', 'variables.model_id')
             ->whereIn('variables.name', $variables)
             ->where('models.is_active', 1)  //ganti model yang aktif
             ->pluck('variables.id', 'variables.name');
+
+        $var_1 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['North Natuna Defense and Security'] ?? null)  //nama disesuaikan
+            ->first();
+ 
+        if ($var_1 == null) {
+            $var_1 = 0;
+        } else {
+            $var_1 = $var_1->value;
+        }
+         
+        $var_2 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['National Sea Threat Risk'] ?? null)  //nama disesuaikan
+            ->first();
+
+        if ($var_2 == null) {
+            $var_2 = 0;
+        } else {
+            $var_2 = $var_2->value;
+        }
+        
+        $var_3 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Defense Posture'] ?? null)  //nama disesuaikan
+            ->first();
+
+        # if len naval_capabilities == 0, then naval_capabilities = 0
+        if ($var_3 == null) {
+            $var_3 = 0;
+        }
 
         $naval_strength = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
@@ -62,6 +94,9 @@ class HankamController extends Controller
             'title' => 'Defence and Security | Summary',
             'head_title' => 'Summary',
             'breadcrumb_item' => 'Defence and Security',
+            'first_var' => $var_1,
+            'second_var' => $var_2,
+            'third_var' => $var_3,
             'naval_strength' => $naval_strength,
             'naval_deployment' => $naval_deployment,
             'naval_capabilities' => $naval_capabilities
@@ -73,7 +108,7 @@ class HankamController extends Controller
     public function infraSummary()
     {   
         // diganti dengan nama variable
-        $variables = ['Naval Strength', 'Naval Strength', 'Naval Strength'];
+        $variables = ['National Defense and Security Infrastructure', 'Defense and Security Regulation', 'Priority Program'];
 
         $variableIds = DB::table('variables')
             ->join('models', 'models.id', '=', 'variables.model_id')
@@ -83,7 +118,7 @@ class HankamController extends Controller
 
         $var_1 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['National Defense and Security Infrastructure'] ?? null)  //nama disesuaikan
             ->first();
  
         if ($var_1 == null) {
@@ -94,7 +129,7 @@ class HankamController extends Controller
          
         $var_2 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Defense and Security Regulation'] ?? null)  //nama disesuaikan
             ->first();
 
         if ($var_2 == null) {
@@ -105,7 +140,7 @@ class HankamController extends Controller
         
         $var_3 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Priority Program'] ?? null)  //nama disesuaikan
             ->first();
 
         # if len naval_capabilities == 0, then naval_capabilities = 0

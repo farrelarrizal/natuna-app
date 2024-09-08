@@ -84,7 +84,7 @@
           <div class="row align-items-center justify-content-center">
               <div class="mt-3 row align-items-center">
                   {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                  <h4 class="mb-0 p-3 color-block text-green-600">{{ $naval_strength }}/5</h4>
+                  <h4 class="mb-0 p-3 color-block text-green-600">{{ $first_var }}/5</h4>
               </div>
           </div>
         </div>
@@ -118,7 +118,7 @@
                   <div class="mt-3 row align-items-center">
                     <div class="col-12">
                       <p class="text-muted mb-1"> North Natuna Sea Risk and Threat Score </p>
-                      <h5 class="mb-0 p-3 color-block text-red-500">{{ $naval_deployment }}/5</h5>
+                      <h5 class="mb-0 p-3 color-block text-red-500">{{ $second_var }}/5</h5>
                     </div>
                     
                   </div>
@@ -127,7 +127,7 @@
                   <div class="mt-3 row align-items-center">
                     <div class="col-12">
                       <p class="text-muted mb-1"> Naval Defense Posture Score</p>
-                      <h5 class="mb-0 p-3 color-block text-green-500">{{ $naval_capabilities }}/5</h5>
+                      <h5 class="mb-0 p-3 color-block text-green-500">{{ $third_var }}/5</h5>
                     </div>
                     
                   </div>
