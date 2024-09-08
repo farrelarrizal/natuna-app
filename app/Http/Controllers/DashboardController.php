@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     //index
@@ -17,10 +17,54 @@ class DashboardController extends Controller
     }
     public function executiveSummary()
     {
+        $variables = ['Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
+
+        $variableIds = DB::table('variables')
+            ->join('models', 'models.id', '=', 'variables.model_id')
+            ->whereIn('variables.name', $variables)
+            ->where('models.is_active', 1)  //ganti model yang aktif
+            ->pluck('variables.id', 'variables.name');
+
+        $first_var = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->first();
+ 
+        if ($first_var == null) {
+            $first_var = 0;
+        } else {
+            $first_var = $first_var->value;
+        }
+         
+        $second_var = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Deployment'] ?? null)  //nama disesuaikan
+            ->first();
+
+        if ($second_var == null) {
+            $second_var = 0;
+        } else {
+            $second_var = $second_var->value;
+        }
+        
+        $third_var = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Capabilities'] ?? null)  //nama disesuaikan
+            ->first();
+
+        # if len naval_capabilities == 0, then naval_capabilities = 0
+        if ($third_var == null) {
+            $third_var = 0;
+        }
+
         $data = [
             'title' => 'Dashboard | Executive Summary',
             'head_title' => 'Executive Summary',
             'breadcrumb_item' => 'Dashboard',
+            'first_var' => $first_var,
+            'second_var' => $second_var,
+            'third_var' => $third_var
+
         ];
         return view('dashboard.executive-summary', $data);
     }

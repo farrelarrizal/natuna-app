@@ -73,14 +73,15 @@ class ApiDataController extends Controller
         return response()->json($response);
     }
 
-    public function variabelActiveGraph()
+    public function variabelStaticGraph($var)
     {
+        
         $data = DB::table('scenario_data')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
             ->join('models', 'models.id', '=', 'variables.model_id')
             ->where('models.is_active', 1)
-            ->where('variables.key_variable', 1)
+            ->where('variables.name', $var)
             ->select(
                 'scenarios.id as scenario_id',
                 'scenarios.name as scenario_name',
@@ -89,8 +90,8 @@ class ApiDataController extends Controller
                 'scenario_data.value'
             )
             ->get();
+            
 
-        // Kelompokkan data berdasarkan scenario_id dan variable_name
         $finalData = [];
         $groupedData = $data->groupBy('variable_name');
 
