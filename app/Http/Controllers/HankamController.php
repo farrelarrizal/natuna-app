@@ -164,73 +164,79 @@ class HankamController extends Controller
         ];
         return view('hankam.threats.hybrid-military', $data);
     }
-    public function simulationBaseModel()
+    public function getSfdVariables($sfdId = null)
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
-        $image = $get_active_model_id->image;
-        $sfdimage = $get_active_model_id->sfd;
-
-        if (Auth::user()->role == 'SUPERADMIN') {
-            $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        
+        if ($sfdId) {
+            $variables = DB::table('sfd_variable')
+                ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+                ->select('variables.id', 'variables.name', 'variables.value', 'variables.level', 'variables.key_variable')
+                ->where('sfd_variable.sfd_id', $sfdId)
+                ->get();
         } else {
-            $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->where('key_variable', 1)->get();
+            $variables = DB::table('variables')
+                ->where('model_id', $get_active_model_id->id)
+                ->select('id', 'name', 'value', 'level', 'key_variable')
+                ->get();
         }
+
+        return response()->json([
+            'variables' => $variables
+        ]);
+    }
+
+    public function simulationBaseModel()
+    {
+        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+        $image = $get_active_model->image;
+        $sfdimage = $get_active_model->sfd;
+
+        // Fetch the list of SFDs for the active model
+        $sfdList = DB::table('sfd')->where('model_id', $get_active_model->id)->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
-            'variable' => $dataVariable,
+            'sfdList' => $sfdList,
             'image' => $image,
-            'sfd' => $sfdimage
+            'sfds' => $sfdimage
         ];
+
         return view('hankam.simulation.base-model.index', $data);
     }
+
     public function uploadSfdImage(Request $request)
-    {
-        // Validate the image input
+    {   
         $request->validate([
-            'sfd' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'sfd' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'sfd_id' => 'required|integer|exists:sfd,id',
         ]);
 
-        // Get the active model
-        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+        $sfdId = $request->input('sfd_id');
 
-        if ($get_active_model) {
-            // Generate a unique name for the image
-            $imageName = time() . '.' . $request->sfd->extension();
+        $imageName = time() . '.' . $request->sfd->extension();
 
-            try {
-                // Move the uploaded image to the public directory
-                $request->sfd->move(public_path('assets/imageSfd'), $imageName);
+        try {
+            $request->sfd->move(public_path('assets/imageSfd'), $imageName);
 
-                // Save the image path in the 'sfd' column of the active model
-                DB::table('models')
-                    ->where('id', $get_active_model->id)
-                    ->update(['sfd' => 'assets/imageSfd/' . $imageName]);
-
-                return redirect()->back()->with('success', 'SFD image uploaded successfully!');
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+            if (!file_exists(public_path('assets/imageSfd/' . $imageName))) {
+                return redirect()->back()->with('error', 'File not found after upload.');
             }
-        }
 
-        return redirect()->back()->with('error', 'No active model found.');
+            DB::table('sfd')
+                ->where('id', $sfdId)
+                ->update(['image_path' => 'assets/imageSfd/' . $imageName]);
+
+            return redirect()->back()->with('success', 'SFD image uploaded successfully!');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+        }
     }
 
-    // public function getVariablesBySFD(Request $request)
-    // {
-    //     $sfdId = $request->sfdId;
 
-    //     $variables = DB::table('sfd_variables')
-    //             ->join('variables', 'sfd_variables.variable_id', '=', 'variables.id') 
-    //             ->where('sfd_variables.sfd_id', $sfdId)
-    //             ->select('variables.*') 
-    //             ->get();
-
-    //     $html = view('partials.variables', compact('variables'))->render();
-
-    //     return response()->json(['html' => $html]);
-    // }
 
 
     public function uploadCldImage(Request $request)
