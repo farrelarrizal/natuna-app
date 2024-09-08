@@ -168,6 +168,7 @@ class HankamController extends Controller
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
         $image = $get_active_model_id->image;
+        $sfdimage = $get_active_model_id->sfd;
 
         if (Auth::user()->role == 'SUPERADMIN') {
             $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
@@ -179,10 +180,91 @@ class HankamController extends Controller
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
             'variable' => $dataVariable,
-            'image' => $image
+            'image' => $image,
+            'sfd' => $sfdimage
         ];
         return view('hankam.simulation.base-model.index', $data);
     }
+    public function uploadSfdImage(Request $request)
+    {
+        // Validate the image input
+        $request->validate([
+            'sfd' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get the active model
+        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+
+        if ($get_active_model) {
+            // Generate a unique name for the image
+            $imageName = time() . '.' . $request->sfd->extension();
+
+            try {
+                // Move the uploaded image to the public directory
+                $request->sfd->move(public_path('assets/imageSfd'), $imageName);
+
+                // Save the image path in the 'sfd' column of the active model
+                DB::table('models')
+                    ->where('id', $get_active_model->id)
+                    ->update(['sfd' => 'assets/imageSfd/' . $imageName]);
+
+                return redirect()->back()->with('success', 'SFD image uploaded successfully!');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'No active model found.');
+    }
+
+    // public function getVariablesBySFD(Request $request)
+    // {
+    //     $sfdId = $request->sfdId;
+
+    //     $variables = DB::table('sfd_variables')
+    //             ->join('variables', 'sfd_variables.variable_id', '=', 'variables.id') 
+    //             ->where('sfd_variables.sfd_id', $sfdId)
+    //             ->select('variables.*') 
+    //             ->get();
+
+    //     $html = view('partials.variables', compact('variables'))->render();
+
+    //     return response()->json(['html' => $html]);
+    // }
+
+
+    public function uploadCldImage(Request $request)
+    {
+        // Validate the image input
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get the active model
+        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+
+        if ($get_active_model) {
+            // Generate a unique name for the image
+            $imageName = time() . '.' . $request->image->extension();
+
+            try {
+                // Move the uploaded image to the public directory
+                $request->image->move(public_path('assets/imageModels'), $imageName);
+
+                // Save the image path in the 'sfd' column of the active model
+                DB::table('models')
+                    ->where('id', $get_active_model->id)
+                    ->update(['image' => 'assets/imageModels/' . $imageName]);
+
+                return redirect()->back()->with('success', 'SFD image uploaded successfully!');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'No active model found.');
+    }
+
     public function editParameterBaseModel()
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
@@ -259,7 +341,6 @@ class HankamController extends Controller
         $scriptPath = public_path('run_model_convert_insert.sh');
         $sourceFile = '../../storage/app/' . $path;
         $model_id = $new_id;
-        // dd($scriptPath, $sourceFile, $model_id);
         $command = "./run_model_convert_insert.sh $sourceFile $model_id";
         shell_exec($command);
 
