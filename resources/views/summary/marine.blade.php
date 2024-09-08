@@ -140,7 +140,7 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center justify-content-between">
-                  <h5 class="mb-0"> Potential Economic Value of North Natuna Se</h5>    
+                  <h5 class="mb-0"> Potential Economic Value of North Natuna Sea</h5>    
               </div>
               <div class="row my-3">
                   <div id="potential-economic-graph"></div>
