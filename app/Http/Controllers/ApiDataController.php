@@ -30,6 +30,15 @@ class ApiDataController extends Controller
 
         return response()->json($data);
     }
+    public function getSfd()
+    {
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $data = DB::table('sfd')
+            ->where('model_id', $model_id)
+            ->get();
+
+        return response()->json($data);
+    }
     public function baseModelGraph(Request $request)
     {
         $idVariable = $request->query('variableId');
@@ -191,9 +200,10 @@ class ApiDataController extends Controller
             ->where('model_id', $active_model_id)
             ->where('name', 'like', "%{$query}%")
             ->get();
-
+        // dd($results);
         $formattedResults = $results->map(function ($sfd) {
             return [
+                
                 'label' => $sfd->name,
                 'value' => $sfd->name,
             ];
