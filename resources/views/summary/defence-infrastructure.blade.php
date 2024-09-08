@@ -86,7 +86,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Strength</p>
-                        <h5 class="mb-0 p-3 color-block text-blue-500">{{ $naval_strength}}/100</h5>
+                        <h5 class="mb-0 p-3 color-block text-blue-500">{{ $first_variable}}/100</h5>
                       </div>
                       
                     </div>
@@ -95,7 +95,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Deployment</p>
-                        <h5 class="mb-0 p-3 color-block text-red-500">{{ $naval_deployment }}/5</h5>
+                        <h5 class="mb-0 p-3 color-block text-red-500">{{ $second_variables }}/5</h5>
                       </div>
                       
                     </div>
@@ -104,7 +104,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Capabilties</p>
-                        <h5 class="mb-0 p-3 color-block text-green-500">{{ $naval_capabilities }}/5</h5>
+                        <h5 class="mb-0 p-3 color-block text-green-500">{{ $third_variables }}/5</h5>
                       </div>
                       
                     </div>
