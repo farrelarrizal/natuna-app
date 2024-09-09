@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-@include('partials/breadcrumb')
+  @include('partials/breadcrumb')
   <div class="row mb-2">
   <div class="row">
     <h3>Actual North Natuna Indicator</h3>
@@ -81,7 +81,7 @@
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>3.58</strong>/100</h3>
+                  <h3 class="mb-1"><strong>3.58</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                   </p>
@@ -130,7 +130,7 @@
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <h3 class="mb-1"><strong>4.85</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
                   </p>
@@ -179,7 +179,7 @@
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <h3 class="mb-1"><strong>4.85</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
                   </p>
@@ -249,7 +249,7 @@
               <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>3.58</strong>/100</h3>
+                  <h3 class="mb-1"><strong>3.58</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                   </p>
@@ -276,7 +276,7 @@
               <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <h3 class="mb-1"><strong>4.85</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
                   </p>
@@ -303,7 +303,7 @@
               <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <h3 class="mb-1"><strong>4.85</strong>/5</h3>
                   <p class="text-primary mb-0">
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
                   </p>
@@ -321,11 +321,30 @@
       <hr>
       <div class="card ">
         <div class="card-header">
-          <h3 class="mb-0">Analisa Kondisi</h3>
+          <h3 class="mb-0">Analisis kondisi existing</h3>
         </div>
         <div class="card-body">
           <p>Infrastruktur laut, sumber daya laut, dan pertahanan-keamanan semuanya berada di tingkat <strong>rendah</strong>, menunjukkan minimnya investasi, pemanfaatan, dan kesiapsiagaan. Kondisi ini menunjukkan kawasan yang mungkin kurang strategis atau terbatas secara sumber daya.</p>
           <p>Risiko: Pengawasan minim, rentan terhadap ancaman non-militer seperti pencurian ikan dan aktivitas ilegal kecil.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">
+            <div class="col d-flex">
+              <h3> Ancaman 
+              </h3>
+            <small><span class=" mx-2 badge  bg-light-danger">Danger</span></small>
+            </div>
+          </h3>
+        </div>
+        <div class="card-body">
+          
+          <h5>Kondisi External</h5>
+          <ol>
+            <li>Peningkatan Kemampuan Kapal</li>
+            <li>Kerjasama Bilateral</li>
+          </ol>
         </div>
       </div>
       <div class="card ">
@@ -340,11 +359,11 @@
           <p>Risiko: Pengawasan minim, rentan terhadap ancaman non-militer seperti pencurian ikan dan aktivitas ilegal kecil.</p>
         </div>
       </div>
-      <div class="card ">
+      <div class="card">
         <div class="card-header">
           <h3 class="mb-0">
             <div class="col d-flex">
-              <h3> Penjalanan Skenario 
+              <h3> Alternative Skenario 
               </h3>
             <small><span class=" mx-2 badge  bg-light-danger">Danger</span></small>
             </div>
