@@ -18,25 +18,61 @@ class HankamController extends Controller
 {
     //
     public function summary()
-    {
-        $naval_strength = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
+    {   
+        $variables = ['North Natuna Defense and Security', 'National Sea Threat Risk', 'Naval Defense Posture', 'Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
+
+        $variableIds = DB::table('variables')
+            ->join('models', 'models.id', '=', 'variables.model_id')
+            ->whereIn('variables.name', $variables)
+            ->where('models.is_active', 1)  //ganti model yang aktif
+            ->pluck('variables.id', 'variables.name');
+
+        $var_1 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Strength')
+            ->where('variables.id', $variableIds['North Natuna Defense and Security'] ?? null)  //nama disesuaikan
+            ->first();
+ 
+        if ($var_1 == null) {
+            $var_1 = 0;
+        } else {
+            $var_1 = $var_1->value;
+        }
+         
+        $var_2 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['National Sea Threat Risk'] ?? null)  //nama disesuaikan
             ->first();
 
+        if ($var_2 == null) {
+            $var_2 = 0;
+        } else {
+            $var_2 = $var_2->value;
+        }
+        
+        $var_3 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Defense Posture'] ?? null)  //nama disesuaikan
+            ->first();
+
+        # if len naval_capabilities == 0, then naval_capabilities = 0
+        if ($var_3 == null) {
+            $var_3 = 0;
+        }
+
+        $naval_strength = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
+            ->first();
+ 
         if ($naval_strength == null) {
             $naval_strength = 0;
         } else {
             $naval_strength = $naval_strength->value;
         }
-
-        $naval_deployment = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
+         
+        $naval_deployment = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Deployment')
+            ->where('variables.id', $variableIds['Naval Deployment'] ?? null)  //nama disesuaikan
             ->first();
 
         if ($naval_deployment == null) {
@@ -44,12 +80,10 @@ class HankamController extends Controller
         } else {
             $naval_deployment = $naval_deployment->value;
         }
-
-        $naval_capabilities = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
+        
+        $naval_capabilities = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Capabilities')
+            ->where('variables.id', $variableIds['Naval Capabilities'] ?? null)  //nama disesuaikan
             ->first();
 
         # if len naval_capabilities == 0, then naval_capabilities = 0
@@ -61,6 +95,9 @@ class HankamController extends Controller
             'title' => 'Defence and Security | Summary',
             'head_title' => 'Summary',
             'breadcrumb_item' => 'Defence and Security',
+            'first_var' => $var_1,
+            'second_var' => $var_2,
+            'third_var' => $var_3,
             'naval_strength' => $naval_strength,
             'naval_deployment' => $naval_deployment,
             'naval_capabilities' => $naval_capabilities
@@ -68,57 +105,61 @@ class HankamController extends Controller
 
         return view('summary.hankam', $data);
     }
+
     public function infraSummary()
-    {
-        $naval_strength = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
+    {   
+        // diganti dengan nama variable
+        $variables = ['National Defense and Security Infrastructure', 'Defense and Security Regulation', 'Priority Program'];
+
+        $variableIds = DB::table('variables')
+            ->join('models', 'models.id', '=', 'variables.model_id')
+            ->whereIn('variables.name', $variables)
+            ->where('models.id', 97)  //ganti model yang aktif
+            ->pluck('variables.id', 'variables.name');
+
+        $var_1 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Strength')
+            ->where('variables.id', $variableIds['National Defense and Security Infrastructure'] ?? null)  //nama disesuaikan
+            ->first();
+ 
+        if ($var_1 == null) {
+            $var_1 = 0;
+        } else {
+            $var_1 = $var_1->value;
+        }
+         
+        $var_2 = DB::table('variables')
+            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
+            ->where('variables.id', $variableIds['Defense and Security Regulation'] ?? null)  //nama disesuaikan
             ->first();
 
-        if ($naval_strength == null) {
-            $naval_strength = 0;
+        if ($var_2 == null) {
+            $var_2 = 0;
         } else {
-            $naval_strength = $naval_strength->value;
+            $var_2 = $var_2->value;
         }
-
-        $naval_deployment = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
+        
+        $var_3 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Deployment')
-            ->first();
-
-        if ($naval_deployment == null) {
-            $naval_deployment = 0;
-        } else {
-            $naval_deployment = $naval_deployment->value;
-        }
-
-        $naval_capabilities = DB::table('models')
-            ->join('variables', 'models.id', '=', 'variables.model_id')
-            ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
-            ->where('models.is_active', 1)
-            ->where('variables.name', 'Naval Capabilities')
+            ->where('variables.id', $variableIds['Priority Program'] ?? null)  //nama disesuaikan
             ->first();
 
         # if len naval_capabilities == 0, then naval_capabilities = 0
-        if ($naval_capabilities == null) {
-            $naval_capabilities = 0;
+        if ($var_3 == null) {
+            $var_3 = 0;
         }
 
         $data = [
-            'title' => 'Defence Infrastructure | Summary',
+            'title' => 'Defence and Security | Summary',
             'head_title' => 'Summary',
-            'breadcrumb_item' => 'Defence Infrastructure',
-            'naval_strength' => $naval_strength,
-            'naval_deployment' => $naval_deployment,
-            'naval_capabilities' => $naval_capabilities
+            'breadcrumb_item' => 'Defence and Security',
+            'first_variable' => $var_1,
+            'second_variable' => $var_2,
+            'third_variable' => $var_3
         ];
-
         return view('summary.defence-infrastructure', $data);
     }
+
     public function details()
     {
         $data = [
@@ -164,73 +205,79 @@ class HankamController extends Controller
         ];
         return view('hankam.threats.hybrid-military', $data);
     }
-    public function simulationBaseModel()
+    public function getSfdVariables($sfdId = null)
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
-        $image = $get_active_model_id->image;
-        $sfdimage = $get_active_model_id->sfd;
-
-        if (Auth::user()->role == 'SUPERADMIN') {
-            $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        
+        if ($sfdId) {
+            $variables = DB::table('sfd_variable')
+                ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+                ->select('variables.id', 'variables.name', 'variables.value', 'variables.level', 'variables.key_variable')
+                ->where('sfd_variable.sfd_id', $sfdId)
+                ->get();
         } else {
-            $dataVariable = Variable::select('name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->where('key_variable', 1)->get();
+            $variables = DB::table('variables')
+                ->where('model_id', $get_active_model_id->id)
+                ->select('id', 'name', 'value', 'level', 'key_variable')
+                ->get();
         }
+
+        return response()->json([
+            'variables' => $variables
+        ]);
+    }
+
+    public function simulationBaseModel()
+    {
+        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+        $image = $get_active_model->image;
+        $sfdimage = $get_active_model->sfd;
+
+        // Fetch the list of SFDs for the active model
+        $sfdList = DB::table('sfd')->where('model_id', $get_active_model->id)->get();
+
         $data = [
             'title' => 'Defence and Security | Simulation Base Model',
             'head_title' => 'Base Model',
             'breadcrumb_item' => 'Simulation',
-            'variable' => $dataVariable,
+            'sfdList' => $sfdList,
             'image' => $image,
-            'sfd' => $sfdimage
+            'sfds' => $sfdimage
         ];
+
         return view('hankam.simulation.base-model.index', $data);
     }
+
     public function uploadSfdImage(Request $request)
-    {
-        // Validate the image input
+    {   
         $request->validate([
-            'sfd' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'sfd' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'sfd_id' => 'required|integer|exists:sfd,id',
         ]);
 
-        // Get the active model
-        $get_active_model = DB::table('models')->where('is_active', 1)->first();
+        $sfdId = $request->input('sfd_id');
 
-        if ($get_active_model) {
-            // Generate a unique name for the image
-            $imageName = time() . '.' . $request->sfd->extension();
+        $imageName = time() . '.' . $request->sfd->extension();
 
-            try {
-                // Move the uploaded image to the public directory
-                $request->sfd->move(public_path('assets/imageSfd'), $imageName);
+        try {
+            $request->sfd->move(public_path('assets/imageSfd'), $imageName);
 
-                // Save the image path in the 'sfd' column of the active model
-                DB::table('models')
-                    ->where('id', $get_active_model->id)
-                    ->update(['sfd' => 'assets/imageSfd/' . $imageName]);
-
-                return redirect()->back()->with('success', 'SFD image uploaded successfully!');
-            } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+            if (!file_exists(public_path('assets/imageSfd/' . $imageName))) {
+                return redirect()->back()->with('error', 'File not found after upload.');
             }
-        }
 
-        return redirect()->back()->with('error', 'No active model found.');
+            DB::table('sfd')
+                ->where('id', $sfdId)
+                ->update(['image_path' => 'assets/imageSfd/' . $imageName]);
+
+            return redirect()->back()->with('success', 'SFD image uploaded successfully!');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Failed to upload the image. Please try again.');
+        }
     }
 
-    // public function getVariablesBySFD(Request $request)
-    // {
-    //     $sfdId = $request->sfdId;
 
-    //     $variables = DB::table('sfd_variables')
-    //             ->join('variables', 'sfd_variables.variable_id', '=', 'variables.id') 
-    //             ->where('sfd_variables.sfd_id', $sfdId)
-    //             ->select('variables.*') 
-    //             ->get();
-
-    //     $html = view('partials.variables', compact('variables'))->render();
-
-    //     return response()->json(['html' => $html]);
-    // }
 
 
     public function uploadCldImage(Request $request)

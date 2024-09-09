@@ -19,7 +19,7 @@
 
 @section('content')
 @include('partials/breadcrumb')
-<div class="row mb-2">
+{{-- <div class="row mb-2">
     <div class="col-sm-3 mb-2">
         <ul class="list-inline d-flex align-items-center">
             <li class="list-inline-item">
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="col-sm-5"></div>
-</div>
+</div> --}}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -205,6 +205,19 @@
         .then(response => response.json())
         .then(data => {
             var geoJsonLayer = L.geoJson(data, {
+                style: function (feature) {
+                    if (feature.properties.name === 'TERRITORIESCLAIMEDCHINA') {
+                        return {
+                            color: '#FF0000', 
+                            weight: 3, 
+                            dashArray: '5, 5',
+                        };
+                    }
+                    return {
+                        color: '#3388ff', 
+                        weight: 2,
+                    };
+                },
                 onEachFeature: function (feature, layer) {
                     var popupContent = '';
                     var label = '';
@@ -256,17 +269,16 @@
 
                     // Add labels
                     var labelIcon = L.divIcon({
-                        className: 'label-class', // Custom CSS class for label styling
+                        className: 'label-class', 
                         html: '<div style="text-align: center; white-space: nowrap;">' + label + '</div>',
-                        iconSize: [100, 20], // Optional: adjust the size of the label box
-                        iconAnchor: [50, 10] // Adjust to center the label
+                        iconSize: [100, 20], 
+                        iconAnchor: [50, 10]
                     });
 
                     // Check if the feature has a valid geometry to place the label
                     if (feature.geometry.type === "Point") {
                         L.marker(layer.getLatLng(), { icon: labelIcon }).addTo(map);
                     } else if (feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon") {
-                        // Get the center of the polygon to place the label
                         var center = layer.getBounds().getCenter();
                         L.marker(center, { icon: labelIcon }).addTo(map);
                     }
@@ -278,11 +290,12 @@
         });
 
 
-    (function () {
-        const d_week = new Datepicker(document.querySelector('#pc-datepicker-2'), {
-            buttonClass: 'btn'
-        });
-    })();
+    // (
+    // function () {
+    //     const d_week = new Datepicker(document.querySelector('#pc-datepicker-2'), {
+    //         buttonClass: 'btn'
+    //     });
+    // })();
 
 </script>
 @endsection

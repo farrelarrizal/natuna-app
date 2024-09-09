@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('uploadModel', [HankamController::class, 'uploadModel'])->name('uploadModel');
                 Route::post('upload-sfd', [HankamController::class, 'uploadSfdImage'])->name('upload-sfd');
                 Route::post('upload-cld', [HankamController::class, 'uploadCldImage'])->name('upload-cld');
+                Route::get('get-sfd-variables/{sfdId}', [HankamController::class, 'getSfdVariables']);
+
                 // Route::get('get-variables', [HankamController::class, 'getVariablesBySFD'])->name('get-variables');
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function () {
@@ -127,14 +129,15 @@ Route::middleware('auth')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
-        Route::get('/get-sfd', [ApiDataController::class, 'getSfd'])->name('get.sfd');
+        Route::get('/get-sfd', [ApiDataController::class, 'getSfd'])->name('get-sfd');
+        Route::get('/sfd-image/{id}', [ApiDataController::class, 'getSfdImagePath']);
 
-        Route::get('/search-variables', [ApiDataController::class, 'searchVariables']);
-        Route::get('/search-sfd', [ApiDataController::class, 'searchSFD']);
+        Route::get('/search-variables', [ApiDataController::class, 'searchVariables'])->name('search.variable');
+        Route::get('/search-sfd', [ApiDataController::class, 'searchSFD'])->name('search.sfd');
         //graph
 
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
-        Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');
+        Route::get('/scenario-graph-data/{var}', [ApiDataController::class, 'variabelStaticGraph'])->name('scenario.graph');
         Route::get('/scenario-model/download/{id}', [ApiDataController::class, 'downloadScenarioModel'])->name('scenario-model.download');
     });
 });

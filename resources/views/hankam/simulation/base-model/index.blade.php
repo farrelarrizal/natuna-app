@@ -48,38 +48,12 @@
                 </li>
                 <li class="list-inline-item text-filter">
                     <h5 class="mb-0">Defense and Security Scenario Model</h5>
-
-                    {{-- <span>Last Edit: 17 May 2024 18:50</span> --}}
-                </li>
-                {{-- <li class="list-inline-item d-flex align-items-center">
-                    <div class="col-auto">
-                        <select id="sfdSelect" name="sfdId" class="form-select form-select-sm">
-                            <option value="">Select SFD</option>
-                            @foreach($sfds as $sfd)
-                                <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-auto ms-2">
-                        <button id="loadVariablesBtn" class="btn btn-primary btn-sm button-send">Load Variables</button>
-                    </div>
-                </li> --}}
-                <li class="list-inline-item d-flex align-items-center">
-                    <div class="col-auto">
-                        <select id="sfdSelect" name="sfdId" class="form-select form-select-sm">
-                            <option value="">Select SFD</option>
-                        </select>
-                    </div>
-                    <div class="col-auto ms-2">
-                        <button type="submit" class="btn btn-primary btn-sm button-send">Send</button>
-                    </div>
                 </li>
             </ul>
             <div class="d-flex flex-wrap gap-2">
                 <a href="{{ route('hankam.simulation.base-model.edit-parameter') }}"
                     class="btn btn-warning "><i class="ti ti-pencil"></i><span class="text-truncate w-100">&nbsp;Edit
                         Parameter</span></a>
-                {{-- <button type="button" class="btn btn-secondary"><i class="ti ti-upload"></i><span class="text-truncate w-100">&nbsp;Export Model</span></button> --}}
                 <a href="{{ route('hankam.simulation.base-model.upload-model') }}"
                     class="btn btn-info "><i class="ti ti-file-upload"></i><span
                         class="text-truncate w-100">&nbsp;Import Model</span></a>
@@ -106,13 +80,6 @@
                     </form>
 
                 </div>
-                {{-- <div class="pc-component">
-                    <div class="alert alert-primary my-3" role="alert">
-                        <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
-                        Information Notes 
-                        <p>Additional description and information about copywriting.</p>
-                      </div>
-                </div> --}}
                 <div class="row mt-3">
                     <div class="alert alert-primary d-flex align-items-center" role="alert">
                         <div class="avatar avatar-s"><i data-feather="alert-circle"></i></div>
@@ -129,48 +96,62 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>Stock Flow Diagram</h5>
-                <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                    Upload SFD Image
-                </button>
-            </div>
-            <div class="card-body">
-
-                <div class="row mt-3">
-                    <img src="{{ asset(session('sfd') ?: $sfd) }}" alt="image" class="img-fluid" width="100%">
+    <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">Stock Flow Diagram</h5>
+            <form id="variableForm">
+                <div class="row row-cols-md-auto g-1 align-items-center">
+                    <div lass="col-6">
+                        <select id="sfddropdown" class="form-control">
+                            <option value="0">Select SFD</option>
+                            @foreach($sfdList as $sfd)
+                                <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
+                            @endforeach
+                        </select>
+                   </div>
+                    <div class="col-6">
+                        <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                            Upload SFD Image
+                        </button>
+                    </div>
                 </div>
-
+            </form>          
+        </div>
+        <div class="card-body">          
+            <div class="row mt-3">
+                <img id="sfd-image" src="{{ asset('assets/imageSfd/default.jpg') }}" alt="SFD Image" class="img-fluid" width="100%">
             </div>
         </div>
     </div>
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
+    
+    <!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="uploadModalLabel">Upload SFD Image</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="uploadModalLabel">Upload SFD Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{{ route('hankam.simulation.base-model.upload-sfd') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" id="sfd_id" name="sfd_id" value="0">
                     <div class="mb-3">
                         <label for="sfdImage" class="form-label">Choose an image to upload</label>
                         <input type="file" class="form-control" id="sfdImage" name="sfd" accept="image/*" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
-                              
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+
+    
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>Causal Loop Diagram</h5>
+                <h5>Causal Loop Diagram</h5>                
                 <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal2">
                     Upload CLD Image
                 </button>
@@ -179,8 +160,6 @@
 
                 <div class="row mt-3">
                     <img src="{{ asset(session('image') ?: $image) }}" alt="image" class="img-fluid" width="100%">
-
-                    {{-- <img src="{{ asset($image) }}" alt="image" class="img-fluid" width="100%"> --}}
                 </div>
                 <div class="row my-3">
                     <div id="defence-and-security-graphics"></div>
@@ -209,51 +188,23 @@
           </div>
         </div>
       </div>
-      {{-- <div class="col-md-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
-                <h5>Model Variables</h5>
-            </div>
-            <div class="card-body p-0 income-scroll">
-                <div class="mt-3 mb-3">
-                    <div class="row" id="variable-container">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="col-md-12">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h5>Model Variables</h5>
+                <!-- SFD Dropdown -->
+                <div class="col-auto">
+                <select id="sfd-dropdown" class="form-control">
+                    <option value="0">Select SFD</option>
+                    @foreach($sfdList as $sfd)
+                        <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
+                    @endforeach
+                </select>
+                </div> 
             </div>
             <div class="card-body p-0 income-scroll">
-                <div class="mt-3 mb-3">
-                    <div class="row">
-                        @foreach($variable as $item)
-                            <div class="col-md-6 px-4">
-                                <div class="flex-grow-1 mx-2">
-                                    <div class="div d-flex">
-
-                                        <p class="text-muted mb-1">{{ $item->name }}</p>
-
-                                        @if($item->key_variable == 1)
-                                            <span class="badge bg-light-primary mx-2">Key Variable</span></p>
-                                        @endif
-                                    </div>
-
-                                    <p class="mb-0">{{ $item->value }}
-
-                                        @if($item->level != 'NULL')
-                                            <span class="mx-2">({{ $item->level }})</span></p>
-                        @endif
-
-
-                        </p>
-                    </div>
-                    <hr class="border border-primary-subtle" />
+                <div id="variables-container">
                 </div>
-                @endforeach
             </div>
         </div>
     </div>
@@ -266,80 +217,116 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="<?= asset('assets/js/plugins/jquery.dataTables.min.js') ?>"></script>
 <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
-{{-- <script>
-    $(document).ready(function() {
-        $('#loadVariablesBtn').on('click', function(e) {
-            e.preventDefault();
-            var sfdId = $('#sfdSelect').val();
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sfdDropdown = document.getElementById('sfddropdown');
+        const sfdImage = document.getElementById('sfd-image');
+        const sfdIdInput = document.getElementById('sfd_id');
+        const baseUrl = window.location.origin; 
 
-            if (sfdId) {
-                $.ajax({
-                    url: "{{ route('base-model.get-variables') }}",
-                    type: "GET",
-                    data: { sfdId: sfdId },
-                    success: function(response) {
-                        $('#variable-container').html(response.html);
-                    },
-                    error: function(xhr) {
-                        alert("An error occurred while fetching variables.");
-                    }
-                });
+        sfdDropdown.addEventListener('change', function() {
+            const sfdId = this.value;
+            sfdIdInput.value = sfdId; 
+
+            if (sfdId !== '0') {
+                fetch(`/api/sfd-image/${sfdId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.imagePath) {
+                            const imagePath = data.imagePath.replace(/\\/g, '/');
+                            sfdImage.src = `${baseUrl}/${imagePath}`; 
+                        } else {
+                            sfdImage.src = '{{ asset('assets/imageSfd/default.png') }}'; 
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching SFD image:', error);
+                        sfdImage.src = '{{ asset('assets/imageSfd/default.png') }}'; 
+                    });
             } else {
-                alert("Please select an SFD first.");
+                sfdImage.src = '{{ asset('assets/imageSfd/default.png') }}'; 
             }
         });
     });
+</script>
 
-</script> --}}
+<script>
+    $(document).ready(function() {
+        $('#sfd-dropdown').trigger('change');
+
+        $('#sfd-dropdown').on('change', function() {
+            var sfdId = $(this).val();
+
+            $('#variables-container').html('');
+
+            // if (sfdId === "") {
+            //     sfdId = null; 
+            // }
+
+            $.ajax({
+                url: '/hankam/simulation/base-model/get-sfd-variables/' + sfdId, 
+                type: 'GET',
+                success: function(response) {
+                    if (response.variables && response.variables.length) {
+                        var variablesHtml = '<div class="row">'; 
+
+                        response.variables.forEach(function(item, index) {
+                            if (index % 2 === 0 && index !== 0) {
+                                variablesHtml += '</div><div class="row">';
+                            }
+
+                            variablesHtml += '<div class="col-md-6 px-4">';
+                            variablesHtml += '<div class="flex-grow-1 mx-2">';
+                            variablesHtml += '<div class="div d-flex">';
+                            variablesHtml += '<p class="text-muted mb-1">' + item.name + '</p>';
+
+                            if (item.key_variable == 1) {
+                                variablesHtml += '<span class="badge bg-light-primary mx-2">Key Variable</span>';
+                            }
+
+                            variablesHtml += '</div>';
+                            variablesHtml += '<p class="mb-0">' + item.value;
+
+                            if (item.level !== 'NULL') {
+                                variablesHtml += '<span class="mx-2">(' + item.level + ')</span>';
+                            }
+
+                            variablesHtml += '</p>';
+                            variablesHtml += '</div>';
+                            variablesHtml += '<hr class="border border-primary-subtle" />';
+                            variablesHtml += '</div>';
+                        });
+
+                        variablesHtml += '</div>';
+                        $('#variables-container').html(variablesHtml);
+                    } else {
+                        $('#variables-container').html(variablesHtml);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var variableSelect = document.getElementById('variableSelect');
         var variableForm = document.getElementById('variableForm');
 
-        function loadSfd() {
-            var sfdSelect = document.getElementById('sfdSelect');
-
-            sfdSelect.innerHTML = '<option value="">Loading...</option>';
-
-            fetch('/api/get-sfd')
-                .then(response => response.json())
-
-                .then(sfdData => {
-                    sfdSelect.innerHTML = ''; 
-                    var defaultOption = document.createElement('option');
-                    defaultOption.value = '';
-                    defaultOption.textContent = 'Select SFD';
-                    sfdSelect.appendChild(defaultOption);
-
-                    sfdData.forEach(sfd => {
-                        var option = document.createElement('option');
-                        option.value = sfd.id; 
-                        option.textContent = 'SFD ' + sfd
-                            .name 
-                        sfdSelect.appendChild(option);
-
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                    sfdSelect.innerHTML = '<option value="">Error loading data</option>';
-                });
-        }
-        loadSfd();
-
         function loadVariables() {
             fetch('/api/get-variables-active')
                 .then(response => response.json())
                 .then(variables => {
+                    variableSelect.innerHTML = ''; // Clear existing options
                     variables.forEach(variable => {
                         var option = document.createElement('option');
                         option.value = variable.id;
-                        option.textContent = 'Variable ' + variable.name
+                        option.textContent = 'Variable ' + variable.name;
                         variableSelect.appendChild(option);
                     });
 
                     if (variables.length > 0) {
-                        fetchAndRenderGraph(variables[0].id);
+                        fetchAndRenderGraph(variables[0].id); // Load graph for first variable
                     }
                 })
                 .catch(error => console.error('Error loading variables:', error));
@@ -350,51 +337,26 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.data.length === 0) {
-                        document.querySelector('#defence-and-security-graphics').innerHTML =
-                            '<p>Belum ada skenario pada variabel</p>';
+                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel. Silahkan masukkan data skenario terlebih dahulu.</p>';
                         return;
                     }
-    function fetchAndRenderGraph(variableId) {
-      fetch(`/api/base-model-graph-data?variableId=${variableId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.data.length === 0) {
-                document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel. Silahkan masukkan data skenario terlebih dahulu.</p>';
-                return;
-            }
 
                     function generateColors(numScenarios) {
-                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347',
-                            '#6a5acd'
-                        ]; // Tambahkan lebih banyak warna jika diperlukan
+                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Add more colors as needed
                         return baseColors.slice(0, numScenarios);
                     }
-            function generateColors(numScenarios) {
-                const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Tambahkan lebih banyak warna jika diperlukan
-                return baseColors.slice(0, numScenarios);
-            }
 
                     const numScenarios = data.data.length;
                     const colors = generateColors(numScenarios);
-            const numScenarios = data.data.length;
-            const colors = generateColors(numScenarios);
 
                     var series = data.data.map(item => {
                         return {
                             name: item.scenario_name,
-                            data: item.values
+                            data: item.values.map(value => parseFloat(value)) // Convert values to floats
                         };
                     });
-            // Convert y-axis data (scores) to floats
-            var series = data.data.map(item => {
-                return {
-                    name: item.scenario_name,
-                    data: item.values.map(value => parseFloat(value)) // Convert values to floats
-                };
-            });
 
                     const xaxisCategories = data.data[0].node_points.map(String);
-            const xaxisCategories = data.data[0].node_points.map(String);
 
                     var options = {
                         chart: {
@@ -434,6 +396,14 @@
                         series: series,
                         xaxis: {
                             categories: xaxisCategories,
+                            title: {
+                                text: 'Month',
+                                offsetY: 100,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: 'bold',
+                                }
+                            },
                             axisBorder: {
                                 show: false
                             },
@@ -442,108 +412,36 @@
                             },
                             labels: {
                                 show: true,
-                                step: 2 // Tampilkan setiap 2 titik data pada sumbu x
+                                step: 2 // Show every 2nd data point on the x-axis
                             },
-                            tickAmount: Math.floor(xaxisCategories.length /
-                                10) // Mengatur jumlah tick pada sumbu x
+                            tickAmount: Math.floor(xaxisCategories.length / 10)
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Score (percent)'
+                            },
+                            labels: {
+                                formatter: function (value) {
+                                    return value; // Keep as integer
+                                }
+                            }
                         }
                     };
-            var options = {
-                chart: {
-                    fontFamily: 'Inter var, sans-serif',
-                    type: 'area',
-                    height: 370,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                colors: colors,
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        shadeIntensity: 1,
-                        type: 'vertical',
-                        inverseColors: false,
-                        opacityFrom: 0.3,
-                        opacityTo: 0
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    width: 3
-                },
-                plotOptions: {
-                    bar: {
-                        columnWidth: '45%',
-                        borderRadius: 4
-                    }
-                },
-                grid: {
-                    strokeDashArray: 4
-                },
-                series: series,
-                xaxis: {
-                    categories: xaxisCategories,
-                    title: {
-                        text: 'Month', // X-axis title
-                        offsetY: 100,   // Adjust this value to move the title down, outside the graph
-                        style: {
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                        }
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    },
-                    labels: {
-                        show: true,
-                        step: 2 // Tampilkan setiap 2 titik data pada sumbu x
-                    },
-                    tickAmount: Math.floor(xaxisCategories.length / 10) // Mengatur jumlah tick pada sumbu x
-                },
-                yaxis: {
-                    title: {
-                        text: 'Score (percent)' // Y-axis title
-                    }
-                    , // y value is int
-                    labels: {
-                        formatter: function (value) {
-                            // round to 0 decimal places
-                            return value;
-                        }
-                    }
-                }
-            };
 
                     document.querySelector('#defence-and-security-graphics').innerHTML = '';
-            document.querySelector('#defence-and-security-graphics').innerHTML = '';
-
-                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'),
-                        options);
+                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
                     chart.render();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    document.querySelector('#defence-and-security-graphics').innerHTML =
-                        '<p>Belum ada skenario pada variabel</p>';
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
                 });
         }
-            var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
-            chart.render();
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
-        });
-}
 
+        // Load variables on page load
         loadVariables();
 
+        // Fetch and render graph on form submit
         variableForm.addEventListener('submit', function (event) {
             event.preventDefault();
             var variableId = variableSelect.value;

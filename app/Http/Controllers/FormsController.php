@@ -11,7 +11,7 @@ class FormsController extends Controller
     // index
     public function index()
     {
-        $forms = DB::table('forms')->get();
+        $forms = DB::table('forms')->where('is_active', 1)->get();
 
         $data = [
             'title' => 'Forms',
@@ -44,6 +44,8 @@ class FormsController extends Controller
             'questions.*.question' => 'required|string|max:255',
             'questions.*.key' => 'required',
             'questions.*.max_value' => 'nullable',
+            'questions.*.min_label' => 'string|max:255',
+            'questions.*.max_label' => 'string|max:255',
         ]);
 
         DB::beginTransaction();
@@ -64,8 +66,10 @@ class FormsController extends Controller
                 $questionsData[] = [
                     'form_id' => $formId,
                     'question' => $questionData['question'], // Sesuaikan field ini
-                    'max_value' => $questionData['max_value'] ?? null, // Set max_value sebagai null jika tidak ada
+                    'max_value' => $questionData['max_value'] ?? 5, // Set max_value sebagai null jika tidak ada
                     'has_realational_to_variable' => $questionData['key'], // Sesuaikan field ini
+                    'min_label' => $questionData['min_label'] ?? 'Minimal', // Set min_label sebagai null jika tidak ada
+                    'max_label' => $questionData['max_label'] ?? 'Maximal', // Set max_label sebagai null jika tidak ada
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
@@ -96,8 +100,8 @@ class FormsController extends Controller
                 'variables.name as name_variable',
                 'question.max_value',
                 'answers.value as answer_value',
-                'questions.min_label',
-                'questions.max_label',
+                'question.min_label as min_label',
+                'question.max_label as max_label',
                 'forms.description'
             )
             ->get();
@@ -116,11 +120,10 @@ class FormsController extends Controller
             'title' => 'Forms',
             'head_title' => 'Expert Survey - Forms',
             'breadcrumb_item' => 'Forms',
-            'questions' => $question,  // Add questions to the data array
-            'groupedResponses' => $groupedResponses,  // Add grouped responses to the data array
+            'questions' => $question,  
+            'groupedResponses' => $groupedResponses,  
         ];
 
-        // Pass the data array to the view
         return view('forms.show', $data);
     }
 
@@ -175,5 +178,55 @@ class FormsController extends Controller
             ]);
         }
         return redirect()->route('forms.index')->with('success', 'Answers submitted successfully.');
+
     }
-}
+    public function edit($id)
+    {
+        $forms = DB::table('forms')
+        ->join('question', 'question.form_id', '=', 'forms.id')
+        ->select(
+            'forms.id as form_id',
+            'forms.name',
+            'forms.sfd_name',
+            'forms.description',
+            'question.question',
+            'question.max_value',
+            'question.has_realational_to_variable',
+            'question.max_label'
+        )
+        ->where('forms.id', $id)
+        ->get();
+        
+        $forms;
+        $response = [];
+
+        foreach ($forms as $form) {
+            if (!isset($response[$form->form_id])) {
+                $response[$form->form_id] = [
+                    'id' => $form->form_id,
+                    'name' => $form->name,
+                    'sfd_name' => $form->sfd_name,
+                ];
+            }
+
+            $response[$form->form_id]['question'][] = [
+                'form_id' => $form->form_id,
+                'question' => $form->question,
+                'max_value' => $form->max_value,
+                'has_realational_to_variable' => $form->has_realational_to_variable,
+                'max_label' => $form->max_label
+            ];
+        }
+
+        $response = array_values($response);
+        // return $response;
+        $data = [
+            'title' => 'Forms',
+            'head_title' => 'Expert Survey - Forms',
+            'breadcrumb_item' => 'Forms',
+            'survey' => $response,
+        ];
+
+        return view('forms.edit', $data);
+    }
+  }

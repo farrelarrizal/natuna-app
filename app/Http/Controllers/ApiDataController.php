@@ -32,13 +32,20 @@ class ApiDataController extends Controller
     }
     public function getSfd()
     {
-        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
-        $data = DB::table('sfd')
-            ->where('model_id', $model_id)
-            ->get();
+        $model = DB::table('models')->where('is_active', 1)->first();
 
-        return response()->json($data);
+        if ($model) {
+            $data = DB::table('sfd')
+                ->where('model_id', $model->id)
+                ->get(['id', 'name', 'image_path']); // Include image_url in the query
+
+            return response()->json($data);
+        }
+
+        return response()->json([], 404); 
     }
+
+
     public function baseModelGraph(Request $request)
     {
         $idVariable = $request->query('variableId');
@@ -82,14 +89,15 @@ class ApiDataController extends Controller
         return response()->json($response);
     }
 
-    public function variabelActiveGraph()
+    public function variabelStaticGraph($var)
     {
+        
         $data = DB::table('scenario_data')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
             ->join('models', 'models.id', '=', 'variables.model_id')
             ->where('models.is_active', 1)
-            ->where('variables.key_variable', 1)
+            ->where('variables.name', $var)
             ->select(
                 'scenarios.id as scenario_id',
                 'scenarios.name as scenario_name',
@@ -98,8 +106,8 @@ class ApiDataController extends Controller
                 'scenario_data.value'
             )
             ->get();
+            
 
-        // Kelompokkan data berdasarkan scenario_id dan variable_name
         $finalData = [];
         $groupedData = $data->groupBy('variable_name');
 
@@ -200,15 +208,26 @@ class ApiDataController extends Controller
             ->where('model_id', $active_model_id)
             ->where('name', 'like', "%{$query}%")
             ->get();
-        // dd($results);
+
         $formattedResults = $results->map(function ($sfd) {
             return [
-                
-                'label' => $sfd->name,
-                'value' => $sfd->name,
+                'id' => $sfd->id,   
+                'name' => $sfd->name,
             ];
         });
 
         return response()->json($formattedResults);
     }
+    public function getSfdImagePath($id)
+    {
+        $sfd = DB::table('sfd')->where('id', $id)->first();
+        
+        if ($sfd && $sfd->image_path) {
+            return response()->json(['imagePath' => $sfd->image_path]);
+        }
+        
+        return response()->json(['imagePath' => null]);
+    }
+
+
 }
