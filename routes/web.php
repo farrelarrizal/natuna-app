@@ -134,7 +134,7 @@ Route::middleware('auth')->group(function () {
         //graph
 
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');
-        Route::get('/scenario-graph-data', [ApiDataController::class, 'variabelActiveGraph'])->name('scenario.graph');
+        Route::get('/scenario-graph-data/{var}', [ApiDataController::class, 'variabelStaticGraph'])->name('scenario.graph');
         Route::get('/scenario-model/download/{id}', [ApiDataController::class, 'downloadScenarioModel'])->name('scenario-model.download');
     });
 });
