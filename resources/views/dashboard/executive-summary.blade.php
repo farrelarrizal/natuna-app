@@ -231,7 +231,7 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-9">
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center">

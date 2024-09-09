@@ -61,34 +61,34 @@
       <div class="col-md-4">
         <div class="card">
           <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">National Defense and Security Infrastructure</h5>
-            
-            <div class="dropdown">
-              <a
-                class="avtar avtar-s btn-link-secondary dropdown-toggle arrow-none"
-                href="#"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="ti ti-dots f-18"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">Today</a>
-                <a class="dropdown-item" href="#">Weekly</a>
-                <a class="dropdown-item" href="#">Monthly</a>
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">National Defense and Security Infrastructure</h5>
+              
+              <div class="dropdown">
+                <a
+                  class="avtar avtar-s btn-link-secondary dropdown-toggle arrow-none"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="ti ti-dots f-18"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end">
+                  <a class="dropdown-item" href="#">Today</a>
+                  <a class="dropdown-item" href="#">Weekly</a>
+                  <a class="dropdown-item" href="#">Monthly</a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row align-items-center justify-content-center">
-              <div class="mt-3 row align-items-center">
-                  {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                  <h4 class="mb-0 p-3 color-block text-green-600">{{ $first_variable }}/5</h4>
-              </div>
+            <div class="row align-items-center justify-content-center">
+                <div class="mt-3 row align-items-center">
+                    {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
+                    <h4 class="mb-0 p-3 color-block text-green-600">{{ $first_variable }}/5</h4>
+                </div>
+            </div>
           </div>
         </div>
-      </div>
       </div>
       <div class="col-md-8">
           <div class="card">
