@@ -99,24 +99,26 @@
     <div class="card">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="mb-0">Stock Flow Diagram</h5>
-            <form id="variableForm">
+            <div class="ms-auto">
                 <div class="row row-cols-md-auto g-1 align-items-center">
-                    <div lass="col-6">
+                    <div class="col-6">
                         <select id="sfddropdown" class="form-control">
                             <option value="0">Select SFD</option>
                             @foreach($sfdList as $sfd)
                                 <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
                             @endforeach
                         </select>
-                   </div>
+                    </div>
                     <div class="col-6">
-                        <button class="btn btn-primary" id="uploadBtn" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <button class="btn btn-primary" id="uploadBtn2" data-bs-toggle="modal" data-bs-target="#uploadModal">
                             Upload SFD Image
                         </button>
                     </div>
                 </div>
-            </form>          
+            </div>
         </div>
+    </div>
+    
         <div class="card-body">          
             <div class="row mt-3">
                 <img id="sfd-image" src="{{ asset('assets/imageSfd/default.jpg') }}" alt="SFD Image" class="img-fluid" width="100%">
