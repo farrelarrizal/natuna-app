@@ -312,22 +312,21 @@
     document.addEventListener('DOMContentLoaded', function () {
         var variableSelect = document.getElementById('variableSelect');
         var variableForm = document.getElementById('variableForm');
-        var selectedSfd = document.getElementById('sfdSelect').value;
-        document.getElementById('selectedSfdId').value = selectedSfd;
 
         function loadVariables() {
             fetch('/api/get-variables-active')
                 .then(response => response.json())
                 .then(variables => {
+                    variableSelect.innerHTML = ''; // Clear existing options
                     variables.forEach(variable => {
                         var option = document.createElement('option');
                         option.value = variable.id;
-                        option.textContent = 'Variable ' + variable.name
+                        option.textContent = 'Variable ' + variable.name;
                         variableSelect.appendChild(option);
                     });
 
                     if (variables.length > 0) {
-                        fetchAndRenderGraph(variables[0].id);
+                        fetchAndRenderGraph(variables[0].id); // Load graph for first variable
                     }
                 })
                 .catch(error => console.error('Error loading variables:', error));
@@ -338,51 +337,26 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.data.length === 0) {
-                        document.querySelector('#defence-and-security-graphics').innerHTML =
-                            '<p>Belum ada skenario pada variabel</p>';
+                        document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel. Silahkan masukkan data skenario terlebih dahulu.</p>';
                         return;
                     }
-    function fetchAndRenderGraph(variableId) {
-      fetch(`/api/base-model-graph-data?variableId=${variableId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.data.length === 0) {
-                document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel. Silahkan masukkan data skenario terlebih dahulu.</p>';
-                return;
-            }
 
                     function generateColors(numScenarios) {
-                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347',
-                            '#6a5acd'
-                        ]; // Tambahkan lebih banyak warna jika diperlukan
+                        const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Add more colors as needed
                         return baseColors.slice(0, numScenarios);
                     }
-            function generateColors(numScenarios) {
-                const baseColors = ['#0d6efd', '#63C3EC', '#ff6347', '#6a5acd']; // Tambahkan lebih banyak warna jika diperlukan
-                return baseColors.slice(0, numScenarios);
-            }
 
                     const numScenarios = data.data.length;
                     const colors = generateColors(numScenarios);
-            const numScenarios = data.data.length;
-            const colors = generateColors(numScenarios);
 
                     var series = data.data.map(item => {
                         return {
                             name: item.scenario_name,
-                            data: item.values
+                            data: item.values.map(value => parseFloat(value)) // Convert values to floats
                         };
                     });
-            // Convert y-axis data (scores) to floats
-            var series = data.data.map(item => {
-                return {
-                    name: item.scenario_name,
-                    data: item.values.map(value => parseFloat(value)) // Convert values to floats
-                };
-            });
 
                     const xaxisCategories = data.data[0].node_points.map(String);
-            const xaxisCategories = data.data[0].node_points.map(String);
 
                     var options = {
                         chart: {
@@ -422,6 +396,14 @@
                         series: series,
                         xaxis: {
                             categories: xaxisCategories,
+                            title: {
+                                text: 'Month',
+                                offsetY: 100,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: 'bold',
+                                }
+                            },
                             axisBorder: {
                                 show: false
                             },
@@ -430,108 +412,36 @@
                             },
                             labels: {
                                 show: true,
-                                step: 2 // Tampilkan setiap 2 titik data pada sumbu x
+                                step: 2 // Show every 2nd data point on the x-axis
                             },
-                            tickAmount: Math.floor(xaxisCategories.length /
-                                10) // Mengatur jumlah tick pada sumbu x
+                            tickAmount: Math.floor(xaxisCategories.length / 10)
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Score (percent)'
+                            },
+                            labels: {
+                                formatter: function (value) {
+                                    return value; // Keep as integer
+                                }
+                            }
                         }
                     };
-            var options = {
-                chart: {
-                    fontFamily: 'Inter var, sans-serif',
-                    type: 'area',
-                    height: 370,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                colors: colors,
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        shadeIntensity: 1,
-                        type: 'vertical',
-                        inverseColors: false,
-                        opacityFrom: 0.3,
-                        opacityTo: 0
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    width: 3
-                },
-                plotOptions: {
-                    bar: {
-                        columnWidth: '45%',
-                        borderRadius: 4
-                    }
-                },
-                grid: {
-                    strokeDashArray: 4
-                },
-                series: series,
-                xaxis: {
-                    categories: xaxisCategories,
-                    title: {
-                        text: 'Month', // X-axis title
-                        offsetY: 100,   // Adjust this value to move the title down, outside the graph
-                        style: {
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                        }
-                    },
-                    axisBorder: {
-                        show: false
-                    },
-                    axisTicks: {
-                        show: false
-                    },
-                    labels: {
-                        show: true,
-                        step: 2 // Tampilkan setiap 2 titik data pada sumbu x
-                    },
-                    tickAmount: Math.floor(xaxisCategories.length / 10) // Mengatur jumlah tick pada sumbu x
-                },
-                yaxis: {
-                    title: {
-                        text: 'Score (percent)' // Y-axis title
-                    }
-                    , // y value is int
-                    labels: {
-                        formatter: function (value) {
-                            // round to 0 decimal places
-                            return value;
-                        }
-                    }
-                }
-            };
 
                     document.querySelector('#defence-and-security-graphics').innerHTML = '';
-            document.querySelector('#defence-and-security-graphics').innerHTML = '';
-
-                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'),
-                        options);
+                    var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
                     chart.render();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    document.querySelector('#defence-and-security-graphics').innerHTML =
-                        '<p>Belum ada skenario pada variabel</p>';
+                    document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
                 });
         }
-            var chart = new ApexCharts(document.querySelector('#defence-and-security-graphics'), options);
-            chart.render();
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            document.querySelector('#defence-and-security-graphics').innerHTML = '<p>Belum ada skenario pada variabel</p>';
-        });
-}
 
+        // Load variables on page load
         loadVariables();
 
+        // Fetch and render graph on form submit
         variableForm.addEventListener('submit', function (event) {
             event.preventDefault();
             var variableId = variableSelect.value;
