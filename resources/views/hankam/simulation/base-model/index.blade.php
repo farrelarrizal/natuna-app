@@ -102,7 +102,7 @@
             <form id="variableForm">
                 <div class="row row-cols-md-auto g-1 align-items-center">
                     <div lass="col-6">
-                        <select id="sfd-dropdown" class="form-control">
+                        <select id="sfddropdown" class="form-control">
                             <option value="0">Select SFD</option>
                             @foreach($sfdList as $sfd)
                                 <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
@@ -219,7 +219,7 @@
 <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const sfdDropdown = document.getElementById('sfd-dropdown');
+        const sfdDropdown = document.getElementById('sfddropdown');
         const sfdImage = document.getElementById('sfd-image');
         const sfdIdInput = document.getElementById('sfd_id');
         const baseUrl = window.location.origin; 
@@ -259,9 +259,9 @@
 
             $('#variables-container').html('');
 
-            if (sfdId === "") {
-                sfdId = null; 
-            }
+            // if (sfdId === "") {
+            //     sfdId = null; 
+            // }
 
             $.ajax({
                 url: '/hankam/simulation/base-model/get-sfd-variables/' + sfdId, 
@@ -300,7 +300,7 @@
                         variablesHtml += '</div>';
                         $('#variables-container').html(variablesHtml);
                     } else {
-                        $('#variables-container').html('<p>No variables found for this SFD.</p>');
+                        $('#variables-container').html(variablesHtml);
                     }
                 }
             });
