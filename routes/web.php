@@ -53,6 +53,9 @@ Route::middleware('auth')->group(function () {
                 Route::put('update-variable', [HankamController::class, 'updateVariableBaseModel'])->name('update-variable');
                 Route::get('upload-model', [HankamController::class, 'uploadModelBaseModel'])->name('upload-model');
                 Route::post('uploadModel', [HankamController::class, 'uploadModel'])->name('uploadModel');
+                Route::post('upload-sfd', [HankamController::class, 'uploadSfdImage'])->name('upload-sfd');
+                Route::post('upload-cld', [HankamController::class, 'uploadCldImage'])->name('upload-cld');
+                // Route::get('get-variables', [HankamController::class, 'getVariablesBySFD'])->name('get-variables');
             });
             Route::prefix('scenario-model')->name('scenario-model.')->group(function () {
                 Route::get('/',  [HankamController::class, 'simulationScenarioModel'])->name('index');
@@ -124,8 +127,10 @@ Route::middleware('auth')->group(function () {
         //data
         Route::get('/get-variables', [ApiDataController::class, 'getVariables'])->name('get.variables');
         Route::get('/get-variables-active', [ApiDataController::class, 'getKeyVariableActive'])->name('get.variables.keyactive');
-        Route::get('/search-variables', [ApiDataController::class, 'searchVariables']);
-        Route::get('/search-sfd', [ApiDataController::class, 'searchSFD']);
+        Route::get('/get-sfd', [ApiDataController::class, 'getSfd'])->name('get.sfd');
+
+        Route::get('/search-variables', [ApiDataController::class, 'searchVariables'])->name('search.variable');
+        Route::get('/search-sfd', [ApiDataController::class, 'searchSFD'])->name('search.sfd');
         //graph
 
         Route::get('/base-model-graph-data', [ApiDataController::class, 'baseModelGraph'])->name('base-model.graph');

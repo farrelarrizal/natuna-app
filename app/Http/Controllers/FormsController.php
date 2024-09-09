@@ -11,7 +11,7 @@ class FormsController extends Controller
     // index
     public function index()
     {
-        $forms = DB::table('forms')->get();
+        $forms = DB::table('forms')->where('is_active', 1)->get();
 
         $data = [
             'title' => 'Forms',
@@ -44,10 +44,12 @@ class FormsController extends Controller
             'questions.*.question' => 'required|string|max:255',
             'questions.*.key' => 'required',
             'questions.*.max_value' => 'nullable',
+            'questions.*.min_label' => 'string|max:255',
+            'questions.*.max_label' => 'string|max:255',
         ]);
-    
+
         DB::beginTransaction();
-    
+
         try {
 
             $formId = DB::table('forms')->insertGetId([
@@ -64,19 +66,21 @@ class FormsController extends Controller
                 $questionsData[] = [
                     'form_id' => $formId,
                     'question' => $questionData['question'], // Sesuaikan field ini
-                    'max_value' => $questionData['max_value'] ?? null, // Set max_value sebagai null jika tidak ada
+                    'max_value' => $questionData['max_value'] ?? 5, // Set max_value sebagai null jika tidak ada
                     'has_realational_to_variable' => $questionData['key'], // Sesuaikan field ini
+                    'min_label' => $questionData['min_label'] ?? 'Minimal', // Set min_label sebagai null jika tidak ada
+                    'max_label' => $questionData['max_label'] ?? 'Maximal', // Set max_label sebagai null jika tidak ada
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
             }
             DB::table('question')->insert($questionsData);
             DB::commit();
-    
+
             return redirect()->route('forms.index')->with('suceess', 'Data has been created');
         } catch (\Exception $e) {
             DB::rollBack();
-    
+
             return response()->json([
                 'message' => 'Failed to create form and questions',
                 'error' => $e->getMessage(),
@@ -86,18 +90,21 @@ class FormsController extends Controller
     public function show($id)
     {
         $questions = DB::table('question')
-        ->join('forms', 'forms.id', '=', 'question.form_id')
-        ->join('variables', 'variables.id', '=', 'question.has_realational_to_variable')
-        ->leftJoin('answers', 'answers.question_id', '=', 'question.id')
-        ->where('question.form_id', $id)
-        ->select(
-            'question.id as question_id',
-            'question.question as name_question',
-            'variables.name as name_variable',
-            'question.max_value',
-            'answers.value as answer_value'
-        )
-        ->get();
+            ->join('forms', 'forms.id', '=', 'question.form_id')
+            ->join('variables', 'variables.id', '=', 'question.has_realational_to_variable')
+            ->leftJoin('answers', 'answers.question_id', '=', 'question.id')
+            ->where('question.form_id', $id)
+            ->select(
+                'question.id as question_id',
+                'question.question as name_question',
+                'variables.name as name_variable',
+                'question.max_value',
+                'answers.value as answer_value',
+                'question.min_label as min_label',
+                'question.max_label as max_label',
+                'forms.description'
+            )
+            ->get();
 
         $groupedResponses = [];
         foreach ($questions as $question) {
@@ -105,6 +112,8 @@ class FormsController extends Controller
             $groupedResponses[$question->question_id]['variable'] = $question->name_variable;
             $groupedResponses[$question->question_id]['max_value'] = $question->max_value;
             $groupedResponses[$question->question_id]['answers'][] = $question->answer_value;
+            $groupedResponses[$question->question_id]['min_label'] = $question->min_label;
+            $groupedResponses[$question->question_id]['max_label'] = $question->max_label;
         }
 
         $data = [
@@ -169,6 +178,7 @@ class FormsController extends Controller
             ]);
         }
         return redirect()->route('forms.index')->with('success', 'Answers submitted successfully.');
+
     }
     public function edit($id)
     {
@@ -219,5 +229,4 @@ class FormsController extends Controller
 
         return view('forms.edit', $data);
     }
-
-}
+  }

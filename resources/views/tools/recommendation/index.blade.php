@@ -18,20 +18,28 @@
                     <thead>
                       <tr>
                         <th class="col-1">No</th>
-                        <th>Recommendation Name</th>
-                        <th>Severity</th>
-                        <th>Related Variable</th>
-                        <th class="col-1">Action</th>
+                        <th class="">Classification <br>Severity</th>
+                        <th class="">Defence <br>Severity</th>
+                        <th class="">Defence <br>Infra Severity</th>
+                        <th class="">Marine <br>Resource</th>
+                        <th class="">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>Survey Naval Sea Threats</td>
                             <td>
                                 <span class="btn btn-sm btn-light-danger">Low</span>
                             </td>
-                            <td>Naval Sea Threats</td>
+                            <td>
+                              <span class="btn btn-sm btn-light-danger">Low</span>
+                            </td>
+                            <td>
+                              <span class="btn btn-sm btn-light-danger">Low</span>
+                            </td>
+                            <td>
+                              <span class="btn btn-sm btn-light-danger">Low</span>
+                          </td>
                             <td>
                                 <!-- isi survey -->
                                 <a href="{{route('tools.recommendation.edit', 1)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit </a>
@@ -42,11 +50,12 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th class="col-1">No</th>
-                            <th>Recommendation Name</th>
-                            <th>Severity</th>
-                            <th>Related Variable</th>
-                            <th class="col-1">Action</th>
+                          <th class="col-1">No</th>
+                          <th class="">Classification <br>Severity</th>
+                          <th class="">Defence <br>Severity</th>
+                          <th class="">Defence <br>Infra Severity</th>
+                          <th class="">Marine <br>Resource</th>
+                          <th class="">Action</th>
                           </tr>
                     </tfoot>
                   </table>

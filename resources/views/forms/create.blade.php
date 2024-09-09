@@ -55,11 +55,19 @@
                                     <label for="max_value_1" class="form-label">Set maximum value:</label>
                                     <input type="number" class="form-control" id="max_value_1" name="questions[1][max_value]" min="2">
                                 </div>
+                                <div class="scalar-options mt-2" style="display:none;">
+                                    <label for="min_label_1" class="form-label">Set minimal label:</label>
+                                    <input type="text" class="form-control" id="min_label_1" name="questions[1][min_label]">
+                                </div>
+                                <div class="scalar-options mt-2" style="display:none;">
+                                    <label for="max_label_1" class="form-label">Set maximal label:</label>
+                                    <input type="text" class="form-control" id="max_label_1" name="questions[1][max_label]">
+                                </div>
                                 <button type="button" class="btn btn-danger remove-question mt-2">Remove</button>
                             </div>
                         </div>
-                        <div>
 
+                        <div>
                             <button type="button" class="btn btn-secondary" id="add-question">Add Question</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
@@ -69,43 +77,33 @@
         </div>
     </div>
 
-    <script src="<?= asset('assets/js/plugins/choices.min.js') ?>"></script>
+    <script src="{{ asset('assets/js/plugins/choices.min.js') }}"></script>
     <script>
-       // In your Javascript (external .js resource or <script> tag)
-        
         document.addEventListener('DOMContentLoaded', function () {
             let questionCounter = 1;
 
             // Function to show or hide scalar options
             function toggleScalarOptions(questionId, isScalar) {
-                const scalarOptionsContainer = document.querySelector(`#is_scalar_${questionId}`).closest('.question-item').querySelector('.scalar-options');
-                scalarOptionsContainer.style.display = isScalar ? 'block' : 'none';
+                const scalarOptionsContainer = document.querySelector(`#is_scalar_${questionId}`).closest('.question-item').querySelectorAll('.scalar-options');
+                scalarOptionsContainer.forEach(option => option.style.display = isScalar ? 'block' : 'none');
                 if (!isScalar) {
                     document.getElementById(`max_value_${questionId}`).value = ''; // Reset max value
                 }
             }
 
             // Function to initialize Choices.js for a specific select element
-            function initializeChoices(questionCounter) {
-                new Choices(`#choices-single-remove-${questionCounter}`, {
+            function initializeChoices(questionId) {
+                new Choices(`#choices-single-remove-${questionId}`, {
                     removeItemButton: true,
                     searchPlaceholderValue: "Search for a variable",
                 }).setChoices(function () {
-                    return fetch('http://127.0.0.1:8000/api/search-variables')
-                        .then(function (response) {
-                            return response.json();
-                        })
-                        .then(function (data) {
-                            return data.map(function (item) {
-                                return {
-                                    label: item.label,  // Displayed label
-                                    value: item.value,  // Value to be submitted
-                                };
-                            });
-                        })
-                        .catch(function (error) {
-                            console.error('Error fetching data:', error);
-                        });
+                    return fetch('{{ route('api.search.variable') }}')
+                        .then(response => response.json())
+                        .then(data => data.map(item => ({
+                            label: item.label,  // Displayed label
+                            value: item.value,  // Value to be submitted
+                        })))
+                        .catch(error => console.error('Error fetching data:', error));
                 });
             }
 
@@ -135,7 +133,14 @@
                         <label for="max_value_${questionCounter}" class="form-label">Set maximum value:</label>
                         <input type="number" class="form-control" id="max_value_${questionCounter}" name="questions[${questionCounter}][max_value]" min="2">
                     </div>
-
+                    <div class="scalar-options mt-2" style="display:none;">
+                        <label for="min_label_${questionCounter}" class="form-label">Set minimal label:</label>
+                        <input type="text" class="form-control" id="min_label_${questionCounter}" name="questions[${questionCounter}][min_label]">
+                    </div>
+                    <div class="scalar-options mt-2" style="display:none;">
+                        <label for="max_label_${questionCounter}" class="form-label">Set maximal label:</label>
+                        <input type="text" class="form-control" id="max_label_${questionCounter}" name="questions[${questionCounter}][max_label]">
+                    </div>
                     <button type="button" class="btn btn-danger remove-question mt-2">Remove</button>
                 `;
                 questionContainer.appendChild(newQuestionDiv);
@@ -167,29 +172,20 @@
             // Initialize Choices.js for the existing select element
             initializeChoices(questionCounter);
 
+            // Initialize Choices.js for SFD dropdown
             var sfdSearch = new Choices('#choices-sfd', {
                 removeItemButton: true,
                 searchPlaceholderValue: "Search for a SFD",
             }).setChoices(function () {
-                return fetch('http://127.0.0.1:8000/api/search-sfd')
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        return data.map(function (item) {
-                            return {
-                                label: item.label,  // Displayed label
-                                value: item.value,  // Value to be submitted
-                            };
-                        });
-                    })
-                    .catch(function (error) {
-                        console.error('Error fetching data:', error);
-                    });
+                return fetch('{{ route('api.search.sfd') }}')
+                    .then(response => response.json())
+                    .then(data => data.map(item => ({
+                        label: item.label,  // Displayed label
+                        value: item.value,  // Value to be submitted
+                    })))
+                    .catch(error => console.error('Error fetching data:', error));
             });
-
         });
-
     </script>
     
 @endsection

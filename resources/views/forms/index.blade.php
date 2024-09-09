@@ -6,12 +6,14 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
-                <!-- add on right -->
-                <div class="card-header d-flex justify-content-end">
-                    <a href="{{ route('forms.create') }}" class="btn btn-sm btn-light-primary">
-                        <i class="fas fa-plus"></i>
-                        Create Survey</a>
-                </div>
+                @if(Auth::user()->role == 'SUPERADMIN')
+                    <!-- add on right -->
+                    <div class="card-header d-flex justify-content-end">
+                        <a href="{{ route('forms.create') }}" class="btn btn-sm btn-light-primary">
+                            <i class="fas fa-plus"></i>
+                            Create Survey</a>
+                    </div>
+                @endif
 
               <div class="card-body">
                 <div class="dt-responsive table-responsive">
@@ -41,8 +43,10 @@
                             <td>
                                 <!-- isi survey -->
                                 <a href="{{route('forms.showForm', $item->id)}}" class="btn btn-sm btn-success"><i class="fas fa-share"></i> Fill Survey</a>
-                                {{-- <a href="{{route('forms.edit', $item->id)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a> --}}
-                                <a href="{{route('forms.show', $item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
+                                @if(Auth::user()->role == 'SUPERADMIN')
+                                    {{-- <a href="{{route('forms.edit', $item->id)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a> --}}
+                                    <a href="{{route('forms.show', $item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
