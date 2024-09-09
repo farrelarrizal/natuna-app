@@ -218,6 +218,14 @@
                         series: series,
                         xaxis: {
                             categories: xaxisCategories,
+                            title: {
+                                text: 'Month',
+                                offsetY: 100,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: 'bold',
+                                }
+                            },
                             axisBorder: {
                                 show: false
                             },
@@ -226,9 +234,19 @@
                             },
                             labels: {
                                 show: true,
-                                step: 2 // Display every 2 data points
+                                step: 2 // Show every 2nd data point on the x-axis
                             },
-                            tickAmount: Math.floor(xaxisCategories.length / 10) // Adjust tick amount
+                            tickAmount: Math.floor(xaxisCategories.length / 10)
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Score (percent)'
+                            },
+                            labels: {
+                                formatter: function (value) {
+                                    return value; // Keep as integer
+                                }
+                            }
                         }
                     };
 
