@@ -44,7 +44,7 @@
                                 <!-- isi survey -->
                                 <a href="{{route('forms.showForm', $item->id)}}" class="btn btn-sm btn-success"><i class="fas fa-share"></i> Fill Survey</a>
                                 @if(Auth::user()->role == 'SUPERADMIN')
-                                    <a href="{{route('hankam.simulation.scenario-model.detail', 1)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a>
+                                    {{-- <a href="{{route('forms.edit', $item->id)}}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i> Edit Survey</a> --}}
                                     <a href="{{route('forms.show', $item->id)}}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View Survey</a>
                                 @endif
                             </td>
