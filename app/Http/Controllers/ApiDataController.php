@@ -93,9 +93,6 @@ class ApiDataController extends Controller
     public function variabelStaticGraph($var)
     {
 
-        if ($var =='Potential Economic Value of North Natuna Sea') {
-           
-        }
         $data = DB::table('scenario_data')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
             ->join('variables', 'variables.id', '=', 'scenario_data.variable_id')
