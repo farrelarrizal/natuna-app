@@ -231,58 +231,85 @@
             </div>
           </div>
         </div>
-        <div class="col-9">
+        
+        <div class="col-3">
           <div class="card">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <div class="flex-shrink-0">
                   <div class="avtar avtar-s bg-light-primary">
+                    <!-- fas fa-ship -->
                     <i class="fas fa-shield-alt"></i>
                   </div>
                 </div>
                 <div class="flex-grow-1 ms-3">
-                  <h6 class="mb-0">Defence and Security <br>Score</h6>
-                </div>
-              </div>
-              <div class="row align-items-center justify-content-center">
-                <div class="col-md-4 col-xl-4">
-                  <div class="mt-3 row align-items-center">
-                    <div class="col-12">
-                      <p class="text-muted mb-1">Defence and Security Score</p>
-                      <h5 class="mb-0 p-3 color-block text-blue-500">{{ $first_var}}/100</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                  <div class="mt-3 row align-items-center">
-                    <div class="col-12">
-                      <p class="text-muted mb-1">National Defense and Security Infrastructure</p>
-                      <h5 class="mb-0 p-3 color-block text-red-500">{{ $second_var }}/5</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4 col-xl-4">
-                  <div class="mt-3 row align-items-center">
-                    <div class="col-12">
-                      <p class="text-muted mb-1">Marine Resource Utilizatio</p>
-                      <h5 class="mb-0 p-3 color-block text-green-500">{{ $third_var }}/5</h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex-grow-1 ms-3">
-                  <h6 class="mb-0 text-justify">Marine Resource <br>Utilization</h6>
+                  <h6 class="mb-0">Defence and Security Score</h6>
                 </div>
               </div>
               <div class="bg-body p-1 rounded text-center">
-                <div class="mt-2 row align-items-center">
-                  <div class="col-12">
-                    <h3 class="mb-1"><strong>4.85</strong>/100</h3>
-                    <p class="text-primary mb-0">
-                      <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
-                    </p>
+              <div class="mt-2 row align-items-center">
+                <div class="col-12">
+                  <h3 class="mb-1"><strong>3.58</strong>/100</h3>
+                  <p class="text-primary mb-0">
+                    <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
+                  </p>
+                </div>
+              </div>
+            </div>            
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <div class="avtar avtar-s bg-light-primary">
+                    <!-- fas fa-ship -->
+                    <i class="fas fa-shield-alt"></i>
                   </div>
                 </div>
-              </div>          
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">National Defense and Security Infrastructure</h6>
+                </div>
+              </div>
+              <div class="bg-body p-1 rounded text-center">
+              <div class="mt-2 row align-items-center">
+                <div class="col-12">
+                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <p class="text-primary mb-0">
+                    <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
+                  </p>
+                </div>
+              </div>
+            </div>            
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                  <div class="avtar avtar-s bg-light-primary">
+                    <!-- fas fa-ship -->
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                  <h6 class="mb-0">Marine Resource Utilizatio</h6>
+                </div>
+              </div>
+              <div class="bg-body p-1 rounded text-center">
+              <div class="mt-2 row align-items-center">
+                <div class="col-12">
+                  <h3 class="mb-1"><strong>4.85</strong>/100</h3>
+                  <p class="text-primary mb-0">
+                    <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
+                  </p>
+                </div>
+              </div>
+            </div>            
             </div>
           </div>
         </div>
