@@ -16,8 +16,11 @@ class DashboardController extends Controller
 
         return view('dashboard', $data);
     }
-    // public function executiveSummary()
-    // {
+    public function executiveSummary()
+    {
+        # redirect to scenario id 28
+        return redirect()->route('dashboard.executive-summary-scenario', ['scenarioId' => 28]);
+    }
 
     //     $flag_first_var = false;
     //     $time = 60;
