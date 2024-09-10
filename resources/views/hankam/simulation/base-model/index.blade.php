@@ -424,7 +424,7 @@
                             },
                             labels: {
                                 formatter: function (value) {
-                                    return value; // Keep as integer
+                                    return value + '%'; // Keep as integer
                                 }
                             }
                         }

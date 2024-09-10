@@ -134,7 +134,7 @@ class ApiDataController extends Controller
                 ];
             }
         }
-
+        
         // Mengembalikan data sebagai JSON
         $response = [
             'data' => $finalData,

@@ -161,7 +161,7 @@
             return baseColors.slice(0, numScenarios);
         }
 
-        function renderGraph(containerId, varValue) {
+        function renderGraph(containerId, varValue, isIDR) {
             fetch(`/api/scenario-graph-data/${varValue}`)
                 .then(response => response.json())
                 .then(data => {
@@ -175,7 +175,9 @@
 
                     const series = data.data.map(item => ({
                         name: item.scenario_name,
-                        data: item.values
+                        data: item.values.map(value => {
+                            return isIDR === 'yes' ? value / 1000000000000 : value;
+                        })
                     }));
 
                     const xaxisCategories = data.data.length > 0 ? data.data[0].node_points.map(String) : [];
@@ -218,6 +220,14 @@
                         series: series,
                         xaxis: {
                             categories: xaxisCategories,
+                            title: {
+                                text: 'Month',
+                                offsetY: 100,
+                                style: {
+                                    fontSize: '12px',
+                                    fontWeight: 'bold',
+                                }
+                            },
                             axisBorder: {
                                 show: false
                             },
@@ -226,9 +236,23 @@
                             },
                             labels: {
                                 show: true,
-                                step: 2 // Display every 2 data points
+                                step: 2 // Show every 2nd data point on the x-axis
                             },
-                            tickAmount: Math.floor(xaxisCategories.length / 10) // Adjust tick amount
+                            tickAmount: Math.floor(xaxisCategories.length / 10)
+                        },
+                        yaxis: {
+                          title: {
+                              text: isIDR === 'yes' ? 'IDR (T)' : 'Score (Percent)'
+                          },
+                          labels: {
+                              formatter: function(value) {
+                                  if (isIDR === 'yes') {
+                                      return value + " T"; // Format for IDR in Trillions (T)
+                                  } else {
+                                      return value + "%"; // Default format is percentage
+                                  }
+                              }
+                          },
                         }
                     };
 
@@ -244,8 +268,8 @@
         }
 
         // Call the function for each graph
-        renderGraph('marine-resource-graph', 'Marine Resource Utilization');
-        renderGraph('potential-economic-graph', 'Potential Economic Value of North Natuna Sea');
+        renderGraph('marine-resource-graph', 'Marine Resource Utilization', 'no');
+        renderGraph('potential-economic-graph', 'Potential Economic Value of North Natuna Sea', 'yes');
     });
     </script>
 @endsection

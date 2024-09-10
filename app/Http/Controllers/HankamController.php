@@ -18,7 +18,7 @@ class HankamController extends Controller
 {
     //
     public function summary()
-    {   
+    {
         $variables = ['North Natuna Defense and Security', 'National Sea Threat Risk', 'Naval Defense Posture', 'Naval Strength', 'Naval Deployment', 'Naval Capabilities'];
 
         $variableIds = DB::table('variables')
@@ -31,13 +31,13 @@ class HankamController extends Controller
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['North Natuna Defense and Security'] ?? null)  //nama disesuaikan
             ->first();
- 
+
         if ($var_1 == null) {
             $var_1 = 0;
         } else {
             $var_1 = $var_1->value;
         }
-         
+
         $var_2 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['National Sea Threat Risk'] ?? null)  //nama disesuaikan
@@ -48,7 +48,7 @@ class HankamController extends Controller
         } else {
             $var_2 = $var_2->value;
         }
-        
+
         $var_3 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Naval Defense Posture'] ?? null)  //nama disesuaikan
@@ -63,13 +63,13 @@ class HankamController extends Controller
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Naval Strength'] ?? null)  //nama disesuaikan
             ->first();
- 
+
         if ($naval_strength == null) {
             $naval_strength = 0;
         } else {
             $naval_strength = $naval_strength->value;
         }
-         
+
         $naval_deployment = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Naval Deployment'] ?? null)  //nama disesuaikan
@@ -80,7 +80,7 @@ class HankamController extends Controller
         } else {
             $naval_deployment = $naval_deployment->value;
         }
-        
+
         $naval_capabilities = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Naval Capabilities'] ?? null)  //nama disesuaikan
@@ -107,7 +107,7 @@ class HankamController extends Controller
     }
 
     public function infraSummary()
-    {   
+    {
         // diganti dengan nama variable
         $variables = ['National Defense and Security Infrastructure', 'Defense and Security Regulation', 'Priority Program'];
 
@@ -121,13 +121,13 @@ class HankamController extends Controller
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['National Defense and Security Infrastructure'] ?? null)  //nama disesuaikan
             ->first();
- 
+
         if ($var_1 == null) {
             $var_1 = 0;
         } else {
             $var_1 = $var_1->value;
         }
-         
+
         $var_2 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Defense and Security Regulation'] ?? null)  //nama disesuaikan
@@ -138,7 +138,7 @@ class HankamController extends Controller
         } else {
             $var_2 = $var_2->value;
         }
-        
+
         $var_3 = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Priority Program'] ?? null)  //nama disesuaikan
@@ -208,7 +208,7 @@ class HankamController extends Controller
     public function getSfdVariables($sfdId = null)
     {
         $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
-        
+
         if ($sfdId) {
             $variables = DB::table('sfd_variable')
                 ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
@@ -249,7 +249,7 @@ class HankamController extends Controller
     }
 
     public function uploadSfdImage(Request $request)
-    {   
+    {
         $request->validate([
             'sfd' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'sfd_id' => 'required|integer|exists:sfd,id',
@@ -546,7 +546,7 @@ class HankamController extends Controller
     public function detailOutcomeScenario($id)
     {
         $scenario = Scenario::findOrFail($id);
-        $scenarioData = ScenarioData::where('scenario_id', $id)->with('variable')->get();
+        $scenarioData = ScenarioData::where('scenario_id', $id)->with('variable')->limit(10)->get();
         $data = [
             'title' => 'Defence and Security | Simulation Outcome Scenario',
             'head_title' => 'Outcome Scenario',
