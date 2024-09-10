@@ -79,7 +79,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
+
+        // bring the params on executiveSummary method to the route
         Route::get('executive-summary', [DashboardController::class, 'executiveSummary'])->name('executive-summary');
+        Route::get('executive-summary/{scenarioId}', [DashboardController::class, 'executiveSummaryScenario'])->name('executive-summary-scenario');
         Route::get('recommendation',  [DashboardController::class, 'recommendation'])->name('recommendation');
         Route::get('maps', [DashboardController::class, 'maps'])->name('maps');
         Route::get('policy-brief', [DashboardController::class, 'policyBrief'])->name('policy-brief');

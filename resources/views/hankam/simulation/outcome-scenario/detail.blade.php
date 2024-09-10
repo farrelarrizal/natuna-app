@@ -27,7 +27,7 @@
             </button>                           
         </div>
     </div>
-    <div class="col-md-12">
+    {{-- <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="col-md-12">
     <div class="card">

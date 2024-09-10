@@ -64,38 +64,6 @@
             </div>
         @endif
         </div>
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex align-items-center justify-content-between">
-                
-                  <h5 class="mb-0">Defence and Security Graphics</h5>
-                      <form id="variableForm">
-                        <div class="row row-cols-md-auto g-1 align-items-center">
-                          <div class="col-6">
-                            <select id="variableSelect" name="variableId" class="form-select form-select-sm">
-                            </select>
-                          </div>
-                          <div class="col-6">
-                            <button type="submit" class="btn btn-primary btn-sm button-send">Send</button>
-                          </div>
-                        </div>
-                      </form>
-                  
-              </div>
-              {{-- <div class="pc-component">
-                  <div class="alert alert-primary my-3" role="alert">
-                      <div class="avtar avtar-s"><i data-feather="alert-circle"></i></div>
-                      Information Notes 
-                      <p>Additional description and information about copywriting.</p>
-                    </div>
-              </div> --}}
-             
-              <div class="row my-3">
-                  <div id="defence-and-security-graphics"></div>
-              </div>
-            </div>
-          </div>
       </div>
         <div class="col-sm-12">
           <div class="card">
