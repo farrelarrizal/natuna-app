@@ -58,13 +58,13 @@
       </div> --}}
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-5">
         <div class="card">
           <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
               <h5 class="mb-0">National Defense and Security Infrastructure</h5>
               
-              <div class="dropdown">
+              {{-- <div class="dropdown">
                 <a
                   class="avtar avtar-s btn-link-secondary dropdown-toggle arrow-none"
                   href="#"
@@ -79,24 +79,24 @@
                   <a class="dropdown-item" href="#">Weekly</a>
                   <a class="dropdown-item" href="#">Monthly</a>
                 </div>
-              </div>
+              </div> --}}
             </div>
             <div class="row align-items-center justify-content-center">
-                <div class="mt-3 row align-items-center">
+                <div class="mt-4 row align-items-center">
                     {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                    <h4 class="mb-0 p-3 color-block text-green-600">{{ $first_variable }}/5</h4>
+                    <h4 class="mb-0 p-3 color-block text-green-600">{{ round($first_variable) }}/100</h4>
                 </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-7">
           <div class="card">
               <div class="card-body">
               <div class="d-flex align-items-center justify-content-between">
                 <h5 class="mb-0">Defence Infrastructure Overview</h5>
                 
-                <div class="dropdown">
+                {{-- <div class="dropdown">
                   <a
                     class="avtar avtar-s btn-link-secondary dropdown-toggle arrow-none"
                     href="#"
@@ -111,14 +111,14 @@
                     <a class="dropdown-item" href="#">Weekly</a>
                     <a class="dropdown-item" href="#">Monthly</a>
                   </div>
-                </div>
+                </div> --}}
               </div>
               <div class="row align-items-center justify-content-center">
                 <div class="col-md-6 col-xl-6">
                   <div class="mt-3 row align-items-center">
                     <div class="col-12">
                       <p class="text-muted mb-1">Defense and Security Regulation</p>
-                      <h5 class="mb-0 p-3 color-block text-red-500">{{ $second_variable }}/5</h5>
+                      <h4 class="mb-0 p-3 color-block text-red-500">{{ round($second_variable) }}/100</h4>
                     </div>
                     
                   </div>
@@ -127,7 +127,7 @@
                   <div class="mt-3 row align-items-center">
                     <div class="col-12">
                       <p class="text-muted mb-1"> Priority Program</p>
-                      <h5 class="mb-0 p-3 color-block text-green-500">{{ $third_variable }}/5</h5>
+                      <h4 class="mb-0 p-3 color-block text-green-500">{{ round($third_variable) }}/100</h4>
                     </div>
                     
                   </div>
