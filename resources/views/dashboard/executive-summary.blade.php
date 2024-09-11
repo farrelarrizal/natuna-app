@@ -144,7 +144,7 @@
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>{{$second_var}}</strong><small>/100</small></h3>
+                  <h3 class="mb-1"><strong>{{round($second_var)}}</strong><small>/100</small></h3>
                   <p class="text-primary mb-0">
                     @if($second_var < 50)
                       <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
@@ -193,17 +193,17 @@
                 </div>
               </div>
               <div class="flex-grow-1 ms-3">
-                <h6 class="mb-0">Marine Resource Utilizatio</h6>
+                <h6 class="mb-0">Marine Resource Utilization</h6>
               </div>
             </div>
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>{{$third_var}}</strong><small>/100</small></h3>
+                  <h3 class="mb-1"><strong>{{round($third_var)}}</strong><small>/100</small></h3>
                   <p class="text-primary mb-0">
-                    @if($second_var < 50)
+                    @if($third_var < 50)
                     <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
-                    @elseif($second_var >=50 && $second_var < 75)
+                    @elseif($third_var >=50 && $third_var < 75)
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                     @else
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
@@ -254,7 +254,7 @@
             <div class="bg-body p-1 rounded text-center">
               <div class="mt-2 row align-items-center">
                 <div class="col-12">
-                  <h3 class="mb-1"><strong>{{$fourth_var}}</strong><small>/100</small></h3>
+                  <h3 class="mb-1"><strong>{{round($fourth_var)}}</strong><small>/100</small></h3>
                   <p class="text-primary mb-0">
                     @if($fourth_var < 50)
                       <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
@@ -399,9 +399,9 @@
                 <div class="col-12">
                   <h3 class="mb-1"><strong>{{ round($forecast_third_var)}}</strong>/100</h3>
                   <p class="text-primary mb-0">
-                    @if($forecast_second_var < 50)
+                    @if($forecast_third_var < 50)
                     <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
-                    @elseif($forecast_second_var >=50 && $forecast_second_var < 75)
+                    @elseif($forecast_third_var >=50 && $forecast_third_var < 75)
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                     @else
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
