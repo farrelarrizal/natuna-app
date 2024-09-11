@@ -93,7 +93,7 @@
                   <p class="text-primary mb-0">
                     @if($first_var < 50)
                       <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
-                      @elseif($first_var >=50 && $first_var < 75)
+                      @elseif($first_var >=50 && $first_var < 70)
                       <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                       @else
                       <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
@@ -148,7 +148,7 @@
                   <p class="text-primary mb-0">
                     @if($second_var < 50)
                       <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
-                      @elseif($second_var >=50 && $second_var < 75)
+                      @elseif($second_var >=50 && $second_var < 70)
                       <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                       @else
                       <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
@@ -203,7 +203,7 @@
                   <p class="text-primary mb-0">
                     @if($third_var < 50)
                     <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
-                    @elseif($third_var >=50 && $third_var < 75)
+                    @elseif($third_var >=50 && $third_var < 70)
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
                     @else
                     <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>

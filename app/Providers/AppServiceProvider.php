@@ -17,8 +17,5 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot()
-    {
-        set_time_limit(200);
-    }
+    public function boot() {}
 }

@@ -263,16 +263,18 @@ class DashboardController extends Controller
             $flag_fourth_var = 'HIGH';
         }
 
-        # LOGIC PENENTUAN REKOMENDASI, TP KERJAAIN NASINYA DULU AJA baru ambil lauknya (81 Kombinasi)
-        if ($flag_first_var == 'LOW' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
-            $all_indicator_local = 'VERY LOW';
-        } elseif ($first_var == 'MEDIUM' && $second_var == 'MEDIUM' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
-            $all_indicator_local = 'HIGH';
-        } elseif ($first_var == 'HIGH' && $second_var == 'HIGH' && $flag_third_var == 'HIGH' && $flag_fourth_var == 'HIGH') {
-            $all_indicator_local = 'VERY LOW';
-        } else {
-            $all_indicator_local = 'UNKNOWN';
-        }
+        // # LOGIC PENENTUAN REKOMENDASI, TP KERJAAIN NASINYA DULU AJA baru ambil lauknya (81 Kombinasi)
+        // if ($flag_first_var == 'LOW' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
+        //     $all_indicator = 'VERY LOW';
+        // } elseif ($flag_first_var == 'MEDIUM' && $flag_second_var == 'MEDIUM' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
+        //     $all_indicator = 'HIGH';
+        // } elseif ($flag_first_var == 'MEDIUM' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
+        //     $all_indicator = 'VERY LOW';
+        // } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'HIGH' && $flag_third_var == 'HIGH' && $flag_fourth_var == 'HIGH') {
+        //     $all_indicator = 'VERY LOW';
+        // } else {
+        //     $all_indicator = 'UNKNOWN';
+        // }
 
 
         # forecast
@@ -362,17 +364,11 @@ class DashboardController extends Controller
 
         // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var);
 
-        # LOGIC PENENTUAN REKOMENDASI, TP KERJAAIN NASINYA DULU AJA baru ambil lauknya (81 Kombinasi)
-        if ($flag_forecast_first_var == 'MEDIUM' && $flag_forecast_second_var == 'LOW' && $flag_forecast_third_var == 'LOW' && $flag_forecast_fourth_var == 'LOW') {
+        // LOGIC PENENTUAN REKOMENDASI
+        if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
             $all_indicator = 'VERY LOW';
-        } elseif ($flag_forecast_first_var == 'MEDIUM' && $flag_forecast_second_var == 'MEDIUM' && $flag_forecast_third_var == 'MEDIUM' && $flag_forecast_fourth_var == 'MEDIUM') {
+        } else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
             $all_indicator = 'VERY LOW';
-        } elseif ($flag_forecast_first_var == 'HIGH' && $flag_forecast_second_var == 'HIGH' && $flag_forecast_third_var == 'HIGH' && $flag_forecast_fourth_var == 'HIGH') {
-            $all_indicator = 'VERY LOW';
-        } elseif ($flag_forecast_first_var == 'HIGH' && $flag_forecast_second_var == 'HIGH' && $flag_forecast_third_var == 'HIGH' && $flag_forecast_fourth_var == 'HIGH') {
-            $all_indicator = 'VERY LOW';
-        } elseif ($flag_forecast_first_var == 'MEDIUM' && $flag_forecast_second_var == 'MEDIUM' && $flag_forecast_third_var == 'MEDIUM' && $flag_forecast_fourth_var == 'MEDIUM') {
-            $all_indicator = 'HIGH';
         } else {
             $all_indicator = 'UNKNOWN';
         }
@@ -380,7 +376,6 @@ class DashboardController extends Controller
         $ancaman_id = DB::table('ancaman')
             ->where('flag', substr($flag_forecast_first_var, 0, 1))
             ->get();
-
 
         $recommendationId = DB::table('recommendation')
             ->where('defence_severity', $flag_forecast_first_var)
@@ -467,7 +462,6 @@ class DashboardController extends Controller
             'second_var' => $second_var ?? 0,
             'third_var' => $third_var ?? 0,
             'fourth_var' => $fourth_var ?? 0,
-            'all_indicator_local' => $all_indicator_local,
             'all_indicator' => $all_indicator,
             'scenarios' => $scenarios,
             'forecast_first_var' => $forecast_first_var ?? 0,
