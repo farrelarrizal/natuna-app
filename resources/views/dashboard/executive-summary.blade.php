@@ -365,7 +365,7 @@
           <h3 class="mb-0">Analisis Kondisi Eksisting</h3>
         </div>
         <div class="card-body">
-          {{  $recommendation_id->analisa_kondisi }}
+          {!!  $recommendation_id->analisa_kondisi !!}
         </div>
       </div>
       <div class="card">
@@ -387,7 +387,7 @@
           <h3 class="mb-0">Rekomendasi</h3>
         </div>
         <div class="card-body">
-          {{  $recommendation_id->rekomendasi }}
+          {!!  $recommendation_id->rekomendasi !!}
         </div>
       </div>
       <div class="card">
