@@ -186,6 +186,7 @@
             <h3>Forecast North Natuna Indicator</h3>
             <!-- SELECT LIST -->
             <form id="myForm" action="" method="GET">
+              @csrf
               <div class="list-inline">
                   <select id="scenarioSelect" class="form-select text-filter">
                       @foreach($scenarios as $scenario)
@@ -410,7 +411,7 @@
           {!! $solution_third_var->solusi !!}
           <br>
           <h4>North Natuna Defense and Security</h4>
-          {!! $solution_fourth_var ->solusi!!}
+          {!! $solution_fourth_var->solusi !!}
           <br> --}}
       </div>
       
