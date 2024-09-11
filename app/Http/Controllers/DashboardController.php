@@ -301,7 +301,7 @@ class DashboardController extends Controller
         $forecast_third_var = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->join('scenarios', 'scenarios.id', '=', 'scenario_data.scenario_id')
-            ->where('variables.id', $variableIds['Marine Resource Utilizatio'] ?? null)  //nama disesuaikan
+            ->where('variables.id', $variableIds['Marine Resource Utilization'] ?? null)  //nama disesuaikan
             ->where('scenario_data.node_point', '>', $time)
             ->where('scenarios.id', $scenarioId)
             ->avg('scenario_data.value');
@@ -362,13 +362,13 @@ class DashboardController extends Controller
             $flag_forecast_fourth_var = 'HIGH';
         }
 
-        // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var);
+
 
         // LOGIC PENENTUAN REKOMENDASI
         if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
             $all_indicator = 'VERY LOW';
         } else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
-            $all_indicator = 'VERY LOW';
+            $all_indicator = 'MEDIUM';
         } else {
             $all_indicator = 'UNKNOWN';
         }
@@ -383,6 +383,8 @@ class DashboardController extends Controller
             ->where('marine_resource', $flag_forecast_third_var)
             ->where('threat_severity', $flag_forecast_fourth_var)
             ->first();
+
+        // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var, $recommendationId);
 
         if ($flag_first_var == 'LOW'):
             $solution_first_var = DB::table('scenario_alternative')
@@ -421,17 +423,17 @@ class DashboardController extends Controller
 
         if ($flag_third_var == 'LOW'):
             $solution_third_var = DB::table('scenario_alternative')
-                ->where('variable', 'Marine Resource Utilizatio')
+                ->where('variable', 'Marine Resource Utilization')
                 ->where('severity', 'LOW')
                 ->first();
         elseif ($flag_third_var == 'MEDIUM'):
             $solution_third_var = DB::table('scenario_alternative')
-                ->where('variable', 'Marine Resource Utilizatio')
+                ->where('variable', 'Marine Resource Utilization')
                 ->where('severity', 'MEDIUM')
                 ->first();
         else:
             $solution_third_var = DB::table('scenario_alternative')
-                ->where('variable', 'Marine Resource Utilizatio')
+                ->where('variable', 'Marine Resource Utilization')
                 ->where('severity', 'HIGH')
                 ->first();
         endif;
