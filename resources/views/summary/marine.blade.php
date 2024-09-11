@@ -84,7 +84,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="mt-3 row align-items-center">
                     {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                    <h4 class="mb-0 p-3 color-block text-red-600">{{ $first_variable }}/100</h4>
+                    <h4 class="mb-0 p-3 color-block text-red-600">{{ round($first_variable) }}/100</h4>
                 </div>
             </div>
           </div>
@@ -116,7 +116,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="mt-3 row align-items-center">
                     {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                    <h4 class="mb-0 p-3 color-block text-green-600">{{ $second_variable }}/100</h4>
+                    <h4 class="mb-0 p-3 color-block text-green-600">{{ round($second_variable) }}/100</h4>
                 </div>
             </div>
           </div>

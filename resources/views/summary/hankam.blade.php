@@ -85,7 +85,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="mt-3 row align-items-center">
                     {{-- <p class="text-muted mb-1">Naval Deployment</p> --}}
-                    <h4 class="mb-0 p-3 color-block text-green-600">{{ $first_var }}/100</h4>
+                    <h4 class="mb-0 p-3 color-block text-green-600">{{ round($first_var) }}/100</h4>
                 </div>
             </div>
           </div>
@@ -114,19 +114,19 @@
                 </div> --}}
               <div class="row align-items-center justify-content-center">
                 <div class="col-md-6 col-xl-6">
-                  <div class="mt-3 row align-items-center">
+                  <div class="mt-0 row align-items-center">
                     <div class="col-12">
-                      <h5 class="text-muted mb-1">North Natuna Sea Risk and Threat Score</h5>
-                      <h5 class="mb-0 p-3 color-block text-red-500">{{ $second_var }}/100</h5>
+                      <h5 class="mb-1">North Natuna Sea Risk and Threat Score</h5>
+                      <h4 class="mb-0 mt-3 p-3 color-block text-red-500">{{ round($second_var) }}/100</h4>
                     </div>
                     
                   </div>
                 </div>
                 <div class="col-md-6 col-xl-6">
-                  <div class="mt-3 row align-items-center">
+                  <div class="mt-0 row align-items-center">
                     <div class="col-12">
-                      <h5 class="text-muted mb-1"> Naval Defense Posture Score</h5>
-                      <h5 class="mb-0 p-3 color-block text-green-500">{{ $third_var }}/100</h5>
+                      <h5 class=" mb-1"> Naval Defense Posture Score</h5>
+                      <h4 class="mb-0 mt-3 p-3 color-block text-green-500">{{ round($third_var) }}/100</h4>
                     </div>
                     
                   </div>
@@ -165,7 +165,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Strength</p>
-                        <h5 class="mb-0 p-3 color-block text-blue-500">{{ $naval_strength}}/100</h5>
+                        <h5 class="mb-0 p-3 color-block text-blue-500">{{ round($naval_strength)}}/100</h5>
                       </div>
                      
                     </div>
@@ -174,7 +174,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Deployment</p>
-                        <h5 class="mb-0 p-3 color-block text-red-500">{{ $naval_deployment }}/100</h5>
+                        <h5 class="mb-0 p-3 color-block text-red-500">{{ round($naval_deployment) }}/100</h5>
                       </div>
                       
                     </div>
@@ -183,7 +183,7 @@
                     <div class="mt-3 row align-items-center">
                       <div class="col-6">
                         <p class="text-muted mb-1">Naval Capabilties</p>
-                        <h5 class="mb-0 p-3 color-block text-green-500">{{ $naval_capabilities }}/100</h5>
+                        <h5 class="mb-0 p-3 color-block text-green-500">{{ round($naval_capabilities) }}/100</h5>
                       </div>
                       
                     </div>
