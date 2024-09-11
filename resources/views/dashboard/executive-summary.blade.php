@@ -186,7 +186,7 @@
             <h3>Forecast North Natuna Indicator</h3>
             <!-- SELECT LIST -->
             <form id="myForm" action="" method="GET">
-              @csrf
+              {{-- @csrf --}}
               <div class="list-inline">
                   <select id="scenarioSelect" class="form-select text-filter">
                       @foreach($scenarios as $scenario)
@@ -456,7 +456,7 @@
       document.getElementById('scenarioSelect').addEventListener('change', function() {
           var selectedValue = this.value; // Get the selected value
           var form = document.getElementById('myForm'); // Get the form element
-          var baseUrl = '{{ route("dashboard.executive-summary-scenario", "scenario_id") }}'; // Get the base URL
+          var baseUrl = '{{ secure_url(route("dashboard.executive-summary-scenario", "scenario_id")) }}';
 
           // Update the form's action attribute with the selected scenario ID
           form.action = baseUrl.replace('scenario_id', selectedValue);
