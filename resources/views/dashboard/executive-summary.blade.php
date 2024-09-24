@@ -248,7 +248,13 @@
                 <div class="col-12">
                   <h3 class="mb-1"><strong>{{ round($forecast_first_var)}}</strong>/100</h3>
                   <p class="text-primary mb-0">
+                    @if($forecast_second_var < 50)
+                    <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
+                    @elseif($forecast_second_var >=50 && $forecast_second_var < 70)
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
+                    @else
+                    <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
+                    @endif
                   </p>
                 </div>
               </div>

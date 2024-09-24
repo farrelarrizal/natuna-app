@@ -134,7 +134,7 @@ class ApiDataController extends Controller
                 ];
             }
         }
-        
+
         // Mengembalikan data sebagai JSON
         $response = [
             'data' => $finalData,
@@ -185,6 +185,7 @@ class ApiDataController extends Controller
     {
         // Fetch the scenario from the database
         $scenario = DB::table('scenarios')->where('id', $id)->first();
+        // dd($scenario);
         if (!$scenario) {
             return response()->json([
                 'message' => 'Scenario not found',

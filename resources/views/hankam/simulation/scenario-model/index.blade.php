@@ -23,6 +23,29 @@
             </ul>
             <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
         </div>
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Success!</strong> {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+        <!-- Display error message -->
+        @if(Session::has('error'))
+            <div class="alert alert-danger">
+                {{ Session::get('error') }}
+            </div>
+        @endif
+
+        <!-- Display validation errors -->
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -89,7 +112,10 @@
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
       <script>
       // [ Add Rows ]
-      var t = $('#add-row-table').DataTable();
+      var t = $('#add-row-table').DataTable(
+        // order by column 1
+        { order: [[1, 'desc']] }
+      );
       var counter = 1;
 
       $('#addRow').on('click', function () {
@@ -106,7 +132,10 @@
         $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" >');
       });
 
-      var table = $('#footer-search').DataTable();
+      var table = $('#footer-search').DataTable(
+        // order by column 1
+        { order: [[0, 'desc']] }
+      );
 
       // [ Apply the search ]
       table.columns().every(function () {

@@ -5,7 +5,7 @@ def connect_db():
         host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
         user="admin",
         passwd="cujwiq-suqhu2-bycpuB",
-        database="web-app"
+        database="web-app-dev"
     )
     return connection
 
