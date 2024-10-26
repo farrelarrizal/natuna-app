@@ -162,6 +162,9 @@ class DashboardController extends Controller
     public function executiveSummaryScenario(Request $request)
     {
         $scenarioId = $request->scenarioId;
+        $scenarioName = DB::table('scenarios')
+            ->where('id', $scenarioId)
+            ->first()->name;
 
         // Actual Logic
         $flag_first_var = false;
@@ -476,6 +479,7 @@ class DashboardController extends Controller
             'solution_second_var' => $solution_second_var,
             'solution_third_var' => $solution_third_var,
             'solution_fourth_var' => $solution_fourth_var,
+            'scenarioName' => $scenarioName,
         ];
 
         return view('dashboard.executive-summary', $data);

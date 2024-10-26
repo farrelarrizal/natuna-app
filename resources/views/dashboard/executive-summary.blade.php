@@ -188,12 +188,14 @@
             <form id="myForm" action="" method="GET">
               {{-- @csrf --}}
               <div class="list-inline">
-                  <select id="scenarioSelect" class="form-select text-filter">
-                      @foreach($scenarios as $scenario)
-                          <option value="{{ $scenario->id }}">{{ $scenario->name }}</option>
-                      @endforeach
-                  </select>
-              </div>
+                <select id="scenarioSelect" class="form-select text-filter">
+                    @foreach($scenarios as $scenario)
+                        <option value="{{ $scenario->id }}" {{ $scenario->name == $scenarioName ? 'selected' : '' }}>
+                            Scenario Name: {{ $scenario->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
           </form>
           </div>
         </div>
@@ -372,7 +374,8 @@
           <h3 class="mb-0">Analisis Kondisi Eksisting</h3>
         </div>
         <div class="card-body">
-          {!!  $recommendation_id->analisa_kondisi !!}
+          <!-- text xl from db -->
+          {!! $recommendation_id->analisa_kondisi !!}
         </div>
       </div>
       <div class="card">

@@ -57,6 +57,8 @@ class HankamController extends Controller
         # if len naval_capabilities == 0, then naval_capabilities = 0
         if ($var_3 == null) {
             $var_3 = 0;
+        } else {
+            $var_3 = $var_3->value;
         }
 
         $naval_strength = DB::table('variables')
@@ -620,5 +622,15 @@ class HankamController extends Controller
 
         // Redirect with a success message
         return redirect()->back()->with('success', 'Data imported successfully.');
+    }
+
+    public function simulationLog()
+    {
+        $data = [
+            'title' => 'Defence and Security | Simulation Log',
+            'head_title' => 'Log',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.log.index', $data);
     }
 }
