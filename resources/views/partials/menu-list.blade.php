@@ -146,6 +146,7 @@
     @if (Auth::user()->role === 'SUPERADMIN')
       <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.scenario-model.index') }}">Scenario Model</a></li>
       <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.outcome-scenario.index') }}">Outcome Scenario</a></li>
+      <li class="pc-item"><a class="pc-link" href="{{ route('hankam.simulation.log.index') }}">Log Running Model</a></li>
     @endif
   </ul>
 </li>

@@ -21,7 +21,6 @@
               </li>
               <li class="list-inline-item text-filter">
                   <h5 class="mb-0">Defense and Security Scenario Model</h5>
-                  <span>Last Edit: 17 May 2024 18:50</span>
               </li>
           </ul> 
         </div>
@@ -69,12 +68,20 @@
           <div class="card">
             <div class="card-header">
               <h5>Add Scenario Details</h5>
-              
             </div>
             <div class="card-body">
             <form action="{{route('hankam.simulation.scenario-model.storeScenario')}}" method="post">
                 @csrf
                 <div class="row">
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Model (Stock Flow Diagram)</label>
+                    <select name="sfd_id" id="" class="form-select">
+                        <option selected disabled>Select SFD</option>
+                            @foreach ($rowSfd as $item)
+                                <option value="{{$item->id}}">{{$item->name}}</option>  
+                            @endforeach
+                      </select>
+                  </div>
                   <div class="col-lg-12 mb-3">
                     <label class="form-label">Scenario Name</label>
                     <input class="form-control" type="text" name="name" id="">
@@ -84,17 +91,6 @@
                     <label class="form-label">Scenario Detail</label>
                     <textarea class="form-control" name="desc" id="" cols="10" rows="3"></textarea>
                   </div>
-
-                  <div class="col-md-12 mb-3">
-                    <label class="form-label">SFD</label>
-                    <select name="sfd_id" id="" class="form-select">
-                        <option selected disabled>Select SFD</option>
-                            @foreach ($rowSfd as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>  
-                            @endforeach
-                      </select>
-                  </div>
-
                   <div class="col-lg-12 mb-3">
                     <label class="form-label">Final Time</label>
                     <input class="form-control" type="number" name="timestep" id="" value="132">

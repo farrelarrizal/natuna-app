@@ -186,14 +186,16 @@
             <h3>Forecast North Natuna Indicator</h3>
             <!-- SELECT LIST -->
             <form id="myForm" action="" method="GET">
-              @csrf
+              {{-- @csrf --}}
               <div class="list-inline">
-                  <select id="scenarioSelect" class="form-select text-filter">
-                      @foreach($scenarios as $scenario)
-                          <option value="{{ $scenario->id }}">{{ $scenario->name }}</option>
-                      @endforeach
-                  </select>
-              </div>
+                <select id="scenarioSelect" class="form-select text-filter">
+                    @foreach($scenarios as $scenario)
+                        <option value="{{ $scenario->id }}" {{ $scenario->name == $scenarioName ? 'selected' : '' }}>
+                            Scenario Name: {{ $scenario->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
           </form>
           </div>
         </div>
@@ -248,7 +250,13 @@
                 <div class="col-12">
                   <h3 class="mb-1"><strong>{{ round($forecast_first_var)}}</strong>/100</h3>
                   <p class="text-primary mb-0">
+                    @if($forecast_second_var < 50)
+                    <span class="badge bg-light-danger mb-0 mt-1 text-md">Low</span>
+                    @elseif($forecast_second_var >=50 && $forecast_second_var < 70)
                     <span class="badge bg-light-warning mb-0 mt-1 text-md">Medium</span>
+                    @else
+                    <span class="badge bg-light-success mb-0 mt-1 text-md">High</span>
+                    @endif
                   </p>
                 </div>
               </div>
@@ -366,7 +374,8 @@
           <h3 class="mb-0">Analisis Kondisi Eksisting</h3>
         </div>
         <div class="card-body">
-          {!!  $recommendation_id->analisa_kondisi !!}
+          <!-- text xl from db -->
+          {!! $recommendation_id->analisa_kondisi !!}
         </div>
       </div>
       <div class="card">
@@ -456,7 +465,7 @@
       document.getElementById('scenarioSelect').addEventListener('change', function() {
           var selectedValue = this.value; // Get the selected value
           var form = document.getElementById('myForm'); // Get the form element
-          var baseUrl = '{{ route("dashboard.executive-summary-scenario", "scenario_id") }}'; // Get the base URL
+          var baseUrl = '{{ secure_url(route("dashboard.executive-summary-scenario", "scenario_id")) }}';
 
           // Update the form's action attribute with the selected scenario ID
           form.action = baseUrl.replace('scenario_id', selectedValue);

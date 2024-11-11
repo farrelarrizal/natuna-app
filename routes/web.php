@@ -74,6 +74,10 @@ Route::middleware('auth')->group(function () {
                 Route::post('storeOutcome', [HankamController::class, 'storeOutcome'])->name('storeOutcome');
                 Route::get('detail/{id}', [HankamController::class, 'detailOutcomeScenario'])->name('detail');
             });
+
+            Route::prefix('log')->name('log.')->group(function () {
+                Route::get('/', [HankamController::class, 'simulationLog'])->name('index');
+            });
         });
     });
 

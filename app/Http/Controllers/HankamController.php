@@ -57,6 +57,8 @@ class HankamController extends Controller
         # if len naval_capabilities == 0, then naval_capabilities = 0
         if ($var_3 == null) {
             $var_3 = 0;
+        } else {
+            $var_3 = $var_3->value;
         }
 
         $naval_strength = DB::table('variables')
@@ -437,25 +439,48 @@ class HankamController extends Controller
         ]);
 
         try {
-            Scenario::create([
+            # insert get scenario id
+            $scenario_id = DB::table('scenarios')->insertGetId([
                 'name' => $request->input('name'),
                 'desc' => $request->input('desc'),
                 'sfd_id' => $request->input('sfd_id'),
                 'timestep' => $request->input('timestep')
             ]);
 
-            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('success', 'Scenario created successfully!');
+            # get the variables of the active model
+            $dataVariable = DB::table('sfd_variable')
+                ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+                ->where('sfd_id', $request->input('sfd_id'))
+                ->get();
+
+            # insert the variables to scenario_variables
+            foreach ($dataVariable as $variable) {
+                DB::table('scenario_variables')->insert([
+                    'scenario_id' => $scenario_id,
+                    'sfd_id' => $request->input('sfd_id'),
+                    'variable_id' => $variable->variable_id,
+                    'value' => $variable->value,
+                    'level' => $variable->level,
+                    'unit' => $variable->unit
+                ]);
+            }
+
+            return redirect()->route('hankam.simulation.scenario-model.index')->with('success', 'Scenario created successfully!');
         } catch (\Exception $e) {
             return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
         }
     }
     public function detailScenarioModel($id)
     {
-        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
-        $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
         $scenario = Scenario::findOrFail($id);
-        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
-        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')->where('model_id', $get_active_model_id->id)->get();
+        $sfd_id = $scenario->sfd_id;
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
+
+        $dataVariable = DB::table('scenario_variables')
+            ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+            ->where('scenario_variables.scenario_id', $id)
+            ->where('scenario_variables.sfd_id', $sfd_id)
+            ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
 
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
@@ -471,14 +496,15 @@ class HankamController extends Controller
 
     public function editVariableScenarioModel($id)
     {
-        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
-        $rowSfd = Sfd::select('id', 'name')->where('model_id', $model_id)->get();
         $scenario = Scenario::findOrFail($id);
-        $get_active_model_id = DB::table('models')->where('is_active', 1)->first();
+        $sfd_id = $scenario->sfd_id;
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
 
-        $dataVariable = Variable::select('id', 'name', 'value', 'level', 'key_variable')
-            ->where('model_id', $get_active_model_id->id)
-            ->get();
+        $dataVariable = DB::table('scenario_variables')
+            ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+            ->where('scenario_variables.scenario_id', $id)
+            ->where('scenario_variables.sfd_id', $sfd_id)
+            ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
 
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
@@ -495,25 +521,19 @@ class HankamController extends Controller
     public function updateVariableScenarioModel(Request $request, $id)
     {
         try {
-            $validatedScenario = $request->validate([
-                'name' => 'required|string|max:255',
-                'desc' => 'required|string',
-                'sfd_id' => 'required|exists:sfd,id',
-                'timestep' => 'required|integer',
-            ]);
-            $model_id = DB::table('models')->where('is_active', 1)->first()->id;
 
-            $scenario = Scenario::findOrFail($id);
-            $scenario->update($validatedScenario);
+            // for each value, get the key as the variable id and the value as the variable value
+            $values = $request->input('values');
 
-            foreach ($request->input('values', []) as $variableId => $value) {
-                $variable = Variable::where('model_id', $model_id)->find($variableId);
-
-                if ($variable) {
-                    $variable->value = $value;
-                    $variable->save();
-                } else {
-                    return redirect()->back()->withErrors(['error' => 'Invalid variable ID: ' . $variableId]);
+            // for each value, get the key as the variable id and the value as the variable value
+            foreach ($values as $variable_id => $value) {
+                // update
+                try {
+                    DB::table('scenario_variables')
+                        ->where('id', $variable_id)
+                        ->update(['value' => $value]);
+                } catch (\Exception $e) {
+                    dd($e);
                 }
             }
 
@@ -602,5 +622,15 @@ class HankamController extends Controller
 
         // Redirect with a success message
         return redirect()->back()->with('success', 'Data imported successfully.');
+    }
+
+    public function simulationLog()
+    {
+        $data = [
+            'title' => 'Defence and Security | Simulation Log',
+            'head_title' => 'Log',
+            'breadcrumb_item' => 'Simulation',
+        ];
+        return view('hankam.simulation.log.index', $data);
     }
 }

@@ -23,6 +23,29 @@
             </ul>
             <a href="{{route('hankam.simulation.scenario-model.createScenario')}}" class="btn btn-primary"><i class="ti ti-square-plus"></i> Add Scenario</a>
         </div>
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <strong>Success!</strong> {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
+        <!-- Display error message -->
+        @if(Session::has('error'))
+            <div class="alert alert-danger">
+                {{ Session::get('error') }}
+            </div>
+        @endif
+
+        <!-- Display validation errors -->
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-sm-12">
@@ -56,6 +79,7 @@
                         <td>{{$scenario->timestep}}</td>
                         <td>{{$scenario->created_at}}</td>
                         <td>
+                          <button type='button' class="btn btn-sm btn-light-primary run-model"><i class="fas fa-light fa-play"></i></i> Run Model</button> 
                           <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
                           <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
                           <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
@@ -89,7 +113,10 @@
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
       <script>
       // [ Add Rows ]
-      var t = $('#add-row-table').DataTable();
+      var t = $('#add-row-table').DataTable(
+        // order by column 1
+        { order: [[1, 'desc']] }
+      );
       var counter = 1;
 
       $('#addRow').on('click', function () {
@@ -106,7 +133,10 @@
         $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" >');
       });
 
-      var table = $('#footer-search').DataTable();
+      var table = $('#footer-search').DataTable(
+        // order by column 1
+        { order: [[0, 'desc']] }
+      );
 
       // [ Apply the search ]
       table.columns().every(function () {
@@ -277,6 +307,74 @@
               Swal.fire({
                 title: 'Download Failed',
                 text: 'Scenario download failed',
+                icon: 'error',
+                timer: 2000,
+                timerProgressBar: true
+              })
+            })
+          }
+        })
+      });
+
+      // if button run model clicked show the sweet alert
+      $('.run-model').on('click', function(){
+        Swal.fire({
+          title: 'Run Model',
+          text: "Are you sure want to run this scenario?",
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, run it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // loading animation for static time 2 seconds
+            Swal.fire({
+              title: 'Running...',
+              html: 'Please wait while we run the scenario',
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading()
+              }
+            })
+            .then((result) => {
+              time.sleep(20)
+              // if success
+              if (result.dismiss === Swal.DismissReason.timer) {
+                Swal.fire({
+                  title: 'Run Success',
+                  text: 'Scenario has been run',
+                  icon: 'success',
+                  timer: 2000,
+                  timerProgressBar: true
+                })
+              }
+            })
+
+
+
+            // hit controller to run the scenario
+            $.ajax({
+              data: {
+                id: $(this).data('id')
+              },
+              url: '',
+              type: 'GET',
+              // wait until the download is finished time 2 seconds
+              success: function(response){
+                Swal.fire({
+                  title: 'Run Success',
+                  text: 'Scenario has been run',
+                  icon: 'success',
+                  timer: 5000,
+                  timerProgressBar: true
+                })
+              }
+              // if error
+            }).fail(function(){
+              Swal.fire({
+                title: 'Run Failed',
+                text: 'Scenario run failed',
                 icon: 'error',
                 timer: 2000,
                 timerProgressBar: true
