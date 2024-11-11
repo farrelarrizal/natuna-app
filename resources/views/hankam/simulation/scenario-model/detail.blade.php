@@ -26,16 +26,17 @@
         </ul>
     </div>
     <div class="col-sm-6">
-      <div class="form-group">
-          <label for="sfd_id" class="form-label">Selected SFD:</label>
-          <p class="form-control-plaintext">
-              @if($scenario && $scenario->sfd)
-                  {{ $scenario->sfd->name }}
-              @else
-                  <em>No SFD selected</em>
-              @endif
-          </p>
-      </div>
+        <div class="form-group">
+            <label for="sfd_id" class="form-label">Select SFD:</label>
+            <select name="sfd_id" id="sfd_id" class="form-control">
+                @foreach($sfds as $index => $sfd)
+                    <option value="{{ route('hankam.simulation.scenario-model.detailbysfd', ['scenario_id' => $scenario->id, 'sfd_id' => $sfd->id]) }}" {{ $sfd->id == $sfd_selected->id ? 'selected' : '' }}>
+                        {{ $sfd->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        
   </div>  
 </div>
 <div class="row">
@@ -62,29 +63,31 @@
     <div class="col-sm-12">
       <div class="card">
         <div class="card-header">
-          <h5>Variabel Details</h5>
+          <h5>Variabel Details of SFD: {{ $sfd_selected->name }}</h5>
       </div>
         <div class="card-body">
           <div class="form-group row">
               @foreach($dataVariable as $items)
-                  <div class="col-lg-6">
-                      @if($items->key_variable == 1)
-                          <label class="form-label">
-                              <span class="badge bg-light-primary" style="font-size: 14px;">
-                                  {{ $items->name }} ({{ $items->level }})
-                              </span>
-                          </label>
-                      @else
-                          <label class="form-label">
-                              {{ $items->name }}
-                              @if($items->level !== 'NULL')
-                                  ({{ $items->level }})
-                              @endif
-                          </label>
-                      @endif
-                      <p class="form-control-plaintext">{{ $items->value }}</p>
-                      <small class="form-text text-muted">Value of variable</small>
-                  </div>
+              <div class="col-lg-6 mb-3">
+                @if($items->key_variable == 1)
+                    <label class="form-label">
+                        <span class="badge bg-light-primary" style="font-size: 14px;">
+                            {{ $items->name }} ({{ $items->level }})
+                        </span>
+                    </label>
+                @else
+                    <label class="form-label">
+                        {{ $items->name }}
+                        @if($items->level !== 'NULL')
+                            ({{ $items->level }})
+                        @endif
+                    </label>
+                @endif
+                <textarea class="form-control" rows="3" disabled>{{ $items->value }}</textarea>
+                {{-- <small class="form-text text-muted">Value of variable</small> --}}
+            </div>
+            
+            
               @endforeach
           </div>
       </div>
@@ -113,8 +116,11 @@
                       data-slider-value="14"
                     >
                   </div> --}}
-                    <label class="col-form-label col-lg-3 col-sm-12">Final Time (Month):   {{ $scenario->timestep }}</label>
-                    <div class="col-lg-6 col-md-12 col-sm-12">
+                  <label class="col-form-label col-lg-3 col-sm-12">
+                    Final Time: {{ $scenario->final_time }} month
+                    ({{ intdiv($scenario->final_time, 12) }} year {{ $scenario->final_time % 12 }} month)
+                </label>
+                                    <div class="col-lg-6 col-md-12 col-sm-12">
 
                         {{-- <div class="row align-items-center">
                             <div class="col-4">
@@ -176,5 +182,14 @@
         });
     })();
 
+</script>
+<script>
+    document.getElementById('sfd_id').addEventListener('change', function() {
+        const selectedUrl = this.value;
+        console.log(selectedUrl);
+        if (selectedUrl) {
+            window.location.href = selectedUrl; // Redirects to the selected SFD's link
+        }
+    });
 </script>
 @endsection

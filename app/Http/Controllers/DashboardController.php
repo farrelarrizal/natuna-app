@@ -18,8 +18,16 @@ class DashboardController extends Controller
     }
     public function executiveSummary()
     {
+        $model_id = DB::table('models')
+            ->where('is_active', 1)
+            ->first()->id;
+
+        $scenario_id = DB::table('scenarios')
+            ->where('model_id', $model_id)
+            ->where('name', 'Base Model')
+            ->first()->id;
         # redirect to scenario id 28
-        return redirect()->route('dashboard.executive-summary-scenario', ['scenarioId' => 28]);
+        return redirect()->route('dashboard.executive-summary-scenario', ['scenarioId' => $scenario_id]);
     }
 
     //     $flag_first_var = false;
@@ -202,8 +210,7 @@ class DashboardController extends Controller
             ->first();
 
         $scenarios = DB::table('scenarios')
-            ->join('sfd', 'sfd.id', '=', 'scenarios.sfd_id')
-            ->join('models', 'models.id', '=', 'sfd.model_id')
+            ->join('models', 'models.id', '=', 'scenarios.model_id')
             ->where('models.is_active', 1)
             ->get(
                 "scenarios.*"
@@ -458,6 +465,10 @@ class DashboardController extends Controller
                 ->first()->solusi;
         endif;
 
+        $isBaseModelRun = DB::table('models')
+            ->where('is_active', 1)
+            ->first()->is_run;
+
 
         $data = [
             'title' => 'Dashboard | Executive Summary',
@@ -480,6 +491,7 @@ class DashboardController extends Controller
             'solution_third_var' => $solution_third_var,
             'solution_fourth_var' => $solution_fourth_var,
             'scenarioName' => $scenarioName,
+            'isBaseModelRun' => $isBaseModelRun
         ];
 
         return view('dashboard.executive-summary', $data);

@@ -1,0 +1,8 @@
+Activating virtual environment...
+Virtual environment activated.
+Traceback (most recent call last):
+  File "/Users/farrelarrizal/iCloud Drive (Archive)/Documents/Project/natuna-app/public/python/model-execute.py", line 410, in <module>
+    import pysd
+ModuleNotFoundError: No module named 'pysd'
+Deactivating virtual environment...
+Virtual environment deactivated.

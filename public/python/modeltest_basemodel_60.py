@@ -1,5 +1,5 @@
 """
-Python model 'scenario_ditoooooo.py'
+Python model 'modeltest_basemodel_60.py'
 Translated using PySD
 """
 
@@ -26,7 +26,7 @@ component = Component()
 
 _control_vars = {
     "initial_time": lambda: 1,
-    "final_time": lambda: 132,
+    "final_time": lambda: 60,
     "time_step": lambda: 1,
     "saveper": lambda: time_step(),
 }
@@ -408,7 +408,7 @@ def amount_of_natural_gas_discovered_in_the_block():
 )
 def oil_prices():
     """
-    RANDOM PINK NOISE(1.00093e+06, 221865, 15, 1 ) RANDOM NORMAL(360000 , 1.4e+06 , 1.00093e+06 , 221865, 1)
+    RANDOM PINK NOISE(1.00093e+06, 221865, 15, 1 )RANDOM NORMAL(360000 , 1.4e+06 , 1.00093e+06 , 221865, 1)
     """
     return stats.truncnorm.rvs(
         (360000 - 1000930.0) / 221865,
