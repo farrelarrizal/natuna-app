@@ -205,12 +205,12 @@ class ApiDataController extends Controller
         $scenario_name = str_replace(' ', '', strtolower($scenario->name));
 
         // Create the final scenario filename
-        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->timestep . '.mdl';
+        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->final_time . '.mdl';
 
         // Build the shell command to generate the model
         $command = './run_model_export.sh -f ' . escapeshellarg(storage_path('app/' . $base_model->pathfile))
             . ' -e ' . escapeshellarg(storage_path('app/scenarioModels/' . $scenario_filename))
-            . ' -t ' . intval($scenario->timestep)
+            . ' -t ' . intval($scenario->final_time)
             . ' -s ' . intval($scenario->id);
 
         // Execute the shell command
@@ -274,6 +274,7 @@ class ApiDataController extends Controller
 
         return response()->json($formattedResults);
     }
+    
     public function getSfdImagePath($id)
     {
         $sfd = DB::table('sfd')->where('id', $id)->first();
@@ -284,4 +285,25 @@ class ApiDataController extends Controller
 
         return response()->json(['imagePath' => null]);
     }
+
+    public function runScenario($scenario_id) {
+        // Retrieve scenario and related model details
+        $scenario = Scenario::find($scenario_id);
+        
+        // Define the model path using the export_path column from the scenario
+        $modelPath = storage_path('app/' . $scenario->export_path);
+        // return $modelPath;
+        
+        // Execute shell command with the provided model path and parameter (e.g., 12)
+        $command = './run_model_convert_execute.sh ' . escapeshellarg($modelPath) . ' ' . $scenario->id;
+        // return $command;
+        shell_exec($command . ' 2>&1');
+    
+        // Log the command for debugging purposes
+        Log::info('Shell command executed: ' . $command);
+    
+        // Return a simple success message as JSON
+        return response()->json(['status' => 'Command executed successfully'], 200);
+    }
+    
 }

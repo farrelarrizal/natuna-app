@@ -59,44 +59,49 @@ def load_model(file_name, model_id):
     with open(file_name, 'r', encoding='utf-8') as file:
         # Read the content of the file
         mdl_content = file.read()
-    
-    # Process content to isolate variables and sanitize backslashes
-    mdl_content = mdl_content.split('********************************************************')[0].replace('{UTF-8}', '\n').replace('\n', '').replace('\t', '')
-    mdl_content = mdl_content.replace('\\', '')  # Remove unintended backslashes
-    
-    # Split content to separate variables
+    # Split the content of the file by the newline character
+
+
+    mdl_content = mdl_content.split('********************************************************')[0].replace('{UTF-8}', '\n').replace('\n','').replace('\t', '')
     variables = mdl_content.split('|')
     
     result = []
     for item in variables[:-1]:
         result.append(item.split('\t'))
         
+    
     final = []
     for item in result:
         item = item[0]
         temp = {}
         try:
-            temp_list = item.split('~')
+            # print(item)
+            temp_list = item.split('~')        
+            # print(temp_list)
             
-            # Extract variable components: name, value, level, and unit
-            temp['name'] = temp_list[0].split('=')[0].strip()
-            temp['value'] = '='.join(temp_list[0].split('=')[1:]).strip().replace('\\', '')  # Remove unintended backslashes in values
-            temp['level'] = temp_list[-2].strip() if len(temp_list) > 1 else 'NULL'
-            temp['unit'] = temp_list[-1].strip() if len(temp_list) > 2 else 'NULL'
+            # temp_list = temp_list[1].split('~')
+            temp['name'] = temp_list[0].split('=')[0]
+            # print(len(temp_list[0].split('=')[0]))
+            temp['value'] = '='.join(temp_list[0].split('=')[1:]).strip()
+            temp['level'] = temp_list[-2]
+            temp['unit'] = temp_list[-1]
+            
+            # temp_list = temp_list[0].split('=')[0]
             
         except Exception as e:
-            print(f"Error processing variable: {str(e)} - Item: {item}")
+            print('error')
+            print(str(e))
+            print(item)
             break
         final.append(temp)
     
-    # Convert result to a DataFrame
-    df = pd.DataFrame(final)
+    df = pd.read_json(json.dumps(final))
     df = df.fillna('NULL')
     df = df.replace('', 'NULL')
     df['model_id'] = model_id
     
     return df
-
+        
 
 def insert_variables(df):
     values = []
@@ -336,6 +341,56 @@ def run_and_insert(model_id, model_vensim):
         send_notif(f"Error: {str(e)}")
     finally:
         conn.close()
+        
+def run_and_insert_scenario_data(scenario_id, model_vensim):
+    conn = connect_db()
+    try:
+        # Run the model and convert the result to a dictionary
+        res = model_vensim.run().to_dict()
+        
+        # get active model
+        query = f"SELECT model_id FROM scenarios WHERE id = {scenario_id}"
+        model_id = read_query(query, conn)[0][0]
+        
+        
+        # Get the variable IDs from the database
+        variable_ids = dict(get_variable_id(model_id))
+        df_variable = pd.DataFrame(variable_ids.items(), columns=['id', 'name'])
+        
+        # Prepare the insert values for each node point (time step) based on db variables
+        values = []
+        for var_name in df_variable['name'].values:
+            if var_name in res:
+                variable_id = df_variable[df_variable['name'] == var_name]['id'].values[0]
+                
+                # Iterate over node points in the result
+                for node_point, value in res[var_name].items():
+                    # Format float value to limit precision
+                    formatted_value = f"{value:.4f}" if isinstance(value, float) else value
+                    values.append(f"({variable_id}, {scenario_id}, {node_point}, {formatted_value})")
+            else:
+                send_notif(f"Variable '{var_name}' not found in model results.")
+        
+        # Send sample values to check
+        send_notif(f"Sample values: {values[:2]}")
+        
+        # Insert the scenario data with node points, ensuring the query isn’t too long
+        if values:
+            max_insert_size = 1000  # Insert in batches if too long
+            for i in range(0, len(values), max_insert_size):
+                batch_values = values[i:i + max_insert_size]
+                query = "INSERT INTO scenario_data (variable_id, scenario_id, node_point, value) VALUES " + ", ".join(batch_values)
+                send_notif(f"query (batch {i // max_insert_size + 1}): {query[:500]}...")  # Log part of the query for review
+                res = execute_query(query, conn)
+                if res != True:
+                    print(res)
+        else:
+            send_notif("No data to insert.")
+    except Exception as e:
+        print(str(e))
+        send_notif(f"Error: {str(e)}")
+    finally:
+        conn.close()
 
 
 
@@ -359,12 +414,12 @@ if __name__ == '__main__':
 
     # Define optional arguments with flags
     parser.add_argument('-f', '--file_name', required=True, help='Model File Name')
-    parser.add_argument('-m', '--model_id', required=True, help='Model ID')
+    parser.add_argument('-m', '--scenario_id', required=True, help='Scenario ID')
 
     args = parser.parse_args()
 
     file_name = args.file_name
-    model_id = args.model_id
+    scenario_id = args.scenario_id
     
     # FLOW:
     # 1. Load the model file (variables)
@@ -377,33 +432,10 @@ if __name__ == '__main__':
     # 8. Store the SFD Variabl`es in the database
     
     try:
-        model = load_model(file_name, model_id)
-        send_notif(f"Model {model_id} is being loaded")
-        insert_variables(model)
-        print('Model Variables Loaded')
-        
-        # Register SFD  
-        sfds = get_sfd_name(file_name)
-        insert_sfd_name(sfds, model_id)
-        
-        # Load SFD Variables
-        sfd_variables = get_sfd(file_name, model_id)
-        
-        insert_sfd_variables(sfd_variables)
-    
-        # get the final_time
-        model_vensim = pysd.read_vensim(file_name)
-        final_time = model_vensim.components.final_time()
-        
-        # insert final time
-        insert_final_time(model_id, final_time)
-        
-        # running the model and insert the scenario data of base model
-        run_and_insert(model_id, model_vensim)
-        
-        # send notification
-        send_notif(f"Model {model_id} successfully loaded")
+        model = pysd.read_vensim(file_name)
+        run_and_insert_scenario_data(scenario_id, model)
+        send_notif(f"Model with scenario id {scenario_id} successfully run and inserted to the database")
     except Exception as e:
-        send_notif(f"Error while loading model {model_id}. ERROR: {str(e)}")
+        send_notif(f"Error while loading model. ERROR: {str(e)}")
     
     

@@ -73,15 +73,6 @@
             <form action="{{route('hankam.simulation.scenario-model.storeScenario')}}" method="post">
                 @csrf
                 <div class="row">
-                  <div class="col-md-12 mb-3">
-                    <label class="form-label">Model (Stock Flow Diagram)</label>
-                    <select name="sfd_id" id="" class="form-select">
-                        <option selected disabled>Select SFD</option>
-                            @foreach ($rowSfd as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>  
-                            @endforeach
-                      </select>
-                  </div>
                   <div class="col-lg-12 mb-3">
                     <label class="form-label">Scenario Name</label>
                     <input class="form-control" type="text" name="name" id="">

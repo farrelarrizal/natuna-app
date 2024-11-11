@@ -1,5 +1,5 @@
 """
-Python model 'scenario_ditoooooo.py'
+Python model 'modeltest_mostlikelyscenario_132 (12)_resave.py'
 Translated using PySD
 """
 
@@ -178,13 +178,13 @@ def economic_approach_with_china():
 
 @component.add(
     name="Defense Capability",
-    units="Percentage",
+    units="1",
     comp_type="Auxiliary",
     comp_subtype="Normal",
-    depends_on={"time": 1, "global_defense_partnership": 1},
+    depends_on={"time": 1},
 )
 def defense_capability():
-    return (np.random.uniform(2, 3, size=()) + global_defense_partnership()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
@@ -257,17 +257,15 @@ def nontax_indonesia_state_income():
         "support_capabilities": 1,
         "intelligence_ability": 1,
         "regional_empowerment_capabilities": 1,
-        "national_defense_and_security_infrastructure": 1,
     },
 )
 def naval_capabilities():
     return (
-        defense_capability() * 0.25
-        + diplomacy_ability() * 0.25
+        defense_capability() * 0.3
+        + diplomacy_ability() * 0.3
         + support_capabilities() * 0.1
-        + intelligence_ability() * 0.1
-        + regional_empowerment_capabilities() * 0.1
-        + national_defense_and_security_infrastructure() * 0.2
+        + intelligence_ability() * 0.15
+        + regional_empowerment_capabilities() * 0.15
     )
 
 
@@ -408,7 +406,7 @@ def amount_of_natural_gas_discovered_in_the_block():
 )
 def oil_prices():
     """
-    RANDOM PINK NOISE(1.00093e+06, 221865, 15, 1 ) RANDOM NORMAL(360000 , 1.4e+06 , 1.00093e+06 , 221865, 1)
+    RANDOM PINK NOISE(1.00093e+06, 221865, 15, 1 )RANDOM NORMAL(360000 , 1.4e+06 , 1.00093e+06 , 221865, 1)
     """
     return stats.truncnorm.rvs(
         (360000 - 1000930.0) / 221865,
@@ -1803,13 +1801,12 @@ def defense_score():
 
 @component.add(
     name="Foreign Policy",
-    units="Percentage",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def foreign_policy():
-    return np.random.uniform(1, 3, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
@@ -1836,18 +1833,16 @@ def combined_deploy():
 
 @component.add(
     name="Multilateral Power",
-    units="Percentage",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def multilateral_power():
-    return np.random.uniform(3, 4, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
     name="Diplomacy Ability",
-    units="Percentage",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"diplomatic_network": 1, "foreign_policy": 1, "multilateral_power": 1},
@@ -1860,13 +1855,13 @@ def diplomacy_ability():
 
 @component.add(
     name="Diplomatic Network",
-    units="Percentage",
+    units="1",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def diplomatic_network():
-    return np.random.uniform(1, 3, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
@@ -1972,13 +1967,12 @@ def manipulation_signal_used_severity():
 
 @component.add(
     name="Support Capabilities",
-    units="Percentage",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def support_capabilities():
-    return np.random.uniform(3, 4, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
@@ -2082,13 +2076,12 @@ def misuses_of_ais_and_positioning_data_severity():
 
 @component.add(
     name="Regional Empowerment Capabilities",
-    units="Percentage",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def regional_empowerment_capabilities():
-    return np.random.uniform(3, 4, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
@@ -2159,13 +2152,13 @@ def illegal_fishing_severity():
 
 @component.add(
     name="Intelligence Ability",
-    units="Percentage",
+    units="1",
     comp_type="Auxiliary",
     comp_subtype="Normal",
     depends_on={"time": 1},
 )
 def intelligence_ability():
-    return np.random.uniform(3, 4, size=()) * 20
+    return np.random.uniform(1, 5, size=()) * 20
 
 
 @component.add(
