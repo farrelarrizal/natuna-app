@@ -108,266 +108,220 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="<?= asset('assets/js/plugins/jquery.dataTables.min.js') ?>"></script>
     <script src="<?= asset('assets/js/plugins/dataTables.bootstrap5.min.js') ?>"></script>
-      <script>
-      // [ Add Rows ]
-      var t = $('#add-row-table').DataTable(
-        // order by column 1
-        { order: [[1, 'desc']] }
-      );
-      var counter = 1;
+    <script>
+        // [ Add Rows ]
+        var addRowTable = $('#add-row-table').DataTable({ order: [[1, 'desc']] });
+        var counter = 1;
 
-      $('#addRow').on('click', function () {
-        t.row.add([counter + '.1', counter + '.2', counter + '.3', counter + '.4', counter + '.5']).draw(false);
-
-        counter++;
-      });
-
-      $('#addRow').click();
-
-      // [ Individual Column Searching (Text Inputs) ]
-      $('#footer-search tfoot th').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" >');
-      });
-
-      var table = $('#footer-search').DataTable(
-        // order by column 1
-        { order: [[0, 'desc']] }
-      );
-
-      // [ Apply the search ]
-      table.columns().every(function () {
-        var that = this;
-
-        $('input', this.footer()).on('keyup change', function () {
-          if (that.search() !== this.value) {
-            that.search(this.value).draw();
-          }
+        $('#addRow').on('click', function () {
+            addRowTable.row.add([counter + '.1', counter + '.2', counter + '.3', counter + '.4', counter + '.5']).draw(false);
+            counter++;
         });
-      });
 
-      // [ Individual Column Searching (Select Inputs) ]
-      $('#footer-select').DataTable({
-        initComplete: function () {
-          this.api()
-            .columns()
-            .every(function () {
-              var column = this;
-              var select = $('<select class="form-control form-control-sm"><option value=""></option></select>')
-                .appendTo($(column.footer()).empty())
-                .on('change', function () {
-                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
+        $('#addRow').click();
 
-                  column.search(val ? '^' + val + '$' : '', true, false).draw();
-                });
+        // [ Individual Column Searching (Text Inputs) ]
+        $('#footer-search tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control" placeholder="Search ' + title + '" >');
+        });
 
-              column
-                .data()
-                .unique()
-                .sort()
-                .each(function (d, j) {
-                  select.append('<option value="' + d + '">' + d + '</option>');
-                });
+        var footerSearchTable = $('#footer-search').DataTable({ order: [[0, 'desc']] });
+
+        footerSearchTable.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
             });
+        });
+
+        // [ Individual Column Searching (Select Inputs) ]
+        $('#footer-select').DataTable({
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var column = this;
+                        var select = $('<select class="form-control form-control-sm"><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column.data().unique().sort().each(function (d) {
+                            select.append('<option value="' + d + '">' + d + '</option>');
+                        });
+                    });
+            }
+        });
+
+        var rowSelectTable = $('#row-select').DataTable();
+
+        $('#row-select tbody').on('click', 'tr', function () {
+            $(this).toggleClass('selected');
+        });
+
+        var rowDeleteTable = $('#row-delete').DataTable();
+
+        $('#row-delete tbody').on('click', 'tr', function () {
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+            } else {
+                rowDeleteTable.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
+
+        $('#row-delete-btn').on('click', function () {
+            rowDeleteTable.row('.selected').remove().draw(false);
+        });
+
+        function format(d) {
+            return (
+                '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr><td>Full name:</td><td>' + d.name + '</td></tr>' +
+                '<tr><td>Extension number:</td><td>' + d.extn + '</td></tr>' +
+                '<tr><td>Extra info:</td><td>And any further details here (images etc)...</td></tr>' +
+                '</table>'
+            );
         }
-      });
-      var srow = $('#row-select').DataTable();
 
-      $('#row-select tbody').on('click', 'tr', function () {
-        $(this).toggleClass('selected');
-      });
+        var formInputTable = $('#form-input-table').DataTable();
 
-      var drow = $('#row-delete').DataTable();
+        $('#form-input-btn').on('click', function () {
+            var data = formInputTable.$('input, select').serialize();
+            alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
+            return false;
+        });
 
-      $('#row-delete tbody').on('click', 'tr', function () {
-        if ($(this).hasClass('selected')) {
-          $(this).removeClass('selected');
-        } else {
-          drow.$('tr.selected').removeClass('selected');
-          $(this).addClass('selected');
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+            var column = footerSearchTable.column($(this).attr('data-column'));
+            column.visible(!column.visible());
+        });
+
+        function filterGlobal() {
+            $('#search-api').DataTable().search(
+                $('#global_filter').val(),
+                $('#global_regex').prop('checked'),
+                $('#global_smart').prop('checked')
+            ).draw();
         }
-      });
 
-      $('#row-delete-btn').on('click', function () {
-        drow.row('.selected').remove().draw(!1);
-      });
+        function filterColumn(i) {
+            $('#search-api').DataTable().column(i).search(
+                $('#col' + i + '_filter').val(),
+                $('#col' + i + '_regex').prop('checked'),
+                $('#col' + i + '_smart').prop('checked')
+            ).draw();
+        }
 
-      function format(d) {
-        return (
-          '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-          '<tr>' +
-          '<td>Full name:</td>' +
-          '<td>' +
-          d.name +
-          '</td>' +
-          '</tr>' +
-          '<tr>' +
-          '<td>Extension number:</td>' +
-          '<td>' +
-          d.extn +
-          '</td>' +
-          '</tr>' +
-          '<tr>' +
-          '<td>Extra info:</td>' +
-          '<td>And any further details here (images etc)...</td>' +
-          '</tr>' +
-          '</table>'
-        );
-      }
+        $('#search-api').DataTable();
 
-      // [ Form input ]
-      var table = $('#form-input-table').DataTable();
+        $('input.global_filter').on('keyup click', function () {
+            filterGlobal();
+        });
 
-      $('#form-input-btn').on('click', function () {
-        var data = table.$('input, select').serialize();
-        alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
-        return false;
-      });
+        $('input.column_filter').on('keyup click', function () {
+            filterColumn($(this).parents('tr').attr('data-column'));
+        });
 
-      $('a.toggle-vis').on('click', function (e) {
-        e.preventDefault();
-
-        // Get the column API object
-        var column = sh.column($(this).attr('data-column'));
-
-        // Toggle the visibility
-        column.visible(!column.visible());
-      });
-
-      // [ Search API ]
-      function filterGlobal() {
-        $('#search-api')
-          .DataTable()
-          .search($('#global_filter').val(), $('#global_regex').prop('checked'), $('#global_smart').prop('checked'))
-          .draw();
-      }
-
-      function filterColumn(i) {
-        $('#search-api')
-          .DataTable()
-          .column(i)
-          .search($('#col' + i + '_filter').val(), $('#col' + i + '_regex').prop('checked'), $('#col' + i + '_smart').prop('checked'))
-          .draw();
-      }
-
-      $('#search-api').DataTable();
-
-      $('input.global_filter').on('keyup click', function () {
-        filterGlobal();
-      });
-
-      $('input.column_filter').on('keyup click', function () {
-        filterColumn($(this).parents('tr').attr('data-column'));
-      });
-
-      // if button download clicked show the sweet alert
-      $('.download').on('click', function(){
-        Swal.fire({
-          title: 'Download Scenario',
-          text: "Are you sure want to download this scenario?",
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, download it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // loading animation
+        $('.download').on('click', function () {
             Swal.fire({
-              title: 'Downloading...',
-              html: 'Please wait while we download the scenario',
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading()
-              }
-            })
+                title: 'Download Scenario',
+                text: "Are you sure want to download this scenario?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, download it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Downloading...',
+                        html: 'Please wait while we download the scenario',
+                        timerProgressBar: true,
+                        didOpen: () => Swal.showLoading()
+                    });
 
-            // hit controller to download the scenario
-            $.ajax({
-              data: {
-                id: $(this).data('id')
-              },
-              url: '{{route('api.scenario-model.download', ':id')}}'.replace(':id', $(this).data('id')),
-              type: 'GET',
-              // wait until the download is finished
-              success: function(response){
-                Swal.fire({
-                  title: 'Download Success',
-                  text: 'Scenario has been downloaded',
-                  icon: 'success',
-                  timer: 2000,
-                  timerProgressBar: true
-                })
-              }
-              // if error
-            }).fail(function(){
-              Swal.fire({
-                title: 'Download Failed',
-                text: 'Scenario download failed',
-                icon: 'error',
-                timer: 2000,
-                timerProgressBar: true
-              })
-            })
-          }
-        })
-      });
+                    $.ajax({
+                        data: { id: $(this).data('id') },
+                        url: '{{route('api.scenario-model.download', ':id')}}'.replace(':id', $(this).data('id')),
+                        type: 'GET',
+                        success: function (response) {
+                            Swal.fire({
+                                title: 'Download Success',
+                                text: 'Scenario has been downloaded',
+                                icon: 'success',
+                                timer: 2000,
+                                timerProgressBar: true
+                            });
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Download Failed',
+                                text: 'Scenario download failed',
+                                icon: 'error',
+                                timer: 2000,
+                                timerProgressBar: true
+                            });
+                        }
+                    });
+                }
+            });
+        });
 
-      // if button run model clicked show the sweet alert
-      // If button run model clicked, show the SweetAlert
-      $('.run-model').on('click', function() {
-      const scenarioId = $(this).data('id'); // Get the scenario ID from data-id attribute
-      Swal.fire({
-        title: 'Run Model',
-        text: "Are you sure you want to run this scenario?",
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, run it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Show loading animation while waiting for response
-          Swal.fire({
-            title: 'Please wait',
-            html: 'We are simulating your model...',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            willOpen: () => {
-              Swal.showLoading()
-            }
-          });
+        $('.run-model').on('click', function () {
+            const scenarioId = $(this).data('id');
+            Swal.fire({
+                title: 'Run Model',
+                text: "Are you sure you want to run this scenario?",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, run it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Please wait',
+                        html: 'We are simulating your model...<br><b>This may take a few minutes.</b>',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => Swal.showLoading()
+                    });
 
-          // Hit controller to run the scenario
-          $.ajax({
-            url: `http://localhost:8000/api/run-simulation/${scenarioId}`, // Use scenarioId in URL
-            type: 'GET',
-            success: function(response) {
-              // Close the loading dialog and show success message
-              Swal.close();
-              Swal.fire({
-                title: 'Run Success',
-                text: 'Scenario has been run successfully',
-                icon: 'success',
-                timer: 2000,
-                timerProgressBar: true
-              });
-            },
-            error: function() {
-              // Close the loading dialog and show error message
-              Swal.close();
-              Swal.fire({
-                title: 'Run Failed',
-                text: 'Scenario run failed',
-                icon: 'error',
-                timer: 2000,
-                timerProgressBar: true
-              });
-            }
-          });
-        }
-      });
-      });
-
+                    $.ajax({
+                        url: `{{ route('api.scenario-model.run', ':id') }}`.replace(':id', scenarioId),
+                        type: 'GET',
+                        timeout: 0,
+                        success: function (response) {
+                            Swal.fire({
+                                title: 'Run Success',
+                                text: 'Scenario has been run successfully.',
+                                icon: 'success',
+                                timer: 2000,
+                                timerProgressBar: true
+                            });
+                        },
+                        error: function () {
+                            Swal.fire({
+                                title: 'Run Failed',
+                                text: 'Scenario run failed.',
+                                icon: 'error',
+                                timer: 2000,
+                                timerProgressBar: true
+                            });
+                        },
+                        complete: function () {
+                            Swal.close();
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endsection

@@ -11,17 +11,17 @@ SOURCE_FILE=$1
 MODEL_ID=$2
 
 # Activate the virtual environment
-echo "Activating virtual environment..."
-source ../venv/bin/activate
-echo "Virtual environment activated."
+# echo "Activating virtual environment..."
+# source ../venv/bin/activate
+# echo "Virtual environment activated."
 
 # show pwd
 cd python
 
 # Run the Python script with the specified arguments
-python model-convert.py -f "$SOURCE_FILE" -m "$MODEL_ID"
+python3 model-convert.py -f "$SOURCE_FILE" -m "$MODEL_ID"
 
 # Deactivate the virtual environment
 echo "Deactivating virtual environment..."
-deactivate
+# deactivate
 echo "Virtual environment deactivated."

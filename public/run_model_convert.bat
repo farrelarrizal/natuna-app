@@ -19,7 +19,7 @@ REM Change to the python directory
 cd python
 
 REM Run the Python script with the specified arguments
-python model-convert.py -f "%SOURCE_FILE%" -m "%MODEL_ID%"
+python3 model-convert.py -f "%SOURCE_FILE%" -m "%MODEL_ID%"
 
 REM Deactivate the virtual environment
 echo Deactivating virtual environment...
