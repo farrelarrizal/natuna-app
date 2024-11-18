@@ -380,7 +380,7 @@ class DashboardController extends Controller
         } else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
             $all_indicator = 'MEDIUM';
         } else {
-            $all_indicator = 'UNKNOWN';
+            $all_indicator = 'MEDIUM';
         }
 
         $ancaman_id = DB::table('ancaman')
@@ -491,8 +491,10 @@ class DashboardController extends Controller
             'solution_third_var' => $solution_third_var,
             'solution_fourth_var' => $solution_fourth_var,
             'scenarioName' => $scenarioName,
-            'isBaseModelRun' => $isBaseModelRun
+            'isBaseModelRun' => $isBaseModelRun,
+            'show_alert' => $forecast_first_var == 0 ? false : true,
         ];
+        // dd($data);
 
         return view('dashboard.executive-summary', $data);
     }
