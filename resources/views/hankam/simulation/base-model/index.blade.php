@@ -61,7 +61,7 @@
 
         </div>
     </div>
-    <div class="col-md-12">
+    {{-- <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
@@ -95,37 +95,36 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="mb-0">Stock Flow Diagram</h5>
-            <div class="ms-auto">
-                <div class="row row-cols-md-auto g-1 align-items-center">
-                    <div class="col-6">
-                        <select id="sfddropdown" class="form-control">
-                            <option value="0">Select SFD</option>
-                            @foreach($sfdList as $sfd)
-                                <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
-                            @endforeach
-                        </select>
+    </div> --}}
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="mb-0">Sub Models</h5>
+                <div class="ms-auto">
+                    <div class="row row-cols-md-auto g-1 align-items-center">
+                        <div class="col-6">
+                            <select id="sfddropdown" class="form-control">
+                                <option value="0">Select SFD</option>
+                                @foreach($sfdList as $sfd)
+                                    <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-primary" id="uploadBtn2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                Upload SFD Image
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <button class="btn btn-primary" id="uploadBtn2" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                            Upload SFD Image
-                        </button>
-                    </div>
+                </div>
+            </div>
+            <div class="card-body">          
+                <div class="row mt-3">
+                    <img id="sfd-image" src="{{ asset('assets/imageSfd/default.jpg') }}" alt="SFD Image" class="img-fluid" width="100%">
                 </div>
             </div>
         </div>
     </div>
-    
-        <div class="card-body">          
-            <div class="row mt-3">
-                <img id="sfd-image" src="{{ asset('assets/imageSfd/default.jpg') }}" alt="SFD Image" class="img-fluid" width="100%">
-            </div>
-        </div>
-    </div>
-    
     <!-- Upload Modal -->
 <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -196,15 +195,20 @@
                 <h5>Model Variables</h5>
                 <!-- SFD Dropdown -->
                 <div class="col-auto">
-                <select id="sfd-dropdown" class="form-control">
-                    <option value="0">Select SFD</option>
-                    @foreach($sfdList as $sfd)
-                        <option value="{{ $sfd->id }}">{{ $sfd->name }}</option>
-                    @endforeach
-                </select>
+                    <select id="sfd-dropdown" class="form-control">
+                        @if(count($sfdList) > 0)
+                            @foreach($sfdList as $index => $sfd)
+                                <option value="{{ $sfd->id }}" {{ $index === 0 ? 'selected' : '' }}>
+                                    {{ $sfd->name }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="0">No SFD Available</option>
+                        @endif
+                    </select>
                 </div> 
-            </div>
-            <div class="card-body p-0 income-scroll">
+            </div>            
+            <div class="card-body p-0 income-scroll mt-4">
                 <div id="variables-container">
                 </div>
             </div>
@@ -252,7 +256,7 @@
     });
 </script>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $('#sfd-dropdown').trigger('change');
 
@@ -308,7 +312,79 @@
             });
         });
     });
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        // Trigger the 'change' event on page load to fetch data for the first selected value
+        const initialValue = $('#sfd-dropdown').val(); // Get the initial selected value
+        if (initialValue) {
+            fetchSfdVariables(initialValue); // Fetch and display the variables for the initial selection
+        }
+
+        // Add a change event listener for the dropdown
+        $('#sfd-dropdown').on('change', function() {
+            var sfdId = $(this).val(); // Get the selected value
+
+            if (sfdId) {
+                fetchSfdVariables(sfdId); // Fetch and display the variables for the new selection
+            } else {
+                $('#variables-container').html(''); // Clear the container if no valid value is selected
+            }
+        });
+
+        // Function to fetch SFD variables via AJAX
+        function fetchSfdVariables(sfdId) {
+            $('#variables-container').html('Loading...'); // Show loading state
+
+            $.ajax({
+                url: '/hankam/simulation/base-model/get-sfd-variables/' + sfdId, 
+                type: 'GET',
+                success: function(response) {
+                    if (response.variables && response.variables.length) {
+                        var variablesHtml = '<div class="row">'; 
+
+                        response.variables.forEach(function(item, index) {
+                            if (index % 2 === 0 && index !== 0) {
+                                variablesHtml += '</div><div class="row">';
+                            }
+
+                            variablesHtml += '<div class="col-md-6 px-4">';
+                            variablesHtml += '<div class="flex-grow-1 mx-2">';
+                            variablesHtml += '<div class="div d-flex">';
+                            variablesHtml += '<p class="text-muted mb-1">' + item.name + '</p>';
+
+                            if (item.key_variable == 1) {
+                                variablesHtml += '<span class="badge bg-light-primary mx-2">Key Variable</span>';
+                            }
+
+                            variablesHtml += '</div>';
+                            variablesHtml += '<p class="mb-0">' + item.value;
+
+                            if (item.level !== 'NULL') {
+                                variablesHtml += '<span class="mx-2">(' + item.level + ')</span>';
+                            }
+
+                            variablesHtml += '</p>';
+                            variablesHtml += '</div>';
+                            variablesHtml += '<hr class="border border-primary-subtle" />';
+                            variablesHtml += '</div>';
+                        });
+
+                        variablesHtml += '</div>';
+                        $('#variables-container').html(variablesHtml); // Update the container with variables
+                    } else {
+                        $('#variables-container').html('<p>No variables found.</p>'); // Handle empty response
+                    }
+                },
+                error: function() {
+                    $('#variables-container').html('<p>Error fetching data. Please try again.</p>'); // Handle errors
+                }
+            });
+        }
+    });
 </script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
