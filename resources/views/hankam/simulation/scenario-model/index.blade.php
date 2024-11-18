@@ -275,53 +275,68 @@
         });
 
         $('.run-model').on('click', function () {
-            const scenarioId = $(this).data('id');
-            Swal.fire({
-                title: 'Run Model',
-                text: "Are you sure you want to run this scenario?",
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, run it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'Please wait',
-                        html: 'We are simulating your model...<br><b>This may take a few minutes.</b>',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        willOpen: () => Swal.showLoading()
-                    });
+          const scenarioId = $(this).data('id'); // Get the scenario ID from the data-id attribute
+          Swal.fire({
+              title: 'Run Model',
+              text: "Are you sure you want to run this scenario?",
+              icon: 'info',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, run it!'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Show loading animation
+                  Swal.fire({
+                      title: 'Please wait',
+                      html: 'We are simulating your model...<br><b>This may take a few minutes.</b>',
+                      allowOutsideClick: false,
+                      showConfirmButton: false,
+                      willOpen: () => Swal.showLoading()
+                  });
 
-                    $.ajax({
-                        url: `{{ route('api.scenario-model.run', ':id') }}`.replace(':id', scenarioId),
-                        type: 'GET',
-                        timeout: 0,
-                        success: function (response) {
-                            Swal.fire({
-                                title: 'Run Success',
-                                text: 'Scenario has been run successfully.',
-                                icon: 'success',
-                                timer: 2000,
-                                timerProgressBar: true
-                            });
-                        },
-                        error: function () {
-                            Swal.fire({
-                                title: 'Run Failed',
-                                text: 'Scenario run failed.',
-                                icon: 'error',
-                                timer: 2000,
-                                timerProgressBar: true
-                            });
-                        },
-                        complete: function () {
-                            Swal.close();
-                        }
-                    });
-                }
-            });
-        });
+                  // Hit the route to run the simulation
+                  $.ajax({
+                      url: `{{ route('api.run-simulation', ':scenario_id') }}`.replace(':scenario_id', scenarioId),
+                      type: 'GET',
+                      timeout: 0, // No timeout for long-running processes
+                      success: function (response) {
+                          // Handle success response
+                          if (response && response.success) {
+                              Swal.fire({
+                                  title: 'Run Success',
+                                  text: response.message || 'Scenario has been run successfully.',
+                                  icon: 'success',
+                                  timer: 2000,
+                                  timerProgressBar: true
+                              });
+                          } else {
+                              Swal.fire({
+                                  title: 'Run Failed',
+                                  text: response.message || 'Scenario run failed due to server-side issue.',
+                                  icon: 'error',
+                                  timer: 2000,
+                                  timerProgressBar: true
+                              });
+                          }
+                      },
+                      error: function (xhr, status, error) {
+                          // Handle errors
+                          Swal.fire({
+                              title: 'Run Failed',
+                              text: `Scenario run failed. Error: ${error || 'Unknown error occurred.'}`,
+                              icon: 'error',
+                              timer: 2000,
+                              timerProgressBar: true
+                          });
+                      },
+                      complete: function () {
+                          // Close the loading spinner
+                          Swal.close();
+                      }
+                  });
+              }
+          });
+      });
     </script>
 @endsection
