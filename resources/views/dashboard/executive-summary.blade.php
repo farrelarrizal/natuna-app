@@ -26,7 +26,7 @@
 
     <div class="row col-lg-12">
       <div class="row">
-        <h3>Actual North Natuna Indicator</h3>
+        <h3>Actual North Natuna</h3>
         @if($all_indicator == 'HIGH')
           <div class="alert alert-success d-flex align-items-center mt-2 mx-2" role="alert">
             <i class="fas fa-info-circle me-2"></i>
@@ -199,7 +199,7 @@
           <div class="row col-lg-12">
             <div class="row d-flex justify-content-between">
               <div class="col d-flex justify-content-between">
-                <h3>Forecast North Natuna Indicator</h3>
+                <h3>Scenario Projection North Natuna</h3>
                 <!-- SELECT LIST -->
                 <form id="myForm" action="" method="GET">
                   {{-- @csrf --}}
@@ -215,35 +215,42 @@
               </form>
               </div>
             </div>
-            @if($recommendation_id->klasifikasi == 'HIGH')
-            <div class="alert alert-success d-flex align-items-center mt-2 mx-2" role="alert">
-              <i class="fas fa-info-circle me-2"></i>
-              <div>Well Done! The forecast indicator is <strong>{{$recommendation_id->klasifikasi}}</strong>. Keep up the good work!</div>
-            </div>
-            @elseif($recommendation_id->klasifikasi == 'MEDIUM')
+            @if($show_alert)
+              @if($recommendation_id->klasifikasi == 'HIGH')
               <div class="alert alert-success d-flex align-items-center mt-2 mx-2" role="alert">
                 <i class="fas fa-info-circle me-2"></i>
-                <div>Well Done! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
+                <div>Well Done! The forecast indicator is <strong>{{$recommendation_id->klasifikasi}}</strong>. Keep up the good work!</div>
               </div>
-            @elseif($recommendation_id->klasifikasi == 'LOW')
+              @elseif($recommendation_id->klasifikasi == 'MEDIUM')
+                <div class="alert alert-success d-flex align-items-center mt-2 mx-2" role="alert">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <div>Well Done! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
+                </div>
+              @elseif($recommendation_id->klasifikasi == 'LOW')
+                <div class="alert alert-warning d-flex align-items-center mt-2 mx-2" role="alert">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <div>Warning! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
+                </div>
+              @elseif($recommendation_id->klasifikasi == 'DANGER')
+                <div class="alert alert-danger d-flex align-items-center mt-2 mx-2" role="alert">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <div>Danger! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
+                </div>
+              @elseif($recommendation_id->klasifikasi == 'VERY LOW')
+                <div class="alert alert-danger d-flex align-items-center mt-2 mx-2" role="alert">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <div>Danger! The forecast indicator is <strong>{{ $recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
+                </div>
+              @else
+                <div class="alert alert-info d-flex align-items-center mt-2 mx-2" role="alert">
+                  <i class="fas fa-info-circle me-2"></i>
+                  <div>There is no actual indicator</div>
+                </div>
+              @endif
+            @else
               <div class="alert alert-warning d-flex align-items-center mt-2 mx-2" role="alert">
                 <i class="fas fa-info-circle me-2"></i>
-                <div>Warning! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
-              </div>
-            @elseif($recommendation_id->klasifikasi == 'DANGER')
-              <div class="alert alert-danger d-flex align-items-center mt-2 mx-2" role="alert">
-                <i class="fas fa-info-circle me-2"></i>
-                <div>Danger! The forecast indicator is <strong>{{$recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
-              </div>
-            @elseif($recommendation_id->klasifikasi == 'VERY LOW')
-              <div class="alert alert-danger d-flex align-items-center mt-2 mx-2" role="alert">
-                <i class="fas fa-info-circle me-2"></i>
-                <div>Danger! The forecast indicator is <strong>{{ $recommendation_id->klasifikasi }}</strong>. Keep up the good work!</div>
-              </div>
-            @else
-              <div class="alert alert-info d-flex align-items-center mt-2 mx-2" role="alert">
-                <i class="fas fa-info-circle me-2"></i>
-                <div>There is no actual indicator</div>
+                <div>Please create a scenario to see the projection indicator</div>
               </div>
             @endif
             
