@@ -70,7 +70,7 @@
   </ul>
 </li>
 
-<li class="pc-item pc-caption">
+{{-- <li class="pc-item pc-caption">
   <label>Summary</label>
 </li>
 <li class="pc-item">
@@ -111,7 +111,7 @@
     </span>
     <span class="pc-mtext">Marine Resource</span>
   </a>
-</li>
+</li> --}}
 
 
 <li class="pc-item pc-caption">

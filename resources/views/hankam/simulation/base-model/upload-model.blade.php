@@ -48,11 +48,15 @@
                 <form action="{{ route('hankam.simulation.base-model.uploadModel') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Name
+                            <small class="text-danger">*Max 255 characters</small>
+                        </label>
                         <input type="text" name="name" id="name" class="form-control" placeholder="Name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="desc" class="form-label">Description</label>
+                        <label for="desc" class="form-label">Description
+                            <small class="text-danger">*Max 255 characters</small>
+                        </label>
                         <textarea name="desc" id="desc" class="form-control" placeholder="Description" required></textarea>
                     </div>
                     <div class="form-check mb-3">
@@ -62,11 +66,15 @@
                         </label>
                     </div>
                     <div class="fallback mb-3">
-                        <label for="file" class="form-label">Upload File</label>
+                        <label for="file" class="form-label">Upload Model File
+                            <small class="text-danger">*Only .mdl file is allowed</small>
+                        </label>
                         <input name="file" type="file" id="file" class="form-control" required />
                     </div>
                     <div class="fallback mb-3">
-                        <label for="image" class="form-label">Upload Image</label>
+                        <label for="image" class="form-label">Upload Image of CLD Model
+                            <small class="text-danger">*Only .jpg, .jpeg, .png is allowed</small>
+                        </label>
                         <input name="image" type="file" id="image" class="form-control" required />
                     </div>
                     <button type="submit" class="btn btn-primary mb-4">Upload Model and File</button>
