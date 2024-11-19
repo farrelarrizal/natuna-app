@@ -265,7 +265,7 @@
                         </div>
                       </div>
                       <div class="flex-grow-1 ms-3">
-                        <h6 class="mb-0">Defence and Security Score</h6>
+                        <h6 class="mb-0">North Natuna Defence and Security Score</h6>
                       </div>
                     </div>
                     <div class="bg-body p-1 rounded text-center">
