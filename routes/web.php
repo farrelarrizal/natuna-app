@@ -24,6 +24,12 @@ Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'loginPost'])->name('login.post');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+// panduan
+Route::get('panduan', function () {
+    # return url https://docs.google.com/document/d/17dK83qyuWlSESrX6qkaXrnt7VJW7Q-0WpM8ODo4nhqk/edit?usp=sharing
+    return redirect('https://docs.google.com/document/d/17dK83qyuWlSESrX6qkaXrnt7VJW7Q-0WpM8ODo4nhqk/edit?usp=sharing');
+})->name('panduan');
+
 // protected by auth middleware
 Route::middleware('auth')->group(function () {
     // dashboard
