@@ -61,7 +61,7 @@
       </svg>
     </span>
     <span class="pc-mtext">Threats</span>
-    <span class="pc-arrow"><i data-feather="chevron-right"></i></span>
+    <span class="pc-arrow"><detailScenarioModelSFDi data-feather="chevron-right"></detailScenarioModelSFDi></span>
   </a>
   <ul class="pc-submenu">
     <li class="pc-item"><a class="pc-link" href="{{ route('hankam.threats.military') }}">Military Threats</a></li>

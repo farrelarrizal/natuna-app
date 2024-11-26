@@ -575,32 +575,139 @@ class HankamController extends Controller
         return view('hankam.simulation.scenario-model.detail', $data);
     }
 
-    
-
-
-    public function editVariableScenarioModel($id)
+    public function editVariableScenarioModel($scenario_id)
     {
-        $scenario = Scenario::findOrFail($id);
-        $sfd_id = $scenario->sfd_id;
-        $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
+        // Retrieve the active model ID
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
 
+        // Fetch the scenario by its ID
+        $scenario = Scenario::findOrFail($scenario_id);
+
+        // Get the first SFD associated with the active model
+        $sfd = Sfd::where('model_id', $model_id)->first();
+        if (!$sfd) {
+            abort(404, 'No SFD found for the provided scenario.');
+        }
+
+        $sfd_id = $sfd->id;
+
+        // Retrieve all SFDs associated with the model for the dropdown
+        $list_sfd = Sfd::where('model_id', $model_id)->get();
+
+        // Retrieve variables for the selected scenario and SFD
         $dataVariable = DB::table('scenario_variables')
             ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
-            ->where('scenario_variables.scenario_id', $id)
+            ->where('scenario_variables.scenario_id', $scenario_id)
             ->where('scenario_variables.sfd_id', $sfd_id)
-            ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
+            ->get([
+                'scenario_variables.id',
+                'variables.name',
+                'scenario_variables.value',
+                'scenario_variables.level',
+                'scenario_variables.unit',
+                'variables.key_variable',
+            ]);
 
+        // Prepare data for the view
         $data = [
-            'title' => 'Defence and Security | Simulation Scenario Model',
+            'title' => 'Defense and Security | Simulation Scenario Model',
             'head_title' => 'Scenario Model',
             'breadcrumb_item' => 'Simulation',
-            'rowSfd' => $rowSfd,
             'scenario' => $scenario,
-            'dataVariable' => $dataVariable
+            'dataVariable' => $dataVariable,
+            'list_sfd' => $list_sfd,
+            'sfd_selected' => $sfd_id,
         ];
 
         return view('hankam.simulation.scenario-model.edit', $data);
     }
+
+
+    public function editVariableScenarioModelSFD($scenario_id, $sfd_id)
+    {
+        // Retrieve the scenario by its ID
+        $scenario = Scenario::findOrFail($scenario_id);
+
+        // Retrieve the active model ID
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+
+        // Retrieve the SFD by its ID
+        $sfd = DB::table('sfd')
+            ->where('id', $sfd_id)
+            ->first();
+
+        // If SFD is not found, throw an error
+        if (!$sfd) {
+            abort(404, 'SFD not found for the provided ID.');
+        }
+
+        // Retrieve variables for the selected scenario and SFD
+        $dataVariable = DB::table('scenario_variables')
+            ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+            ->where('scenario_variables.scenario_id', $scenario_id)
+            ->where('scenario_variables.sfd_id', $sfd_id)
+            ->get([
+                'scenario_variables.id',
+                'variables.name',
+                'scenario_variables.value',
+                'scenario_variables.level',
+                'scenario_variables.unit',
+                'variables.key_variable',
+            ]);
+
+        // Retrieve all SFDs associated with the model for the dropdown
+        $list_sfd = Sfd::where('model_id', $model_id)->get();
+
+        // Prepare data for the view
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model - Edit',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+            'scenario' => $scenario,
+            'dataVariable' => $dataVariable,
+            'list_sfd' => $list_sfd,
+            'sfd_selected' => $sfd,
+        ];
+
+        return view('hankam.simulation.scenario-model.edit', $data);
+    }
+
+
+
+
+
+    // public function editVariableScenarioModel($scenario_id, $sfd_id)
+    // {
+    //     $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+    //     $scenario = Scenario::findOrFail($id);
+
+    //     $sfd_id = $scenario->sfd_id;
+    //     $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
+    //     if ($sfd_id == null) {
+    //         $sfd_id = Sfd::where('model_id', $model_id)->first()->id;
+    //     }
+
+    //     $list_sfd = DB::table('sfd')->where('model_id', $model_id)->get();
+
+    //     $dataVariable = DB::table('scenario_variables')
+    //         ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+    //         ->where('scenario_variables.scenario_id', $id)
+    //         ->where('scenario_variables.sfd_id', $sfd_id)
+    //         ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
+
+    //     $data = [
+    //         'title' => 'Defence and Security | Simulation Scenario Model',
+    //         'head_title' => 'Scenario Model',
+    //         'breadcrumb_item' => 'Simulation',
+    //         'rowSfd' => $rowSfd,
+    //         'scenario' => $scenario,
+    //         'dataVariable' => $dataVariable,
+    //         'list_sfd' => $list_sfd,
+    //         'sfd_selected' => $sfd_id
+    //     ];
+
+    //     return view('hankam.simulation.scenario-model.edit', $data);
+    // }
 
     public function updateVariableScenarioModel(Request $request, $id)
     {
