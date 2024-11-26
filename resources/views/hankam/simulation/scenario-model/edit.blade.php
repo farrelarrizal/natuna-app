@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-lg-12 mb-3">
                             <label class="form-label">Final Time</label>
-                            <input class="form-control" type="number" name="timestep" value="{{ $scenario->timestep }}">
+                            <input class="form-control" type="number" name="timestep" value="{{ $scenario->final_time }}">
                         </div>
                         @foreach($dataVariable as $item)
                             <div class="col-lg-6">
@@ -107,12 +107,13 @@
     document.getElementById('sfdDropdown').addEventListener('change', function () {
         const selectedSfdId = this.value;
         const scenarioId = {{ $scenario->id }};
-        const url = `{{ route('hankam.simulation.scenario-model.edit-variable', ['scenario_id' => ':scenario', 'sfd_id' => ':sfd']) }}`
-            .replace(':scenario', scenarioId)
-            .replace(':sfd', selectedSfdId);
+        
+        // Construct the URL directly
+        const url = `/hankam/simulation/scenario-model/edit-variable/${scenarioId}/${selectedSfdId}`;
         
         // Redirect to the new route
         window.location.href = url;
     });
 </script>
+
 @endsection

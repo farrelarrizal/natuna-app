@@ -629,14 +629,14 @@ class HankamController extends Controller
         $scenario = Scenario::findOrFail($scenario_id);
 
         // Retrieve the active model ID
-        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        $model = DB::table('models')->where('is_active', 1)->first();
+        if (!$model) {
+            abort(404, 'Active model not found.');
+        }
+        $model_id = $model->id; // Access the `id` property explicitly
 
         // Retrieve the SFD by its ID
-        $sfd = DB::table('sfd')
-            ->where('id', $sfd_id)
-            ->first();
-
-        // If SFD is not found, throw an error
+        $sfd = DB::table('sfd')->where('id', $sfd_id)->first();
         if (!$sfd) {
             abort(404, 'SFD not found for the provided ID.');
         }
@@ -666,11 +666,12 @@ class HankamController extends Controller
             'scenario' => $scenario,
             'dataVariable' => $dataVariable,
             'list_sfd' => $list_sfd,
-            'sfd_selected' => $sfd,
+            'sfd_selected' => $sfd_id, // Pass only the SFD ID to avoid object conversion issues
         ];
 
         return view('hankam.simulation.scenario-model.edit', $data);
     }
+
 
 
 
