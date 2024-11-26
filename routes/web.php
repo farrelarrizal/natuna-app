@@ -71,7 +71,8 @@ Route::middleware('auth')->group(function () {
                 Route::post('storeScenario', [HankamController::class, 'storeScenario'])->name('storeScenario');
                 Route::get('detail/{id}',  [HankamController::class, 'detailScenarioModel'])->name('detail');
                 Route::get('detail/{scenario_id}/{sfd_id}',  [HankamController::class, 'detailScenarioModelSFD'])->name('detailbysfd');
-                Route::get('edit-variable/{id}', [HankamController::class, 'editVariableScenarioModel'])->name('edit-variable');
+                Route::get('edit-variable/{scenario_id}/{sfd_id}', [HankamController::class, 'editVariableScenarioModelSFD'])->name('editvariablebysfd');
+                Route::get('edit-variable/{scenario_id}', [HankamController::class, 'editVariableScenarioModel'])->name('edit-variable');
                 Route::put('update-variables/{id}', [HankamController::class, 'updateVariableScenarioModel'])->name('update-variables');
             });
 
