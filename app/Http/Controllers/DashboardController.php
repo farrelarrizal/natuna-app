@@ -327,7 +327,7 @@ class DashboardController extends Controller
         if ($forecast_first_var == null) {
             $forecast_first_var = 0;
         }
-
+        // dd($forecast_first_var, $forecast_second_var, $forecast_third_var, $forecast_fourth_var);
         if ($forecast_first_var < 50) {
             $flag_forecast_first_var = 'LOW';
         } elseif ($forecast_first_var >= 50 && $forecast_first_var < 70) {
@@ -393,6 +393,21 @@ class DashboardController extends Controller
             ->where('marine_resource', $flag_forecast_third_var)
             ->where('threat_severity', $flag_forecast_fourth_var)
             ->first();
+
+
+            // ->where('defence_severity', $flag_forecast_first_var)
+            // ->where('infra_defence_severity', $flag_forecast_second_var)
+            // ->where('marine_resource', $flag_forecast_third_var)
+            // ->where('threat_severity', $flag_forecast_fourth_var)
+            // ->select('id')
+            // ->get();
+        // dd($recommendationId, $flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var);
+
+        // if not recommendation, then get the first recommendation
+        if (!$recommendationId) {
+            $recommendationId = DB::table('recommendation')
+                ->first();
+        }
 
         // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var, $recommendationId);
 

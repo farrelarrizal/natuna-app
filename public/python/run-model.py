@@ -45,13 +45,14 @@ def read_model(path):
     print(final_data)
     
 def conn():
+    # Connect to the database
     connection = mysql.connector.connect(
-    host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
-    user="admin",
-    passwd="cujwiq-suqhu2-bycpuB",
-    database="web-app"
+        host="103.23.199.185",       # Your MySQL server IP
+        port=3306,                  # MySQL port
+        user="root",                # MySQL username
+        password="admin123",        # MySQL password
+        database="web-app-dev"      # Your database name
     )
-    
     return connection
 
 def check_connection():
