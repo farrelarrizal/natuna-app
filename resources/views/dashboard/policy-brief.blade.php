@@ -17,7 +17,7 @@
 
                 <!-- put image on the center of page put caption on the image -->
                 <div class="text-center">
-                    <img src="https://onecms-res.cloudinary.com/image/upload/s--v9dF0kmj--/f_auto,q_auto/v1/mediacorp/cna/image/2023/08/04/20230727-Natuna-Islands.png?itok=btL6CFLp" alt="policy-brief" class="img-fluid">
+                    <img src="https://onecms-res.cloudinary.com/image/upload/s--v9dF0kmj--/f_auto,q_auto/v1/mediacorp/cna/image/2023/08/04/20230727-Natuna-Islands.png?itok=btL6CFLp" alt="policy-brief" class="img-fluid" style="max-width: 50%">
                     <p class="text-center">Peta Konflik Laut China Selatan</p>
                 </div>
                 <br>

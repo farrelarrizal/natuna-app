@@ -364,7 +364,10 @@ class HankamController extends Controller
         ]);
 
         $file = $request->file('file');
-        $fileName = $file->hashName();
+
+        $fileName = time() . '.mdl';
+        
+        # store to storage/app/uploads
         $path = $file->storeAs('uploads', $fileName);
 
         $fileImage = $request->file('image');
@@ -382,10 +385,22 @@ class HankamController extends Controller
             'desc' => $request->desc,
             'pathfile' => $path,
             'image' => 'assets/imageModels/' . $imageName,
-            'is_active' => 1
+            'is_active' => 1,
+            'is_run' => 1
         ]);
 
         DB::table('models')->where('is_active', 1)->where('id', '!=', $new_id)->update(['is_active' => 0]);
+        
+        # create scenario as base_model
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+
+        $scenario_id = DB::table('scenarios')
+        ->insertGetId([
+            'model_id' => $model_id,
+            'name' => "Base Model",
+            'desc' => "Base Model",
+            'final_time' => 60, // change this to the final time of the model
+        ]);
 
         $scriptPath = public_path('run_model_convert_insert.sh');
         $sourceFile = '../../storage/app/' . $path;
@@ -400,11 +415,11 @@ class HankamController extends Controller
     {
         # join scenarios, sfd, and models
         $scenarios = DB::table('scenarios')
-            ->join('sfd', 'scenarios.sfd_id', '=', 'sfd.id')
-            ->join('models', 'sfd.model_id', '=', 'models.id')
+            ->join('models', 'scenarios.model_id', '=', 'models.id')
             ->where('models.is_active', 1)
-            ->select('scenarios.id', 'scenarios.name', 'scenarios.desc', 'sfd.name as sfd_name', 'scenarios.timestep', 'scenarios.created_at')
+            ->select('scenarios.id', 'scenarios.name', 'scenarios.desc', 'scenarios.final_time', 'scenarios.created_at')
             ->get();
+        
 
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
@@ -434,36 +449,61 @@ class HankamController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
-            'sfd_id' => 'required|exists:sfd,id',
             'timestep' => 'required|integer'
         ]);
 
         try {
+            $model_id = DB::table('models')->where('is_active', 1)->first()->id;
             # insert get scenario id
             $scenario_id = DB::table('scenarios')->insertGetId([
                 'name' => $request->input('name'),
                 'desc' => $request->input('desc'),
-                'sfd_id' => $request->input('sfd_id'),
-                'timestep' => $request->input('timestep')
+                'model_id' => $model_id,
+                'final_time' => $request->input('timestep')
             ]);
 
-            # get the variables of the active model
-            $dataVariable = DB::table('sfd_variable')
-                ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
-                ->where('sfd_id', $request->input('sfd_id'))
-                ->get();
+            // get all sfds
+            $sfds = DB::table('sfd')->where('model_id', $model_id)->get();
 
-            # insert the variables to scenario_variables
-            foreach ($dataVariable as $variable) {
-                DB::table('scenario_variables')->insert([
-                    'scenario_id' => $scenario_id,
-                    'sfd_id' => $request->input('sfd_id'),
-                    'variable_id' => $variable->variable_id,
-                    'value' => $variable->value,
-                    'level' => $variable->level,
-                    'unit' => $variable->unit
-                ]);
+            // for each sfd, get the variables and insert them to scenario_variables
+            foreach ($sfds as $sfd) {
+                $dataVariable = DB::table('sfd_variable')
+                    ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+                    ->where('sfd_id', $sfd->id)
+                    ->get();
+
+                // insert the variables to scenario_variables
+                foreach ($dataVariable as $variable) {
+                    DB::table('scenario_variables')->insert([
+                        'scenario_id' => $scenario_id,
+                        'sfd_id' => $sfd->id,
+                        'variable_id' => $variable->variable_id,
+                        'value' => $variable->value,
+                        'level' => $variable->level,
+                        'unit' => $variable->unit
+                    ]);
+                }
             }
+
+            // # get the variables of the active model
+            // $dataVariable = DB::table('sfd_variable')
+            //     ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+            //     ->where('sfd_id', $request->input('sfd_id'))
+            //     ->get();
+
+            // # masukin semua scenario variable dari seluruh sfds
+
+            // # insert the variables to scenario_variables
+            // foreach ($dataVariable as $variable) {
+            //     DB::table('scenario_variables')->insert([
+            //         'scenario_id' => $scenario_id,
+            //         'sfd_id' => $request->input('sfd_id'),
+            //         'variable_id' => $variable->variable_id,
+            //         'value' => $variable->value,
+            //         'level' => $variable->level,
+            //         'unit' => $variable->unit
+            //     ]);
+            // }
 
             return redirect()->route('hankam.simulation.scenario-model.index')->with('success', 'Scenario created successfully!');
         } catch (\Exception $e) {
@@ -473,14 +513,21 @@ class HankamController extends Controller
     public function detailScenarioModel($id)
     {
         $scenario = Scenario::findOrFail($id);
-        $sfd_id = $scenario->sfd_id;
         $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        
+        # get the sfd_id from the scenario
+        $sfd = DB::table('sfd')
+            ->where('model_id', $model_id)
+            ->first();
 
         $dataVariable = DB::table('scenario_variables')
             ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
             ->where('scenario_variables.scenario_id', $id)
-            ->where('scenario_variables.sfd_id', $sfd_id)
+            ->where('scenario_variables.sfd_id', $sfd->id)
             ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
+        
+        $sfds = Sfd::where('model_id', $model_id)->get();
 
         $data = [
             'title' => 'Defence and Security | Simulation Scenario Model',
@@ -489,9 +536,46 @@ class HankamController extends Controller
             'rowSfd' => $rowSfd,
             'scenario' => $scenario,
             'dataVariable' => $dataVariable,
+            'sfds' => $sfds,
+            'sfd_selected' => $sfd
         ];
         return view('hankam.simulation.scenario-model.detail', $data);
     }
+
+    public function detailScenarioModelSFD($scenario_id, $sfd_id) 
+    {
+        $scenario = Scenario::findOrFail($scenario_id);
+        $rowSfd = Sfd::select('id', 'name')->where('model_id', 1)->get();
+        $model_id = DB::table('models')->where('is_active', 1)->first()->id;
+        
+        # get the sfd_id from the scenario
+        $sfd = DB::table('sfd')
+            ->where('id', $sfd_id)
+            ->first();
+
+        $dataVariable = DB::table('scenario_variables')
+            ->join('variables', 'scenario_variables.variable_id', '=', 'variables.id')
+            ->where('scenario_variables.scenario_id', $scenario_id)
+            ->where('scenario_variables.sfd_id', $sfd_id)
+            ->get(['scenario_variables.id', 'variables.name', 'scenario_variables.value', 'scenario_variables.level', 'scenario_variables.unit', 'variables.key_variable']);
+        
+        $sfds = Sfd::where('model_id', $model_id)->get();
+
+        $data = [
+            'title' => 'Defence and Security | Simulation Scenario Model',
+            'head_title' => 'Scenario Model',
+            'breadcrumb_item' => 'Simulation',
+            'rowSfd' => $rowSfd,
+            'scenario' => $scenario,
+            'dataVariable' => $dataVariable,
+            'sfds' => $sfds,
+            'sfd_selected' => $sfd
+        ];
+        // dd($data);
+        return view('hankam.simulation.scenario-model.detail', $data);
+    }
+
+    
 
 
     public function editVariableScenarioModel($id)

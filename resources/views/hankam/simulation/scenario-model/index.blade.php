@@ -62,7 +62,7 @@
                         <th>Id</th>
                         <th>Scenario Name</th>
                         <th>Scenario Description</th>
-                        <th>SFD Name</th>
+                        {{-- <th>SFD Name</th> --}}
                         <th>Final Time</th>
                         <th>Created At</th>
                         <th>Action</th>
@@ -75,11 +75,10 @@
                         <td>{{$scenario->id}}</td>
                         <td>{{$scenario->name}}</td>
                         <td>{{$scenario->desc}}</td>
-                        <td>{{$scenario->sfd_name}}</td>
-                        <td>{{$scenario->timestep}}</td>
+                        {{-- <td>{{$scenario->sfd_name}}</td> --}}
+                        <td>{{$scenario->final_time}}</td>
                         <td>{{$scenario->created_at}}</td>
                         <td>
-                          <button type='button' class="btn btn-sm btn-light-primary run-model"><i class="fas fa-light fa-play"></i></i> Run Model</button> 
                           <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
                           <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
                           <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
@@ -94,7 +93,7 @@
                         <th>Id</th>
                         <th>Scenario Name</th>
                         <th>Scenario Description</th>
-                        <th>SFD Name</th>
+                        {{-- <th>SFD Name</th> --}}
                         <th>Final Time</th>
                         <th>Created At</th>
                       </tr>
@@ -307,74 +306,6 @@
               Swal.fire({
                 title: 'Download Failed',
                 text: 'Scenario download failed',
-                icon: 'error',
-                timer: 2000,
-                timerProgressBar: true
-              })
-            })
-          }
-        })
-      });
-
-      // if button run model clicked show the sweet alert
-      $('.run-model').on('click', function(){
-        Swal.fire({
-          title: 'Run Model',
-          text: "Are you sure want to run this scenario?",
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, run it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // loading animation for static time 2 seconds
-            Swal.fire({
-              title: 'Running...',
-              html: 'Please wait while we run the scenario',
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading()
-              }
-            })
-            .then((result) => {
-              time.sleep(20)
-              // if success
-              if (result.dismiss === Swal.DismissReason.timer) {
-                Swal.fire({
-                  title: 'Run Success',
-                  text: 'Scenario has been run',
-                  icon: 'success',
-                  timer: 2000,
-                  timerProgressBar: true
-                })
-              }
-            })
-
-
-
-            // hit controller to run the scenario
-            $.ajax({
-              data: {
-                id: $(this).data('id')
-              },
-              url: '',
-              type: 'GET',
-              // wait until the download is finished time 2 seconds
-              success: function(response){
-                Swal.fire({
-                  title: 'Run Success',
-                  text: 'Scenario has been run',
-                  icon: 'success',
-                  timer: 5000,
-                  timerProgressBar: true
-                })
-              }
-              // if error
-            }).fail(function(){
-              Swal.fire({
-                title: 'Run Failed',
-                text: 'Scenario run failed',
                 icon: 'error',
                 timer: 2000,
                 timerProgressBar: true

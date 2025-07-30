@@ -389,7 +389,7 @@
         </div>
         <div class="card-body">
           <!-- read html tag from db -->
-          {!!  $ancaman_id[0]->text !!}
+          {{-- {!!  $ancaman_id[0]->text !!} --}}
         </div>
       </div>
       <div class="card ">
@@ -397,7 +397,7 @@
           <h3 class="mb-0">Rekomendasi</h3>
         </div>
         <div class="card-body">
-          {!!  $recommendation_id->rekomendasi !!}
+          {{-- {!!  $recommendation_id->rekomendasi !!} --}}
         </div>
       </div>
       <div class="card">
@@ -411,10 +411,10 @@
         </div>
         <div class="card-body">
           <h4>North Natuna Defense and Security</h4>
-          {!! $solution_first_var->solusi !!}
+          {{-- {!! $solution_first_var->solusi !!} --}}
           <br>
           <h4>National Defense and Security Infrastructure</h4>
-          {!! $solution_second_var->solusi !!}
+          {{-- {!! $solution_second_var->solusi !!} --}}
           <br>
           {{-- <h4>North Natuna Defense and Security</h4>
           {!! $solution_third_var->solusi !!}

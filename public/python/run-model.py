@@ -46,9 +46,9 @@ def read_model(path):
     
 def conn():
     connection = mysql.connector.connect(
-    host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
-    user="admin",
-    passwd="cujwiq-suqhu2-bycpuB",
+    host="103.250.11.186",
+    user="its-user",
+    passwd="kudalumping13",
     database="web-app"
     )
     

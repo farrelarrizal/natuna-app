@@ -185,7 +185,7 @@ class ApiDataController extends Controller
     {
         // Fetch the scenario from the database
         $scenario = DB::table('scenarios')->where('id', $id)->first();
-        // dd($scenario);
+        dd($scenario);
         if (!$scenario) {
             return response()->json([
                 'message' => 'Scenario not found',
@@ -203,14 +203,13 @@ class ApiDataController extends Controller
         // Clean up model and scenario names
         $base_model_name = str_replace(' ', '', strtolower($base_model->name));
         $scenario_name = str_replace(' ', '', strtolower($scenario->name));
-
         // Create the final scenario filename
-        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->timestep . '.mdl';
+        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->final_time . '.mdl';
 
         // Build the shell command to generate the model
         $command = './run_model_export.sh -f ' . escapeshellarg(storage_path('app/' . $base_model->pathfile))
             . ' -e ' . escapeshellarg(storage_path('app/scenarioModels/' . $scenario_filename))
-            . ' -t ' . intval($scenario->timestep)
+            . ' -t ' . intval($scenario->final_time)
             . ' -s ' . intval($scenario->id);
 
         // Execute the shell command

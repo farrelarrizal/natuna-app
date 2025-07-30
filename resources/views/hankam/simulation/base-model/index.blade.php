@@ -117,8 +117,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    
         <div class="card-body">          
             <div class="row mt-3">
                 <img id="sfd-image" src="{{ asset('assets/imageSfd/default.jpg') }}" alt="SFD Image" class="img-fluid" width="100%">

@@ -19,7 +19,7 @@ class DashboardController extends Controller
     public function executiveSummary()
     {
         # redirect to scenario id 28
-        return redirect()->route('dashboard.executive-summary-scenario', ['scenarioId' => 28]);
+        return redirect()->route('dashboard.executive-summary-scenario', ['scenarioId' => 1]);
     }
 
     //     $flag_first_var = false;
@@ -202,8 +202,7 @@ class DashboardController extends Controller
             ->first();
 
         $scenarios = DB::table('scenarios')
-            ->join('sfd', 'sfd.id', '=', 'scenarios.sfd_id')
-            ->join('models', 'models.id', '=', 'sfd.model_id')
+            ->join('models', 'scenarios.model_id', '=', 'models.id')
             ->where('models.is_active', 1)
             ->get(
                 "scenarios.*"
@@ -386,6 +385,17 @@ class DashboardController extends Controller
             ->where('marine_resource', $flag_forecast_third_var)
             ->where('threat_severity', $flag_forecast_fourth_var)
             ->first();
+        if ($recommendationId == null) {
+            $recommendationId = (object)[
+                'id' => 0,
+                'klasifikasi' => '',
+                'analisa_kondisi' => '',
+                'rekomendasi' => '',
+                'flag' => ''
+            ];
+        } else {
+            // 
+        }
 
         // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var, $recommendationId);
 
@@ -445,18 +455,25 @@ class DashboardController extends Controller
             $solution_fourth_var = DB::table('scenario_alternative')
                 ->where('variable', 'National Sea Threat Risk')
                 ->where('severity', 'LOW')
-                ->first()->solusi;
+                ->first();
         elseif ($flag_fourth_var == 'MEDIUM'):
             $solution_fourth_var = DB::table('scenario_alternative')
                 ->where('variable', 'National Sea Threat Risk')
                 ->where('severity', 'MEDIUM')
-                ->first()->solusi;
+                ->first();
         else:
             $solution_fourth_var = DB::table('scenario_alternative')
                 ->where('variable', 'National Sea Threat Risk')
                 ->where('severity', 'HIGH')
-                ->first()->solusi;
+                ->first();
         endif;
+        
+        // if solution_fourth_var is null, set to empty string
+        if ($solution_fourth_var == null) {
+            $solution_fourth_var = '';
+        } else {
+            $solution_fourth_var = $solution_fourth_var->solusi;
+        }
 
 
         $data = [
@@ -481,7 +498,7 @@ class DashboardController extends Controller
             'solution_fourth_var' => $solution_fourth_var,
             'scenarioName' => $scenarioName,
         ];
-
+        // dd($data);
         return view('dashboard.executive-summary', $data);
     }
 

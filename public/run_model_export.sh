@@ -52,7 +52,7 @@ echo "Export file: $EXPORT_FILE"
 echo "Time: $TIME"
 echo "Scenario ID: $SCENARIO_ID"
 
-python model-export.py -f=$INPUT_FILE -e=$EXPORT_FILE -t=$TIME -s=$SCENARIO_ID
+python3 model-export.py -f=$INPUT_FILE -e=$EXPORT_FILE -t=$TIME -s=$SCENARIO_ID
 if [ $? -ne 0 ]; then
     echo "Python script failed!"
     exit 1

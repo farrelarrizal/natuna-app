@@ -2,10 +2,10 @@ def connect_db():
     
     # Connect to the database
     connection = mysql.connector.connect(
-        host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
-        user="admin",
-        passwd="cujwiq-suqhu2-bycpuB",
-        database="web-app-dev"
+        host="103.250.11.186",
+        user="its-user",
+        passwd="kudalumping13",
+        database="dasina"
     )
     return connection
 
@@ -16,17 +16,15 @@ def check_connection(conn):
         return False
 
 def execute_query(query, conn):
-    result = None
     try:
-        cursor = conn.cursor()
-        cursor.execute(query)
+        with conn.cursor() as cursor:
+            cursor.execute(query)
         conn.commit()
-        result = True
+        return True
     except Exception as e:
-        result = 'ERROR: ' + str(e)
-        
-    conn.commit()
-    return result
+        conn.rollback()  # Rollback changes if error occurs
+        return f'ERROR: {e}'
+
     
 def read_query(query, conn):
     cursor = conn.cursor()
@@ -34,72 +32,94 @@ def read_query(query, conn):
     result = cursor.fetchall()
     return result
 
+def send_notif(message: str):   
+    """
+    Send a notification message to a specified Telegram chat via the Telegram API.
+    :param token: Telegram Bot API token.
+    :param chat_id: The chat ID where the message will be sent.
+    :param message: The message text to be sent.
+    """
+    token = '7822549251:AAGZ6HVlKSjreqpeVzVQNiMWODtaBowB4ns'
+    chat_id = 1363019510
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": message
+    }
+    
+    response = requests.post(url, json=payload)
+    
+    if response.status_code != 200:
+        raise Exception(f"Failed to send message: {response.status_code} - {response.text}")
+
 def load_model(file_name, model_id):
     # Open the .mdl file in read mode
     with open(file_name, 'r', encoding='utf-8') as file:
         # Read the content of the file
         mdl_content = file.read()
-    # Split the content of the file by the newline character
-
-
-    mdl_content = mdl_content.split('********************************************************')[0].replace('{UTF-8}', '\n').replace('\n','').replace('\t', '')
+    
+    # Process content to isolate variables and sanitize backslashes
+    mdl_content = mdl_content.split('********************************************************')[0].replace('{UTF-8}', '\n').replace('\n', '').replace('\t', '')
+    mdl_content = mdl_content.replace('\\', '')  # Remove unintended backslashes
+    
+    # Split content to separate variables
     variables = mdl_content.split('|')
     
     result = []
     for item in variables[:-1]:
         result.append(item.split('\t'))
         
-    
     final = []
     for item in result:
         item = item[0]
         temp = {}
         try:
-            # print(item)
-            temp_list = item.split('~')        
-            # print(temp_list)
+            temp_list = item.split('~')
             
-            # temp_list = temp_list[1].split('~')
-            temp['name'] = temp_list[0].split('=')[0]
-            # print(len(temp_list[0].split('=')[0]))
-            temp['value'] = '='.join(temp_list[0].split('=')[1:]).strip()
-            temp['level'] = temp_list[-2]
-            temp['unit'] = temp_list[-1]
-            
-            # temp_list = temp_list[0].split('=')[0]
+            # Extract variable components: name, value, level, and unit
+            temp['name'] = temp_list[0].split('=')[0].strip()
+            temp['value'] = '='.join(temp_list[0].split('=')[1:]).strip().replace('\\', '')  # Remove unintended backslashes in values
+            temp['level'] = temp_list[-2].strip() if len(temp_list) > 1 else 'NULL'
+            temp['unit'] = temp_list[-1].strip() if len(temp_list) > 2 else 'NULL'
             
         except Exception as e:
-            print('error')
-            print(str(e))
-            print(item)
+            print(f"Error processing variable: {str(e)} - Item: {item}")
             break
         final.append(temp)
     
-    df = pd.read_json(json.dumps(final))
+    # Convert result to a DataFrame
+    df = pd.DataFrame(final)
     df = df.fillna('NULL')
     df = df.replace('', 'NULL')
     df['model_id'] = model_id
     
     return df
-        
+
 
 def insert_variables(df):
-    values = []
-    model = df
-    
-    conn = connect_db()
-    for idx, row in model.iterrows():
-        values.append(f"('{row['name']}', '{row['value']}', '{row['level']}', '{row['unit']}', {row['model_id']})")
+    try:
+            
+        values = []
+        model = df
+        
+        conn = connect_db()
+        for idx, row in model.iterrows():
+            values.append(f"('{row['name']}', '{row['value']}', '{row['level']}', '{row['unit']}', {row['model_id']})")
 
-    # Create the full query with all accumulated values
-    query = "INSERT INTO variables (name, value, level, unit, model_id) VALUES " + ", ".join(values)
+        # Create the full query with all accumulated values
+        query = "INSERT INTO variables (name, value, level, unit, model_id) VALUES " + ", ".join(values)
+        # Execute the query
+        res = execute_query(query, conn)
+        send_notif(str(res))
+        if res != True:
+            print(res)
 
-    # Execute the query
-    res = execute_query(query, conn)
-    if res != True:
-        print(res)
-
-    conn.close()
+        conn.close()
+        return True
+    except Exception as e:
+        send_notif(f"Error inserting variables: {str(e)}")
+        # Optionally, you can log the error or handle it as needed
+        return False
     
     
 def load_raw(file_name):
@@ -253,6 +273,79 @@ def insert_sfd_variables(df):
         print(str(e))
     finally:
         conn.close()
+        
+
+def insert_final_time(model_id, final_time):
+    conn = connect_db()
+    try:
+        query = f"UPDATE models SET final_step = {final_time} WHERE id = {model_id}"
+        res = execute_query(query, conn)
+        if res != True:
+            print(res)
+    except Exception as e:
+        print(str(e))
+    finally:
+        conn.close()
+
+def run_and_insert(model_id, model_vensim):
+    conn = connect_db()
+    try:
+        # Run the model and convert the result to a dictionary
+        res = model_vensim.run().to_dict()
+        
+        # Get the variable IDs from the database
+        variable_ids = dict(get_variable_id(model_id))
+        df_variable = pd.DataFrame(variable_ids.items(), columns=['id', 'name'])
+        
+        # Get the scenario ID
+        query = f"SELECT id FROM scenarios WHERE model_id = {model_id} AND name = 'Base Model'"
+        send_notif(f"query: {query}")
+        scenario_result = read_query(query, conn)
+        if not scenario_result:
+            send_notif("Error: Scenario not found.")
+            return
+        scenario_id = scenario_result[0][0]
+        send_notif(f"scenario_id: {scenario_id}")
+        
+        # Prepare the insert values for each node point (time step) based on db variables
+        values = []
+        for var_name in df_variable['name'].values:
+            if var_name in res:
+                variable_id = df_variable[df_variable['name'] == var_name]['id'].values[0]
+                
+                # Iterate over node points in the result
+                for node_point, value in res[var_name].items():
+                    # Format float value to limit precision
+                    formatted_value = f"{value:.4f}" if isinstance(value, float) else value
+                    values.append(f"({variable_id}, {scenario_id}, {node_point}, {formatted_value})")
+            else:
+                send_notif(f"Variable '{var_name}' not found in model results.")
+        
+        # Send sample values to check
+        send_notif(f"Sample values: {values[:2]}")
+        
+        # Insert the scenario data with node points, ensuring the query isn’t too long
+        if values:
+            max_insert_size = 1000  # Insert in batches if too long
+            for i in range(0, len(values), max_insert_size):
+                batch_values = values[i:i + max_insert_size]
+                query = "INSERT INTO scenario_data (variable_id, scenario_id, node_point, value) VALUES " + ", ".join(batch_values)
+                # send_notif(f"query (batch {i // max_insert_size + 1}): {query[:500]}...")  # Log part of the query for review
+                res = execute_query(query, conn)
+                if res != True:
+                    print(res)
+        else:
+            send_notif("No data to insert.")
+    except Exception as e:
+        print(str(e))
+        send_notif(f"Error: {str(e)}")
+    finally:
+        conn.close()
+
+
+
+        
+
 
 if __name__ == '__main__':
     import json
@@ -264,13 +357,8 @@ if __name__ == '__main__':
     warnings.filterwarnings('ignore')
     import logging
     import uuid
-    
-    LOG_ID = str(uuid.uuid4())
-    # setup logging
-    logging.basicConfig(level=logging.INFO)
-    
-    logger = logging.getLogger(f"LOG_ID: {LOG_ID} | Model Convert")
-    
+    import pysd    
+    import requests
 
     parser = argparse.ArgumentParser(description='Convert Model File to Database')
 
@@ -283,6 +371,8 @@ if __name__ == '__main__':
     file_name = args.file_name
     model_id = args.model_id
     
+    send_notif(f"Model {model_id} is being converted from file {file_name}")
+    
     # FLOW:
     # 1. Load the model file (variables)
     # 2. Parse the model file
@@ -293,28 +383,37 @@ if __name__ == '__main__':
     # 7. get the ID of the SFD Model
     # 8. Store the SFD Variabl`es in the database
     
-    model = load_model(file_name, model_id)
-    insert_variables(model)
-    print('Model Variables Loaded')
+    try:
+        model = load_model(file_name, model_id)
+        send_notif(f"Model {model_id} is being loaded")
+        if insert_variables(model) != True:
+            send_notif(f"Error while inserting variables for model {model_id}")
+        send_notif('Model Variables Loaded')
+        
+        # Register SFD  
+        sfds = get_sfd_name(file_name)
+        insert_sfd_name(sfds, model_id)
+        
+        # Load SFD Variables
+        sfd_variables = get_sfd(file_name, model_id)
+        
+        insert_sfd_variables(sfd_variables)
     
-    # Register SFD  
-    logger.info('LOG_ID: {LOG_ID} | Loading SFD Name')
-    sfds = get_sfd_name(file_name)
-    insert_sfd_name(sfds, model_id)
-    logger.info(f"LOG_ID: {LOG_ID} | SFD Name Loaded : {sfds}")
-    logger.info('LOG_ID: {LOG_ID} | SFD Name Loaded')
-    
-    # Load SFD Variables
-    logger.info('LOG_ID: {LOG_ID} | Loading SFD VARIABLES')
-    sfd_variables = get_sfd(file_name, model_id)
-    logger.info(f"LOG_ID: {LOG_ID} | SFD Variables Loaded : {sfd_variables}")
-    logger.info(f"LOG_ID: {LOG_ID} | SFD Variables Loaded : {sfd_variables.shape}")
-    
-    logger.info('LOG_ID: {LOG_ID} | Inserting SFD')
-    insert_sfd_variables(sfd_variables)
-    logger.info('LOG_ID: {LOG_ID} | SFD Variables Loaded')
-    
-    logger.info('LOG_ID: {LOG_ID} | Model Convert Completed')
-    
+        # get the final_time
+        model_vensim = pysd.read_vensim(file_name)
+        final_time = model_vensim.components.final_time()
+        send_notif(f"Final time for model {model_id} is {final_time}")
+        
+        # insert final time
+        insert_final_time(model_id, final_time)
+        
+        # running the model and insert the scenario data of base model
+        run_and_insert(model_id, model_vensim)
+        
+        # send notification
+        send_notif(f"Model {model_id} successfully loaded")
+    except Exception as e:
+        send_notif(f"Error while loading model {model_id}. ERROR: {str(e)}")
+        print(f"Error while loading model {model_id}. ERROR: {str(e)}")
     
     

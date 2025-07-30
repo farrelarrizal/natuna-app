@@ -2,10 +2,10 @@ def connect_db():
     
     # Connect to the database
     connection = mysql.connector.connect(
-        host="db-natuna.ctmogcuxclxn.ap-southeast-1.rds.amazonaws.com",
-        user="admin",
-        passwd="cujwiq-suqhu2-bycpuB",
-        database="web-app-dev"
+        host="103.250.11.186",
+        user="its-user",
+        passwd="kudalumping13",
+        database="dasina"
     )
     return connection
 
