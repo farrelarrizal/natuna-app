@@ -385,17 +385,6 @@ class DashboardController extends Controller
             ->where('marine_resource', $flag_forecast_third_var)
             ->where('threat_severity', $flag_forecast_fourth_var)
             ->first();
-        if ($recommendationId == null) {
-            $recommendationId = (object)[
-                'id' => 0,
-                'klasifikasi' => '',
-                'analisa_kondisi' => '',
-                'rekomendasi' => '',
-                'flag' => ''
-            ];
-        } else {
-            // 
-        }
 
         // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var, $recommendationId);
 
@@ -467,13 +456,6 @@ class DashboardController extends Controller
                 ->where('severity', 'HIGH')
                 ->first();
         endif;
-        
-        // if solution_fourth_var is null, set to empty string
-        if ($solution_fourth_var == null) {
-            $solution_fourth_var = '';
-        } else {
-            $solution_fourth_var = $solution_fourth_var->solusi;
-        }
 
 
         $data = [
@@ -491,7 +473,7 @@ class DashboardController extends Controller
             'forecast_third_var' => $forecast_third_var ?? 0,
             'forecast_fourth_var' => $forecast_fourth_var ?? 0,
             'ancaman_id' => $ancaman_id,
-            'recommendation_id' => $recommendationId,
+            'recommendation_id' => $recommendationId ?? null,
             'solution_first_var' => $solution_first_var,
             'solution_second_var' => $solution_second_var,
             'solution_third_var' => $solution_third_var,

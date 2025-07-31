@@ -356,6 +356,7 @@ class HankamController extends Controller
 
     public function uploadModel(Request $request)
     {
+        ini_set('max_execution_time', 60);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'desc' => ['required', 'string', 'max:255'],
@@ -446,6 +447,7 @@ class HankamController extends Controller
 
     public function storeScenario(Request $request)
     {
+        ini_set('max_execution_time', 60);
         $request->validate([
             'name' => 'required|string|max:255',
             'desc' => 'required|string',

@@ -116,15 +116,15 @@
                     <label class="col-form-label col-lg-3 col-sm-12">Final Time (Month):   {{ $scenario->timestep }}</label>
                     <div class="col-lg-6 col-md-12 col-sm-12">
 
-                        {{-- <div class="row align-items-center">
+                        <div class="row align-items-center">
                             <div class="col-4">
-                                <input type="text" class="form-control" id="pc-no_ui_slider-1-input" placeholder="0">
-                                {{ $scenario->timestep }}
+                                <input type="text" class="form-control" id="pc-no_ui_slider-1-input" value={{ $scenario->final_time }} disabled>
+                                
                             </div>
                             <div class="col-8">
                                 <div id="pc-no_ui_slider-1" class="pc-no_ui_slider--drag-danger"></div>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 {{-- <button type="submit" class="btn btn-primary">Add Scenario</button> --}}

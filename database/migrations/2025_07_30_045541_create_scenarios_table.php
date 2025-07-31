@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('desc')->nullable();
             $table->integer('timestep')->nullable();
             $table->string('model_id')->nullable(); // keep if needed
+            $table->string('export_path')->nullable(); // keep if needed
             $table->timestamps();
             $table->integer('final_time')->nullable(); // keep if needed
         });
@@ -42,14 +43,18 @@ return new class extends Migration
 
         Schema::create('recommendation', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->string('defence_severity')->nullable();
             $table->string('infra_defence_severity')->nullable();
             $table->string('marine_resource')->nullable();
             $table->string('threat_severity')->nullable();
             $table->string('klasifikasi')->nullable();
             $table->string('flag')->nullable();
-            $table->string('analisa_kondisi')->nullable();
-            $table->string('rekomendasi')->nullable();
+            $table->text('analisa_kondisi')->nullable();
+            $table->text('rekomendasi')->nullable();
+            $table->datetime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->datetime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
 
         Schema::create('scenario_alternative', function (Blueprint $table) {
@@ -82,6 +87,32 @@ return new class extends Migration
             $table->string('value');
             $table->string('level');
             $table->string('unit');
+            $table->timestamps(); // adds both created_at and updated_at
+        });
+
+        Schema::create('forms', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->nullable();
+            $table->string('sfd_name')->nullable();
+            $table->text('description')->nullable(); // keep only once
+            $table->integer('is_active')->default(1);
+        });
+
+        Schema::create('question', function (Blueprint $table) {
+            $table->id();
+            $table->integer('form_id')->nullable();
+            $table->string('question')->nullable();
+            $table->integer('max_value')->nullable();
+            $table->integer('has_relational_to_variable');
+            $table->string('min_label')->nullable();
+            $table->string('max_label')->nullable();
+            $table->timestamps(); // adds both created_at and updated_at
+        });
+
+        Schema::create('recommendation_variable_rel', function (Blueprint $table) {
+            $table->id();
+            $table->integer('recommendation_id')->nullable();
+            $table->integer('variable_id')->nullable();
             $table->timestamps(); // adds both created_at and updated_at
         });
     }

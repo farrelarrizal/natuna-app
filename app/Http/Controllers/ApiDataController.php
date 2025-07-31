@@ -185,7 +185,6 @@ class ApiDataController extends Controller
     {
         // Fetch the scenario from the database
         $scenario = DB::table('scenarios')->where('id', $id)->first();
-        dd($scenario);
         if (!$scenario) {
             return response()->json([
                 'message' => 'Scenario not found',
@@ -199,26 +198,26 @@ class ApiDataController extends Controller
                 'message' => 'Base model not found',
             ], 404);
         }
-
+        
         // Clean up model and scenario names
         $base_model_name = str_replace(' ', '', strtolower($base_model->name));
         $scenario_name = str_replace(' ', '', strtolower($scenario->name));
         // Create the final scenario filename
         $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->final_time . '.mdl';
-
+        
         // Build the shell command to generate the model
         $command = './run_model_export.sh -f ' . escapeshellarg(storage_path('app/' . $base_model->pathfile))
-            . ' -e ' . escapeshellarg(storage_path('app/scenarioModels/' . $scenario_filename))
-            . ' -t ' . intval($scenario->final_time)
-            . ' -s ' . intval($scenario->id);
-
+        . ' -e ' . escapeshellarg(storage_path('app/scenarioModels/' . $scenario_filename))
+        . ' -t ' . intval($scenario->final_time)
+        . ' -s ' . intval($scenario->id);
+        
         // Execute the shell command
         $output = shell_exec($command . ' 2>&1');
-
+        
         // Log shell output for debugging purposes
         Log::info('Shell command executed: ' . $command);
         Log::info('Shell command output: ' . $output);
-
+        
         // Check if the file was generated successfully
         $scenario_export_path = 'scenarioModels/' . $scenario_filename;
         if (!file_exists(storage_path('app/' . $scenario_export_path))) {
