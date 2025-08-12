@@ -387,7 +387,7 @@ class DashboardController extends Controller
             ->first();
 
         // dd($flag_forecast_first_var, $flag_forecast_second_var, $flag_forecast_third_var, $flag_forecast_fourth_var, $recommendationId);
-
+        // dd($flag_first_var, $flag_second_var, $flag_third_var, $flag_fourth_var, $forecast_first_var, $forecast_second_var, $forecast_third_var, $forecast_fourth_var, $recommendationId);
         if ($flag_first_var == 'LOW'):
             $solution_first_var = DB::table('scenario_alternative')
                 ->where('variable', 'North Natuna Defense and Security')
@@ -457,7 +457,7 @@ class DashboardController extends Controller
                 ->first();
         endif;
 
-
+        // dd($solution_first_var, $solution_second_var, $solution_third_var, $solution_fourth_var);
         $data = [
             'title' => 'Dashboard | Executive Summary',
             'head_title' => 'Executive Summary',

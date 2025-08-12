@@ -23,5 +23,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'role' => 'SUPERADMIN'
         ]);
+
+        
     }
 }

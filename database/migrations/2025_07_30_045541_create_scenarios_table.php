@@ -61,7 +61,7 @@ return new class extends Migration
             $table->id();
             $table->string('variable')->nullable();
             $table->string('severity')->nullable();
-            $table->string('solusi')->nullable();
+            $table->text('solusi')->nullable();
             $table->timestamps(); // adds both created_at and updated_at
         });
 
