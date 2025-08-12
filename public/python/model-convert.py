@@ -287,7 +287,7 @@ def insert_final_time(model_id, final_time):
     finally:
         conn.close()
 
-def run_and_insert(model_id, model_vensim):
+def run_and_insert(model_id, model_vensim, scenario_id=None):
     conn = connect_db()
     try:
         # Run the model and convert the result to a dictionary
@@ -298,14 +298,17 @@ def run_and_insert(model_id, model_vensim):
         df_variable = pd.DataFrame(variable_ids.items(), columns=['id', 'name'])
         
         # Get the scenario ID
-        query = f"SELECT id FROM scenarios WHERE model_id = {model_id} AND name = 'Base Model'"
-        send_notif(f"query: {query}")
-        scenario_result = read_query(query, conn)
-        if not scenario_result:
-            send_notif("Error: Scenario not found.")
-            return
-        scenario_id = scenario_result[0][0]
-        send_notif(f"scenario_id: {scenario_id}")
+        if scenario_id is None:
+            query = f"SELECT id FROM scenarios WHERE model_id = {model_id} AND name = 'Base Model'"
+            send_notif(f"query: {query}")
+            scenario_result = read_query(query, conn)
+            if not scenario_result:
+                send_notif("Error: Scenario not found.")
+                return
+            scenario_id = scenario_result[0][0]
+            send_notif(f"scenario_id: {scenario_id}")
+        else:
+            send_notif(f"Using provided scenario_id: {scenario_id}")
         
         # Prepare the insert values for each node point (time step) based on db variables
         values = []
@@ -365,13 +368,15 @@ if __name__ == '__main__':
     # Define optional arguments with flags
     parser.add_argument('-f', '--file_name', required=True, help='Model File Name')
     parser.add_argument('-m', '--model_id', required=True, help='Model ID')
+    parser.add_argument('-s', '--scenario_id', help='Scenario ID (optional)', default=None)
 
     args = parser.parse_args()
 
     file_name = args.file_name
     model_id = args.model_id
+    scenario_id = args.scenario_id if hasattr(args, 'scenario_id') else None
     
-    send_notif(f"Model {model_id} is being converted from file {file_name}")
+    send_notif(f"Model {model_id} is being converted from file {file_name} with scenario ID {scenario_id if scenario_id else 'None'}")
     
     # FLOW:
     # 1. Load the model file (variables)

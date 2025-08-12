@@ -233,6 +233,67 @@ class ApiDataController extends Controller
         return response()->download(storage_path('app/' . $scenario_export_path));
     }
 
+    public function run_to_get_export_path($id){
+        // Fetch the scenario from the database
+        $scenario = DB::table('scenarios')->where('id', $id)->first();
+        if (!$scenario) {
+            return response()->json([
+                'message' => 'Scenario not found',
+            ], 404);
+        }
+
+        // Fetch the active base model
+        $base_model = DB::table('models')->where('is_active', 1)->first();
+        if (!$base_model) {
+            return response()->json([
+                'message' => 'Base model not found',
+            ], 404);
+        }
+        
+        // Clean up model and scenario names
+        $base_model_name = str_replace(' ', '', strtolower($base_model->name));
+        $scenario_name = str_replace(' ', '', strtolower($scenario->name));
+        // Create the final scenario filename
+        $scenario_filename = $base_model_name . '_' . $scenario_name . '_' . $scenario->final_time . '.mdl';
+        
+        // Build the shell command to generate the model
+        $command = './run_model_export.sh -f ' . escapeshellarg(storage_path('app/' . $base_model->pathfile))
+        . ' -e ' . escapeshellarg(storage_path('app/scenarioModels/' . $scenario_filename))
+        . ' -t ' . intval($scenario->final_time)
+        . ' -s ' . intval($scenario->id);
+        
+        // Execute the shell command
+        $output = shell_exec($command . ' 2>&1');
+        
+        // Log shell output for debugging purposes
+        Log::info('Shell command executed: ' . $command);
+        Log::info('Shell command output: ' . $output);
+        
+        // Check if the file was generated successfully
+        $scenario_export_path = 'scenarioModels/' . $scenario_filename;
+        if (!file_exists(storage_path('app/' . $scenario_export_path))) {
+            return response()->json([
+                'message' => 'Failed to generate model file',
+            ], 500);
+        }
+
+        // Update the scenario export path in the database
+        DB::table('scenarios')->where('id', $id)->update(['export_path' => $scenario_export_path]);
+
+        if (!$scenario) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Scenario not found',
+            ], 404);
+        }
+        // Download the generated file
+        return response()->json([
+            'message' => 'Model file generated successfully',
+            'status' => 'success',
+            'export_path' => $scenario_export_path,
+        ]);
+    }
+
 
     public function searchVariables(Request $request)
     {

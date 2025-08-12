@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiDataController;
 use App\Models\Variable;
 use App\Models\ModelSD;
 use App\Models\Sfd;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Imports\ScenarioDataImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class HankamController extends Controller
 {
@@ -447,7 +449,7 @@ class HankamController extends Controller
 
     public function storeScenario(Request $request)
     {
-        ini_set('max_execution_time', 60);
+        ini_set('max_execution_time', 120);
         $request->validate([
             'name' => 'required|string|max:255',
             'desc' => 'required|string',
@@ -456,7 +458,6 @@ class HankamController extends Controller
 
         try {
             $model_id = DB::table('models')->where('is_active', 1)->first()->id;
-            # insert get scenario id
             $scenario_id = DB::table('scenarios')->insertGetId([
                 'name' => $request->input('name'),
                 'desc' => $request->input('desc'),
@@ -464,28 +465,35 @@ class HankamController extends Controller
                 'final_time' => $request->input('timestep')
             ]);
 
+            // Build the route URL
+            // Call ApiDataController method directly
+            $apiController = app(ApiDataController::class);
+            $result = $apiController->run_to_get_export_path($scenario_id);
+            $data = $result->getData(true); // true = associative array
+            $path = $data['export_path'];
+
             // get all sfds
-            $sfds = DB::table('sfd')->where('model_id', $model_id)->get();
+            // $sfds = DB::table('sfd')->where('model_id', $model_id)->get();
 
-            // for each sfd, get the variables and insert them to scenario_variables
-            foreach ($sfds as $sfd) {
-                $dataVariable = DB::table('sfd_variable')
-                    ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
-                    ->where('sfd_id', $sfd->id)
-                    ->get();
+            // // for each sfd, get the variables and insert them to scenario_variables
+            // foreach ($sfds as $sfd) {
+            //     $dataVariable = DB::table('sfd_variable')
+            //         ->join('variables', 'sfd_variable.variable_id', '=', 'variables.id')
+            //         ->where('sfd_id', $sfd->id)
+            //         ->get();
 
-                // insert the variables to scenario_variables
-                foreach ($dataVariable as $variable) {
-                    DB::table('scenario_variables')->insert([
-                        'scenario_id' => $scenario_id,
-                        'sfd_id' => $sfd->id,
-                        'variable_id' => $variable->variable_id,
-                        'value' => $variable->value,
-                        'level' => $variable->level,
-                        'unit' => $variable->unit
-                    ]);
-                }
-            }
+            //     // insert the variables to scenario_variables
+            //     foreach ($dataVariable as $variable) {
+            //         DB::table('scenario_variables')->insert([
+            //             'scenario_id' => $scenario_id,
+            //             'sfd_id' => $sfd->id,
+            //             'variable_id' => $variable->variable_id,
+            //             'value' => $variable->value,
+            //             'level' => $variable->level,
+            //             'unit' => $variable->unit
+            //         ]);
+            //     }
+            // }
 
             // # get the variables of the active model
             // $dataVariable = DB::table('sfd_variable')
@@ -493,7 +501,7 @@ class HankamController extends Controller
             //     ->where('sfd_id', $request->input('sfd_id'))
             //     ->get();
 
-            // # masukin semua scenario variable dari seluruh sfds
+            // // # masukin semua scenario variable dari seluruh sfds
 
             // # insert the variables to scenario_variables
             // foreach ($dataVariable as $variable) {
@@ -507,9 +515,14 @@ class HankamController extends Controller
             //     ]);
             // }
 
+            $scriptPath = public_path('run_model_convert_insert.sh');
+            $sourceFile = '../../storage/app/' . $path;
+            $command = "./run_model_convert_execute.sh $sourceFile $scenario_id";
+            shell_exec($command);
+
             return redirect()->route('hankam.simulation.scenario-model.index')->with('success', 'Scenario created successfully!');
         } catch (\Exception $e) {
-            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again.');
+            return redirect()->route('hankam.simulation.scenario-model.createScenario')->with('error', 'Failed to create scenario. Please try again. Error: ' . $e->getMessage());
         }
     }
     public function detailScenarioModel($id)

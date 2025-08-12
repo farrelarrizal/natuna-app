@@ -291,6 +291,7 @@ class DashboardController extends Controller
             ->where('scenario_data.node_point', '>', $time)
             ->where('scenarios.id', $scenarioId)
             ->avg('scenario_data.value');
+        // dd($forecast_first_var);
 
         $forecast_second_var = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
@@ -370,6 +371,8 @@ class DashboardController extends Controller
         if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
             $all_indicator = 'VERY LOW';
         } else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
+            $all_indicator = 'MEDIUM';
+        }else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'MEDIUM' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
             $all_indicator = 'MEDIUM';
         } else {
             $all_indicator = 'UNKNOWN';

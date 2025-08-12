@@ -46,12 +46,12 @@ def read_model(path):
     
 def conn():
     connection = mysql.connector.connect(
-    host="103.250.11.186",
-    user="its-user",
-    passwd="kudalumping13",
-    database="web-app"
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT"),
+        user=os.getenv("DB_USERNAME"),
+        passwd=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_DATABASE")
     )
-    
     return connection
 
 def check_connection():
@@ -90,12 +90,17 @@ if __name__ == '__main__':
     import json
     import argparse
     import mysql.connector
+    from dotenv import load_dotenv
+    import os
     
     parser = argparse.ArgumentParser(description='Read the model from the .mdl file')
     parser.add_argument('--path', type=str, help='Path of the .mdl file')
     parser.add_argument('--name', type=str, help='Name of the model')
     parser.add_argument('--desc', type=str, help='Description of the model')
     args = parser.parse_args()
+    
+    load_dotenv(dotenv_path="../../.env")
+
     
     read_model(args.path)
     
@@ -113,3 +118,4 @@ if __name__ == '__main__':
         
         
         # insert variables    
+        

@@ -84,7 +84,7 @@ return new class extends Migration
             $table->integer('scenario_id')->nullable();
             $table->integer('sfd_id')->nullable();
             $table->integer('variable_id');
-            $table->string('value');
+            $table->text('value');
             $table->string('level');
             $table->string('unit');
             $table->timestamps(); // adds both created_at and updated_at
