@@ -374,6 +374,18 @@ class DashboardController extends Controller
             $all_indicator = 'MEDIUM';
         }else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'MEDIUM' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
             $all_indicator = 'MEDIUM';
+        }else if ($flag_first_var == 'MEDIUM' && $flag_second_var == 'MEDIUM' && $flag_third_var == 'HIGH' && $flag_fourth_var == 'MEDIUM') {
+$           all_indicator  = 'MEDIUM';
+        } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'HIGH' && $flag_third_var == 'HIGH' && $flag_fourth_var == 'HIGH') {
+            $all_indicator = 'VERY HIGH';
+        } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'HIGH' && $flag_third_var == 'HIGH' && $flag_fourth_var == 'MEDIUM') {
+            $all_indicator = 'HIGH';
+        } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'HIGH' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
+            $all_indicator = 'HIGH';
+        } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'MEDIUM' && $flag_third_var == 'MEDIUM' && $flag_fourth_var == 'MEDIUM') {
+            $all_indicator = 'HIGH';
+        } elseif ($flag_first_var == 'HIGH' && $flag_second_var == 'LOW' && $flag_third_var == 'LOW' && $flag_fourth_var == 'LOW') {
+            $all_indicator = 'LOW';  
         } else {
             $all_indicator = 'UNKNOWN';
         }
