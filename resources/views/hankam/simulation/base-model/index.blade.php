@@ -232,22 +232,39 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($scenarios as $scenario)
-                      <tr>
-                        <td>{{$scenario->id}}</td>
-                        <td>{{$scenario->name}}</td>
-                        <td>{{$scenario->desc}}</td>
-                        {{-- <td>{{$scenario->sfd_name}}</td> --}}
-                        <td>{{$scenario->final_time}}</td>
-                        <td>{{$scenario->created_at}}</td>
-                        <td>
-                          <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
-                          <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
-                          <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
-                          <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
-                        </td>
-                      </tr>
-                      @endforeach
+                        @if (!isset($scenarios) || $scenarios->isEmpty())
+    <tr>
+        <td colspan="6" class="text-center">No scenarios available.</td>
+    </tr>
+@else
+    @foreach ($scenarios as $scenario)
+        @if (isset($scenario))
+        <tr>
+            <td>{{ $scenario->id }}</td>
+            <td>{{ $scenario->name }}</td>
+            <td>{{ $scenario->desc }}</td>
+            {{-- <td>{{$scenario->sfd_name}}</td> --}}
+            <td>{{ $scenario->final_time }}</td>
+            <td>{{ $scenario->created_at }}</td>
+            <td>
+                <a href="{{ route('api.scenario-model.download', $scenario->id) }}" class="btn btn-sm btn-secondary">
+                    <i class="ti ti-upload me-1"></i>Download
+                </a> 
+                <a href="{{ route('hankam.simulation.scenario-model.detail', $scenario->id) }}" class="btn btn-sm btn-success">
+                    <i class="ti ti-eye me-1"></i>View
+                </a>
+                <a href="{{ route('hankam.simulation.scenario-model.edit-variable', $scenario->id) }}" class="btn btn-sm btn-warning">
+                    <i class="ti ti-pencil me-1"></i>Edit
+                </a>
+                <button type="button" class="btn btn-sm btn-danger">
+                    <i class="ti ti-trash me-1"></i>Delete
+                </button>
+            </td>
+        </tr>
+        @endif
+    @endforeach
+@endif
+
                     
                     </tbody>
                     <tfoot>
