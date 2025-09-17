@@ -88,7 +88,8 @@ class HankamController extends Controller
         $naval_capabilities = DB::table('variables')
             ->join('scenario_data', 'variables.id', '=', 'scenario_data.variable_id')
             ->where('variables.id', $variableIds['Naval Capabilities'] ?? null)  //nama disesuaikan
-            ->first();
+            ->first()
+            ->value;
 
         # if len naval_capabilities == 0, then naval_capabilities = 0
         if ($naval_capabilities == null) {
@@ -356,8 +357,7 @@ class HankamController extends Controller
         return view('hankam.simulation.base-model.upload-model', $data);
     }
 
-    public function uploadModel(Request $request)
-    {
+    public function uploadModel(Request $request){
         ini_set('max_execution_time', 60);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],

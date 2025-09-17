@@ -183,7 +183,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Upload</button>
                 </form>
-                              
             </div>
           </div>
         </div>
@@ -209,6 +208,64 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Scenario</h5>
+                
+              </div>
+              <div class="card-body">
+                <div class="dt-responsive table-responsive">
+                  <table id="footer-search" class="table table-striped table-bordered nowrap">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Scenario Name</th>
+                        <th>Scenario Description</th>
+                        {{-- <th>SFD Name</th> --}}
+                        <th>Final Time</th>
+                        <th>Created At</th>
+                        <th>Action</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($scenarios as $scenario)
+                      <tr>
+                        <td>{{$scenario->id}}</td>
+                        <td>{{$scenario->name}}</td>
+                        <td>{{$scenario->desc}}</td>
+                        {{-- <td>{{$scenario->sfd_name}}</td> --}}
+                        <td>{{$scenario->final_time}}</td>
+                        <td>{{$scenario->created_at}}</td>
+                        <td>
+                          <a href="{{route('api.scenario-model.download', $scenario->id)}}" class="btn btn-sm btn-secondary"><i class="ti ti-upload me-1"></i>Download</button> 
+                          <a href="{{route('hankam.simulation.scenario-model.detail', $scenario->id)}}" class="btn btn-sm btn-success"><i class="ti ti-eye me-1"></i>View</a>
+                          <a href="{{route('hankam.simulation.scenario-model.edit-variable', $scenario->id)}}" class="btn btn-sm btn-warning"><i class="ti ti-pencil me-1"></i>Edit</a>
+                          <button type="button" class="btn btn-sm btn-danger"><i class="ti ti-trash me-1"></i>Delete</button>
+                        </td>
+                      </tr>
+                      @endforeach
+                    
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Id</th>
+                        <th>Scenario Name</th>
+                        <th>Scenario Description</th>
+                        {{-- <th>SFD Name</th> --}}
+                        <th>Final Time</th>
+                        <th>Created At</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
 
 @endsection
 
